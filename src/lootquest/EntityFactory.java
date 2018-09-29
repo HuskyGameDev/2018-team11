@@ -7,7 +7,7 @@ import lutebox.ecs.Entity;
 
 public final class EntityFactory {
 
-    // don't instanciate this class 
+    // don't instantiate this class 
     private EntityFactory() {} 
     
     public static Entity createPlayer(float x, float y) {
