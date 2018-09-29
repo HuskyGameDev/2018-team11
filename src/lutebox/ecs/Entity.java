@@ -58,7 +58,7 @@ public class Entity {
         try {
             return attach(type.newInstance());
         } catch (Exception e) {
-            throw new IllegalArgumentException("Component cannot be automatically instanciated: " + type); 
+            throw new IllegalArgumentException("Component cannot be automatically instantiated: " + type); 
         } 
     }
     
