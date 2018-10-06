@@ -10,14 +10,47 @@ import lutebox.graphics.Graphics;
 import lutebox.input.Cursor;
 import lutebox.input.Input;
 
+/**
+ * 
+ * Manages the game and important subsystems 
+ * 
+ * @author Nicholas Hamilton 
+ *
+ */
 public class Lutebox {
 
+    /**
+     * Settings for the mouse cursor 
+     */
     public static Cursor cursor; 
+    
+    /**
+     * Display interface. 
+     * Allows you to set the title and window size, etc. 
+     */
     public static Display display; 
+    
+    /**
+     * Graphics interface. 
+     * Use this to draw lines, shapes, images, etc. 
+     */
     public static Graphics graphics; 
+    
+    /**
+     * Input interface. 
+     * Use this to get information about the keyboard and mouse. 
+     */
     public static Input input; 
+    
+    /**
+     * Current scene. 
+     * The core part of the game. 
+     */
     public static Scene scene; 
     
+    /**
+     * For internal use only. 
+     */
     public static GraphicsBackend graphicsBackend; 
     
     public static float deltaTime = 1 / 60f; 
@@ -40,11 +73,19 @@ public class Lutebox {
         graphicsBackend = backend.getGraphicsBackend(); 
     }
     
+    /**
+     * Starts the game with a default configuration. 
+     * @see start(Config, GameListener) 
+     */
     public static void start(GameListener game) {
         start(null, game); 
     }
     
+    /**
+     * Starts the game with a default configuration. 
+     */
     public static void start(Config config, GameListener game) {
+        if (running) throw new IllegalStateException("Game is already running");
         if (config == null) config = new Config();
         
         initSystems(); 
@@ -55,11 +96,13 @@ public class Lutebox {
         display.setSize(config.width, config.height); 
         display.setVisible(true); 
         
-        if (running) throw new IllegalStateException("Game is already running");
         running = true; 
         gameLoop(); 
     }
     
+    /**
+     * Quits the game after the current frame. 
+     */
     public static void stop() {
         if (!running) System.out.println("[WARNING] Game is not running, but it is trying to be stopped");
         
