@@ -1,5 +1,6 @@
 package lootquest.system;
 
+import lootquest.LootquestGame;
 import lootquest.component.Position;
 import lootquest.component.Size;
 import lutebox.core.Lutebox;
@@ -14,12 +15,16 @@ public class MapRenderSystem extends IteratingEntitySystem {
     public MapRenderSystem(float scale) {
         super(Filter.include(Position.class, Size.class).create()); 
         
-        this.scale = scale; 
+        this.scale = scale;
+        
+        
     }
     
     public void preRenderEntities() {
         Lutebox.graphics.setColor(0x66BBFF); 
-        Lutebox.graphics.clear(); 
+        Lutebox.graphics.clear();
+        
+        LootquestGame.world.render();
     }
     
     public void renderEntity(Entity e) {

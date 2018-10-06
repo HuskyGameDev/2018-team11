@@ -30,7 +30,12 @@ public class Texture {
             img.getRGB(0, 0, width, height, argb, 0, width); 
             internal.setData(0, 0, width, height, argb); 
         } catch (Exception e) {
-            System.out.println("Could not load image: " + filename); 
+            System.out.println("Could not load image: " + filename + ", using default texture");
+            width = 1; 
+            height = 1; 
+            int[] argb = new int[] { 0xFFFF00FF }; 
+            this.internal = Lutebox.graphicsBackend.createNativeTexture(width, height);
+            internal.setData(0, 0, 1, 1, argb); 
         } 
     }
     
