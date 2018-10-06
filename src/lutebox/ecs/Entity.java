@@ -5,6 +5,13 @@ import java.util.Map;
 
 import lutebox.util.BitField;
 
+/**
+ * 
+ * Container for component 
+ * 
+ * @author Nicholas Hamilton 
+ *
+ */
 public class Entity {
 
     private Map<Integer, Component> compMap = new HashMap<>(); 
@@ -19,6 +26,9 @@ public class Entity {
         return compBits.get(id); 
     }
     
+    /**
+     * Check if this entity has a specific component 
+     */
     public <T extends Component> boolean contains(Class<T> type) {
         return contains(ComponentId.get(type)); 
     }
@@ -32,6 +42,10 @@ public class Entity {
         }
     }
     
+    /**
+     * Get a component of the entity. If the entity does not 
+     * have this component, it will return null 
+     */
     @SuppressWarnings("unchecked")
     public <T extends Component> T get(Class<T> type) {
         return (T) get(ComponentId.get(type)); 

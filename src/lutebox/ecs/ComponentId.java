@@ -3,6 +3,13 @@ package lutebox.ecs;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * Stores unique ID for each component type 
+ * 
+ * @author Nicholas Hamilton 
+ *
+ */
 public final class ComponentId {
 
     private ComponentId() {} 
