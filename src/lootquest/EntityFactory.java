@@ -2,6 +2,7 @@ package lootquest;
 
 import lootquest.component.Direction;
 import lootquest.component.EquipedSword;
+import lootquest.component.Player;
 import lootquest.component.Position;
 import lootquest.component.Size;
 import lutebox.core.Lutebox;
@@ -19,7 +20,7 @@ public final class EntityFactory {
         e.attach(Size.class).set(1, 1); 
         e.attach(Direction.class);
         e.attach(EquipedSword.class);
-        
+        e.attach(Player.class);
         return e; 
     }
     
