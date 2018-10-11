@@ -24,19 +24,19 @@ public class PlayerMovementSystem extends IteratingEntitySystem
 	    
 	    d.moving = false; 
 	    
-		if(Lutebox.input.getKey(Input.KEY_W)) {
+		if(Lutebox.input.getKey(Input.KEY_W) || Lutebox.input.getKey(Input.KEY_I)) {
 		    d.direction = Direction.UP;
 		    d.moving = true; 
 		}
-        if(Lutebox.input.getKey(Input.KEY_S)) {
+        if(Lutebox.input.getKey(Input.KEY_S) || Lutebox.input.getKey(Input.KEY_K)) {
             d.direction = Direction.DOWN;
             d.moving = true; 
         }
-        if(Lutebox.input.getKey(Input.KEY_A)) {
+        if(Lutebox.input.getKey(Input.KEY_A) || Lutebox.input.getKey(Input.KEY_J)) {
             d.direction = Direction.LEFT;
             d.moving = true; 
         }
-        if(Lutebox.input.getKey(Input.KEY_D)) {
+        if(Lutebox.input.getKey(Input.KEY_D) || Lutebox.input.getKey(Input.KEY_L)) {
             d.direction = Direction.RIGHT;
             d.moving = true; 
         }
@@ -53,24 +53,26 @@ public class PlayerMovementSystem extends IteratingEntitySystem
 		
 		int direction = d.direction; 
 		
+		float speed = 3; 
+		
 		if(direction == Direction.UP)
 		{
-			p.set(p.x, (p.y) - 1 * Lutebox.deltaTime);
+			p.set(p.x, (p.y) - speed * Lutebox.deltaTime);
 		}
 		
 		if(direction == Direction.DOWN)
 		{
-			p.set(p.x, (p.y) + 1 * Lutebox.deltaTime);
+			p.set(p.x, (p.y) + speed * Lutebox.deltaTime);
 		}
 		
 		if(direction == Direction.RIGHT)
 		{
-			p.set((p.x) + 1 * Lutebox.deltaTime, p.y);
+			p.set((p.x) + speed * Lutebox.deltaTime, p.y);
 		}
 		
 		if(direction == Direction.LEFT)
 		{
-			p.set((p.x) - 1 * Lutebox.deltaTime, p.y);
+			p.set((p.x) - speed * Lutebox.deltaTime, p.y);
 		}
 	}
 	
