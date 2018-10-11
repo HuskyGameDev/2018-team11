@@ -9,5 +9,6 @@ public class Direction extends Component{
     public static final int RIGHT = 3; 
     
 	public int direction = DOWN;
+	public boolean moving = false; 
 
 }
