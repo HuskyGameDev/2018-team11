@@ -24,9 +24,9 @@ public class MovementSystem extends IteratingEntitySystem
         if(Lutebox.input.getKey(Input.KEY_S))
            direction = down;
         if(Lutebox.input.getKey(Input.KEY_A))
-           direction = right;
-        if(Lutebox.input.getKey(Input.KEY_S))
            direction = left;
+        if(Lutebox.input.getKey(Input.KEY_D))
+           direction = right;
         
         move(e);
 	}
@@ -36,12 +36,12 @@ public class MovementSystem extends IteratingEntitySystem
 		Position p = e.get(Position.class);
 		if(direction == up)
 		{
-			p.set(p.x, (p.y) + 1 * Lutebox.deltaTime);
+			p.set(p.x, (p.y) - 1 * Lutebox.deltaTime);
 		}
 		
 		if(direction == down)
 		{
-			p.set(p.x, (p.y) - 1 * Lutebox.deltaTime);
+			p.set(p.x, (p.y) + 1 * Lutebox.deltaTime);
 		}
 		
 		if(direction == right)
