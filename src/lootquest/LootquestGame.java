@@ -1,6 +1,6 @@
 package lootquest;
 
-import lootquest.dungeon.world.World;
+import lootquest.dungeon.World;
 import lootquest.system.MapRenderSystem;
 import lootquest.system.PlayerMovementSystem;
 import lootquest.system.UseSwordSystem;
