@@ -38,11 +38,17 @@ public class World {
 		
 	}
 	
+	public boolean inBounds(int x, int y) {
+		return x >= 0 && x < worldWidth && y >= 0 && y < worldHeight; 
+	}
+	
 	public Tile getTile(int x, int y) {
+		if (!inBounds(x, y)) throw new IllegalArgumentException("Position is out of bounds: " + x + ", " + y); 
 	    return tiles[x + y * worldWidth]; 
 	}
 	
 	public void setTile(int x, int y, Tile t) {
+		if (!inBounds(x, y)) throw new IllegalArgumentException("Position is out of bounds: " + x + ", " + y); 
 	    tiles[x + y * worldWidth] = t; 
 	}
 	

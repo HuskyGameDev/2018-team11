@@ -23,9 +23,13 @@ public class AABB {
      * Check if this AABB intersects with another AABB 
      */
     public boolean intersects(AABB other) {
-        if (x + w < other.x || x > other.x + other.w) return false; 
-        if (y + h < other.y || y > other.y + other.h) return false;
+        if (x + w <= other.x || x >= other.x + other.w) return false; 
+        if (y + h <= other.y || y >= other.y + other.h) return false;
         return true; 
+    }
+    
+    public String toString() {
+    	return "[" + x + ", " + y + ", " + w + ", " + h + "]"; 
     }
     
 }
