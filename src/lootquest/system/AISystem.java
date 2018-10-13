@@ -27,16 +27,45 @@ public class AISystem extends IteratingEntitySystem{
 		
 		Position enemyPos = e.get(Position.class);
 		Position playerPos = player.get(Position.class);
+		Direction enemyDir = e.get(Direction.class);
+		Size playerSize = player.get(Size.class);
 		
 		float xDiff = playerPos.x - enemyPos.x;
 		float yDiff = playerPos.y - enemyPos.y;
 		
-		if (Math.abs(xDiff) > Math.abs(yDiff)) {
+		if (Math.abs(xDiff) >= Math.abs(yDiff)) {
 			//move along x direction
+			if (xDiff < 0) {
+				enemyDir.direction = Direction.LEFT;
+			}else if (xDiff > 0) {
+				enemyDir.direction = Direction.RIGHT;
+			}
+			
+			if (Math.abs(xDiff) <= playerSize.w) {
+				//change if statement to change when enemy stops moving
+				enemyDir.moving = false;
+				//attack
+			}else {
+				enemyDir.moving = true;
+			}
 		}
 		else if(Math.abs(xDiff) < Math.abs(yDiff)) {
 			//move along y direction
+			if (yDiff < 0) {
+				enemyDir.direction = Direction.UP;
+			}else if (yDiff > 0) {
+				enemyDir.direction = Direction.DOWN;
+			}
+			
+			if (Math.abs(yDiff) <= playerSize.h) {
+				//change if statement to change when enemy stops moving
+				enemyDir.moving = false;
+				//attack
+			}else {
+				enemyDir.moving = true;
+			}
 		}
+		
 	}
 
 }
