@@ -1,7 +1,5 @@
 package lootquest.dungeon.world;
 
-import java.awt.Graphics2D;
-import java.util.ArrayList;
 import java.util.Random;
 
 import lootquest.dungeon.tile.DirtTile;
@@ -10,9 +8,9 @@ import lootquest.dungeon.tile.Tile;
 
 public class World {
 
-	ArrayList<Tile> tile = new ArrayList<Tile>();
-	int worldWidth;
-	int worldHeight;
+    private Tile[] tiles; 
+    private int worldWidth; 
+    private int worldHeight; 
 	
 	public World( int worldWidth, int worldHeight ) {
 		this.worldHeight = worldHeight;
@@ -23,6 +21,7 @@ public class World {
 	
 	public void generateWorld() {
 		Random r = new Random();
+		tiles = new Tile[worldWidth * worldHeight]; 
 		int index = 0;
 		
 		for ( int x = 0; x < worldWidth; x++ ) {
@@ -30,23 +29,31 @@ public class World {
 				index = r.nextInt(4);
 				
 				if (index==0) {
-					tile.add(new DirtTile(x * Tile.size, y * Tile.size));
+					setTile(x, y, new DirtTile(x * Tile.size, y * Tile.size));
 				} else {
-					tile.add(new GrassTile(x * Tile.size, y * Tile.size));
+					setTile(x, y, new GrassTile(x * Tile.size, y * Tile.size));
 				}
 			}
 		}
 		
 	}
 	
+	public Tile getTile(int x, int y) {
+	    return tiles[x + y * worldWidth]; 
+	}
+	
+	public void setTile(int x, int y, Tile t) {
+	    tiles[x + y * worldWidth] = t; 
+	}
+	
 	public void tick() {
-		for( Tile t : tile ) {
+		for( Tile t : tiles ) {
 			t.tick();
 		}
 	}
 	
 	public void render() {
-		for( Tile t : tile ) {
+		for( Tile t : tiles ) {
 			t.render();
 		}
 	}

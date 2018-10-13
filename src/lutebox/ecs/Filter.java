@@ -2,6 +2,13 @@ package lutebox.ecs;
 
 import lutebox.util.BitField;
 
+/**
+ * 
+ * Used for getting specific types of entities. 
+ * 
+ * @author Nicholas Hamilton 
+ *
+ */
 public class Filter {
 
     private BitField include; 

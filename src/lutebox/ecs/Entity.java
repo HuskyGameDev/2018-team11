@@ -51,6 +51,11 @@ public class Entity {
         return (T) get(ComponentId.get(type)); 
     }
 
+    /**
+     * Attach and return a component of the entity. If the 
+     * entity already had a component of this type, it will 
+     * be replaced. 
+     */
     public <T extends Component> T attach(T comp) {
         if (comp == null) throw new IllegalArgumentException("Cannot attach a null component"); 
         
@@ -68,6 +73,11 @@ public class Entity {
         return comp; 
     }
     
+    /**
+     * Attach and return a component of the entity. If the 
+     * entity already had a component of this type, it will 
+     * be replaced. 
+     */
     public <T extends Component> T attach(Class<T> type) {
         try {
             return attach(type.newInstance());
@@ -88,10 +98,19 @@ public class Entity {
         }
     }
     
+    /**
+     * Remove a component from the entity. 
+     * 
+     * @return true if the component existed and was removed 
+     */
     public <T extends Component> boolean detach(Class<T> type) {
         return detach(ComponentId.get(type)); 
     }
     
+    /**
+     * Destroy the entity, the entity will be removed from the
+     * scene after the current update. 
+     */
     public void destroy() {
         destroyed = true; 
     }
