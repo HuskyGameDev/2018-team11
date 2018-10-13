@@ -5,6 +5,7 @@ import java.util.List;
 import lootquest.component.AI;
 import lootquest.component.Direction;
 import lootquest.component.Enemy;
+import lootquest.component.EquipedSword;
 import lootquest.component.Health;
 import lootquest.component.Player;
 import lootquest.component.Position;
@@ -16,7 +17,7 @@ import lutebox.ecs.IteratingEntitySystem;
 public class AISystem extends IteratingEntitySystem{
 
 	public AISystem() {
-		super(Filter.include(Position.class, Health.class, Enemy.class, AI.class, Size.class, Direction.class).create());
+		super(Filter.include(Position.class, Health.class, Enemy.class, AI.class, Size.class, Direction.class, EquipedSword.class).create());
 	}
 	
 	public void updateEntity(Entity e) {
@@ -28,6 +29,7 @@ public class AISystem extends IteratingEntitySystem{
 		Position playerPos = player.get(Position.class);
 		Direction enemyDir = e.get(Direction.class);
 		Size playerSize = player.get(Size.class);
+		EquipedSword armed = e.get(EquipedSword.class);
 		
 		float xDiff = playerPos.x - enemyPos.x;
 		float yDiff = playerPos.y - enemyPos.y;
@@ -44,8 +46,10 @@ public class AISystem extends IteratingEntitySystem{
 				//change if statement to change when enemy stops moving
 				enemyDir.moving = false;
 				//attack
+				armed.isUsing = true;
 			}else {
 				enemyDir.moving = true;
+				armed.isUsing = false;
 			}
 		}
 		else if(Math.abs(xDiff) < Math.abs(yDiff)) {
@@ -60,8 +64,10 @@ public class AISystem extends IteratingEntitySystem{
 				//change if statement to change when enemy stops moving
 				enemyDir.moving = false;
 				//attack
+				armed.isUsing = true;
 			}else {
 				enemyDir.moving = true;
+				armed.isUsing = false;
 			}
 		}
 		
