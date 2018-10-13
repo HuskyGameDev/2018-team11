@@ -11,11 +11,11 @@ import lutebox.input.Input;
 
 
 
-public class PlayerMovementSystem extends IteratingEntitySystem
+public class MovementSystem extends IteratingEntitySystem
 {
-	public PlayerMovementSystem()
+	public MovementSystem()
 	{
-		super(Filter.include(Position.class, Direction.class, Player.class).create());
+		super(Filter.include(Position.class, Direction.class).create());
 	}
 	
 	public void updateEntity(Entity e)
