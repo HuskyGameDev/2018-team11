@@ -21,27 +21,31 @@ public class PlayerMovementSystem extends IteratingEntitySystem
 	public void updateEntity(Entity e)
 	{
 	    Direction d = e.get(Direction.class); 
-	    
+	    Player pl = e.get(Player.class);
 	    d.moving = false; 
 	    
-		if(Lutebox.input.getKey(Input.KEY_W) || Lutebox.input.getKey(Input.KEY_I)) {
+	    if(pl != null)
+	    {
+		  if(Lutebox.input.getKey(Input.KEY_W) || Lutebox.input.getKey(Input.KEY_I)) {
 		    d.direction = Direction.UP;
 		    d.moving = true; 
-		}
-        if(Lutebox.input.getKey(Input.KEY_S) || Lutebox.input.getKey(Input.KEY_K)) {
+		  }
+          if(Lutebox.input.getKey(Input.KEY_S) || Lutebox.input.getKey(Input.KEY_K)) {
             d.direction = Direction.DOWN;
             d.moving = true; 
-        }
-        if(Lutebox.input.getKey(Input.KEY_A) || Lutebox.input.getKey(Input.KEY_J)) {
+          }
+          if(Lutebox.input.getKey(Input.KEY_A) || Lutebox.input.getKey(Input.KEY_J)) {
             d.direction = Direction.LEFT;
             d.moving = true; 
-        }
-        if(Lutebox.input.getKey(Input.KEY_D) || Lutebox.input.getKey(Input.KEY_L)) {
+          }
+          if(Lutebox.input.getKey(Input.KEY_D) || Lutebox.input.getKey(Input.KEY_L)) {
             d.direction = Direction.RIGHT;
             d.moving = true; 
-        }
-        
-        move(e);
+          }
+	    }
+	  
+	  if(d.moving)
+		move(e);
 	}
 	
 	public void move(Entity e)
