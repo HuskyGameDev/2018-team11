@@ -1,5 +1,6 @@
 package lootquest;
 
+import lootquest.component.Collider;
 import lootquest.component.Direction;
 import lootquest.component.EquipedSword;
 import lootquest.component.Player;
@@ -17,10 +18,12 @@ public final class EntityFactory {
         Entity e = Lutebox.scene.createEntity(); 
         
         e.attach(Position.class).set(x, y); 
-        e.attach(Size.class).set(1, 1); 
+        e.attach(Size.class).set(0.8f, 0.8f); 
         e.attach(Direction.class);
         e.attach(EquipedSword.class);
         e.attach(Player.class);
+        e.attach(Collider.class); 
+        
         return e; 
     }
     
