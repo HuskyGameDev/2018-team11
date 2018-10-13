@@ -9,7 +9,6 @@ import lootquest.component.Health;
 import lootquest.component.Player;
 import lootquest.component.Position;
 import lootquest.component.Size;
-import lootquest.component.Speed;
 import lutebox.ecs.Entity;
 import lutebox.ecs.Filter;
 import lutebox.ecs.IteratingEntitySystem;
@@ -17,7 +16,7 @@ import lutebox.ecs.IteratingEntitySystem;
 public class AISystem extends IteratingEntitySystem{
 
 	public AISystem() {
-		super(Filter.include(Position.class, Health.class, Enemy.class, AI.class, Size.class, Direction.class, Speed.class).create());
+		super(Filter.include(Position.class, Health.class, Enemy.class, AI.class, Size.class, Direction.class).create());
 	}
 	
 	public void updateEntity(Entity e) {

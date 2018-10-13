@@ -11,4 +11,5 @@ public class Direction extends Component{
 	public int direction = DOWN;
 	public boolean moving = false; 
 
+	public float speed = 3;
 }
