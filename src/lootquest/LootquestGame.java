@@ -1,7 +1,6 @@
 package lootquest;
 
 import lootquest.dungeon.world.World;
-import lootquest.system.AISystem;
 import lootquest.system.MapRenderSystem;
 import lootquest.system.PlayerMovementSystem;
 import lootquest.system.UseSwordSystem;
@@ -27,10 +26,8 @@ public class LootquestGame extends GameListener {
         Lutebox.scene.addSystem(new UseSwordSystem());
         Lutebox.scene.addSystem(new PlayerMovementSystem());
         Lutebox.scene.addSystem(new WorldPhysicsSystem()); 
-        Lutebox.scene.addSystem(new AISystem());
         // add entities
         EntityFactory.createPlayer(2, 2); 
-        EntityFactory.createEnemy1(5, 6);
 
     }
     
