@@ -20,6 +20,7 @@ public class UseSwordSystem extends IteratingEntitySystem {
 
     public void updateEntity(Entity e) {
         EquipedSword sword = e.get(EquipedSword.class); 
+        sword.cooldownCur --;
         
         sword.isUsing = Lutebox.input.getKey(Input.KEY_SPACE); 
     }
@@ -48,21 +49,25 @@ public class UseSwordSystem extends IteratingEntitySystem {
         Position pos = e.get(Position.class);
         Size size = e.get(Size.class);
         
-        if (sword.isUsing) {
+        if (sword.isUsing && sword.cooldownCur <= 0) {
             // sword logic here 
             if (dir.direction == Direction.UP) {
-                //y- North
-                return new AABB(pos.x - (size.w)/4,pos.y - size.h,(size.w) * 1.5f,size.h);
+                //up
+            	sword.cooldownCur = sword.cooldownMax;
+            	return new AABB(pos.x - (size.w)/4,pos.y - size.h,(size.w) * 1.5f,size.h);
             }else if (dir.direction == Direction.RIGHT) {
-                //x+ East
-                return new AABB(pos.x + (size.w),pos.y - (size.h)/4,(size.w),(size.h)*1.5f);
+                //right
+            	sword.cooldownCur = sword.cooldownMax;
+            	return new AABB(pos.x + (size.w),pos.y - (size.h)/4,(size.w),(size.h)*1.5f);
             }else if (dir.direction == Direction.DOWN) {
-                //y+ South
-                return new AABB(pos.x - (size.w)/4,pos.y + (size.h),(size.w) * 1.5f,size.h);
+                //down
+            	sword.cooldownCur = sword.cooldownMax;
+            	return new AABB(pos.x - (size.w)/4,pos.y + (size.h),(size.w) * 1.5f,size.h);
             }else if (dir.direction == Direction.LEFT) {
-                //x- West
+                //left
+            	sword.cooldownCur = sword.cooldownMax;
                 return new AABB(pos.x - (size.w),pos.y - (size.h)/4,(size.w),(size.h)*1.5f);
-            }
+            } 
         }
         
         return null; 
