@@ -1,4 +1,4 @@
-package lootquest.dungeon.tile;
+package lootquest.dungeon;
 
 import lutebox.graphics.Texture;
 

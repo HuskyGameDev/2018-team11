@@ -1,10 +1,6 @@
-package lootquest.dungeon.world;
+package lootquest.dungeon;
 
 import java.util.Random;
-
-import lootquest.dungeon.tile.DirtTile;
-import lootquest.dungeon.tile.GrassTile;
-import lootquest.dungeon.tile.Tile;
 
 public class World {
 
