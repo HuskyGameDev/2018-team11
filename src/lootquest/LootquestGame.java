@@ -1,11 +1,11 @@
 package lootquest;
 
-<<<<<<< HEAD
-import lootquest.dungeon.world.World;
+//<<<<<<< HEAD
+//import lootquest.dungeon.world.World;
 import lootquest.system.AISystem;
-=======
+//=======
 import lootquest.dungeon.World;
->>>>>>> master
+//>>>>>>> master
 import lootquest.system.MapRenderSystem;
 import lootquest.system.MovementSystem;
 import lootquest.system.UseSwordSystem;
