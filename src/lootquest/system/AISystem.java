@@ -42,7 +42,7 @@ public class AISystem extends IteratingEntitySystem{
 				enemyDir.direction = Direction.RIGHT;
 			}
 			
-			if (Math.abs(xDiff) <= playerSize.w) {
+			if (Math.abs(xDiff) <= playerSize.w + 0.5) {
 				//change if statement to change when enemy stops moving
 				enemyDir.moving = false;
 				//attack
@@ -60,7 +60,7 @@ public class AISystem extends IteratingEntitySystem{
 				enemyDir.direction = Direction.DOWN;
 			}
 			
-			if (Math.abs(yDiff) <= playerSize.h) {
+			if (Math.abs(yDiff) <= playerSize.h + 0.5) {
 				//change if statement to change when enemy stops moving
 				enemyDir.moving = false;
 				//attack
