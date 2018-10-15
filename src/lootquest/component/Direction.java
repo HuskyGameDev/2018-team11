@@ -12,4 +12,9 @@ public class Direction extends Component{
 	public boolean moving = false; 
 
 	public float speed = 3;
+	
+	public Direction setSpeed(float s) {
+		this.speed = s;
+		return this;
+	}
 }

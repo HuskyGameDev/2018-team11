@@ -35,7 +35,7 @@ public final class EntityFactory {
     	
     	e.attach(Position.class).set(x, y); 
         e.attach(Size.class).set(0.8f, 0.8f); 
-        e.attach(Direction.class);
+        e.attach(Direction.class).setSpeed(2);
         e.attach(EquipedSword.class);
         e.attach(Health.class);
         e.attach(Collider.class);
