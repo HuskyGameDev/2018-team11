@@ -36,7 +36,12 @@ public class AISystem extends IteratingEntitySystem{
 		float yDiff = playerPos.y - enemyPos.y;
 		bob.counterCur--;
 		
-		if (Math.abs(yDiff) >= playerSize.h + 0.3 || Math.abs(xDiff) >= playerSize.h + 0.3) {
+		if(Math.abs(xDiff) > 4 || Math.abs(yDiff) > 4 || bob.counterCur < 0 || bob.counterCur > 35) {
+			if(bob.counterCur < 0) {
+				enemyMov.set((float) (Math.random()*4 - 2), (float) (Math.random()*4 - 2));
+				bob.counterCur = bob.counterMax;
+			}
+		}else if (Math.abs(yDiff) >= playerSize.h + 0.25 || Math.abs(xDiff) >= playerSize.h + 0.25) {
 			enemyMov.set(xDiff, yDiff);
 		}else {
 			enemyMov.set(0, 0);
