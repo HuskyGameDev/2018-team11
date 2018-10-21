@@ -3,6 +3,7 @@ package lootquest.system;
 import lootquest.LootquestGame;
 import lootquest.component.Collider;
 import lootquest.component.Direction;
+import lootquest.component.Movement;
 import lootquest.component.Position;
 import lootquest.component.Size;
 import lootquest.dungeon.Tile;
@@ -20,7 +21,7 @@ public class WorldPhysicsSystem extends IteratingEntitySystem {
 	
 	public void updateEntity(Entity e) {
 		Position pos = e.get(Position.class); 
-		Direction dir = e.get(Direction.class); 
+		Movement move = e.get(Movement.class); 
 		Size size = e.get(Size.class); 
 		Collider col = e.get(Collider.class); 
 		
@@ -30,51 +31,106 @@ public class WorldPhysicsSystem extends IteratingEntitySystem {
 		
 		World world = LootquestGame.world; 
 		
-		int xStart = (int) Math.floor(pos.x); 
-		int yStart = (int) Math.floor(pos.y); 
-		int xSize = xStart + (int) Math.ceil(size.w) + 1; 
-		int ySize = yStart + (int) Math.ceil(size.h) + 1; 
+		boolean collision = false; 
 		
-		AABB tileCollider = new AABB(0, 0, 1, 1); 
-		AABB entityCollider = new AABB(pos.x, pos.y, size.w, size.h); 
-		
-//		System.out.println(xStart + " " + yStart + " " + xSize + " " + ySize); 
-		
-		for (int y = yStart; y < yStart + ySize; y++) {
-			for (int x = xStart; x < xStart + xSize; x++) {
-				tileCollider.x = x; 
-				tileCollider.y = y; 
-				
-				if (world.inBounds(x, y)) {
-					Tile tile = world.getTile(x, y); 
-					if (!tile.isSolid) continue; 
-				}
-				
-				if (tileCollider.intersects(entityCollider)) {
-					// collision 
-//					System.out.println("Collision"); 
+		do {
+			collision = false; 
+			
+			int xStart = (int) Math.floor(pos.x); 
+			int yStart = (int) Math.floor(pos.y); 
+			int xSize = xStart + (int) Math.ceil(size.w) + 1; 
+			int ySize = yStart + (int) Math.ceil(size.h) + 1; 
+			
+			AABB tileCollider = new AABB(0, 0, 1, 1); 
+			AABB entityCollider = new AABB(pos.x, pos.y, size.w, size.h); 
+			
+	//		System.out.println(xStart + " " + yStart + " " + xSize + " " + ySize); 
+			
+			for (int y = yStart; y < yStart + ySize; y++) {
+				for (int x = xStart; x < xStart + xSize; x++) {
+					tileCollider.x = x; 
+					tileCollider.y = y; 
 					
-					resolve(pos, size, dir, x, y); 
-				}
-			} 
-		}
+					if (world.inBounds(x, y)) {
+						Tile tile = world.getTile(x, y); 
+						if (!tile.isSolid) continue; 
+					}
+					
+					if (tileCollider.intersects(entityCollider)) {
+						// collision 
+	//					System.out.println("Collision"); 
+						
+						collision |= resolve(world, pos, size, move, x, y);
+					}
+				} 
+			}
+		} while (collision); 
 	}
 	
-	private static void resolve(Position pos, Size size, Direction dir, int x, int y) {
-		switch (dir.direction) {
-		case Direction.UP: 
-			pos.y = y + 1; 
-			break; 
-		case Direction.DOWN: 
-			pos.y = y - size.h; 
-			break; 
-		case Direction.LEFT: 
-			pos.x = x + 1; 
-			break; 
-		case Direction.RIGHT: 
-			pos.x = x - size.w; 
-			break; 
+	private static boolean resolve(World world, Position pos, Size size, Movement move, int cx, int cy) {
+		float vx = move.getDx(); 
+		float vy = move.getDy(); 
+		
+		
+		float len = (float) Math.sqrt(vx * vx + vy * vy);; 
+		if (len == 0) return false; // requires nonzero velocity 
+		float invlen = 1.0f /  len; 
+		vx *= invlen; 
+		vy *= invlen; 
+		
+//		System.out.println(vx + " " + vy);
+		
+		float x = pos.x; 
+		float y = pos.y;
+		float w = size.w; 
+		float h = size.h; 
+		float dx; 
+		float dy; 
+		
+		if (vx > 0) {
+			if (world.isSolid(cx - 1, cy)) vx = 0; 
+			dx = cx - x - w;
 		}
+		else {
+			if (world.isSolid(cx + 1, cy)) vx = 0; 
+			dx = cx + 1 - x; 
+		}
+//		System.out.println("dx " + dx); 
+		
+		if (vy > 0) {
+			dy = cy - y - h; 
+		}
+		else {
+			dy = cy + 1 - y; 
+		}
+//		System.out.println("dy " + dy); 
+		
+		float sx = dx / vx; 
+		float sy = dy / vy; 
+		
+		if (vy == 0 && vx != 0) {
+//			System.out.println("!vy and vx");
+			pos.x += dx; 
+			return true; 
+		}
+		else if (vy != 0 && vx == 0) {
+//			System.out.println("vy and !vx"); 
+			pos.y += dy; 
+			return true; 
+		}
+		else if (vy != 0 && vx != 0) {
+			if (Math.abs(sx) < Math.abs(sy)) {
+//				System.out.println("sx < sy");
+				pos.x += dx; 
+			}
+			else {
+//				System.out.println("sy < sx");
+				pos.y += dy; 
+			}
+			return true; 
+		}
+		
+		return false; 
 	}
 	
 }

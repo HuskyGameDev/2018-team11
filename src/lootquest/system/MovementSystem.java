@@ -1,13 +1,11 @@
 package lootquest.system;
 
-import lootquest.component.Direction;
-import lootquest.component.Player;
 import lootquest.component.Position;
+import lootquest.component.Movement;
 import lutebox.core.Lutebox;
 import lutebox.ecs.Entity;
 import lutebox.ecs.Filter;
 import lutebox.ecs.IteratingEntitySystem;
-import lutebox.input.Input;
 
 
 
@@ -15,68 +13,16 @@ public class MovementSystem extends IteratingEntitySystem
 {
 	public MovementSystem()
 	{
-		super(Filter.include(Position.class, Direction.class).create());
+		super(Filter.include(Position.class, Movement.class).create());
 	}
 	
 	public void updateEntity(Entity e)
 	{
-	    Direction d = e.get(Direction.class); 
-	    Player pl = e.get(Player.class);
-	     
+		Position p = e.get(Position.class); 
+	    Movement v = e.get(Movement.class); 
 	    
-	    if(pl != null)
-	    {
-	    	d.moving = false;
-		  if(Lutebox.input.getKey(Input.KEY_W) || Lutebox.input.getKey(Input.KEY_I)) {
-		    d.direction = Direction.UP;
-		    d.moving = true; 
-		  }
-          if(Lutebox.input.getKey(Input.KEY_S) || Lutebox.input.getKey(Input.KEY_K)) {
-            d.direction = Direction.DOWN;
-            d.moving = true; 
-          }
-          if(Lutebox.input.getKey(Input.KEY_A) || Lutebox.input.getKey(Input.KEY_J)) {
-            d.direction = Direction.LEFT;
-            d.moving = true; 
-          }
-          if(Lutebox.input.getKey(Input.KEY_D) || Lutebox.input.getKey(Input.KEY_L)) {
-            d.direction = Direction.RIGHT;
-            d.moving = true; 
-          }
-	    }
-	  
-	  if(d.moving)
-		move(e);
-	}
-	
-	public void move(Entity e)
-	{
-		Position p = e.get(Position.class);
-		Direction d = e.get(Direction.class); 
-		
-		if (!d.moving) return; 
-		
-		int direction = d.direction; 
-		 
-		if(direction == Direction.UP)
-		{
-			p.set(p.x, (p.y) - d.speed * Lutebox.deltaTime);
-		}
-		
-		if(direction == Direction.DOWN)
-		{
-			p.set(p.x, (p.y) + d.speed * Lutebox.deltaTime);
-		}
-		
-		if(direction == Direction.RIGHT)
-		{
-			p.set((p.x) + d.speed * Lutebox.deltaTime, p.y);
-		}
-		
-		if(direction == Direction.LEFT)
-		{
-			p.set((p.x) - d.speed * Lutebox.deltaTime, p.y);
-		}
+	    p.x += v.getDx() * Lutebox.deltaTime; 
+	    p.y += v.getDy() * Lutebox.deltaTime; 
 	}
 	
 }

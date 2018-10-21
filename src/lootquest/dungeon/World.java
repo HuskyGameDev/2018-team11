@@ -48,6 +48,11 @@ public class World {
 	    tiles[x + y * worldWidth] = t; 
 	}
 	
+	public boolean isSolid(int x, int y) {
+		if (!inBounds(x, y)) return true; 
+		return getTile(x, y).isSolid; 
+	}
+	
 	public void tick() {
 		for( Tile t : tiles ) {
 			t.tick();
