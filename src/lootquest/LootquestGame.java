@@ -5,6 +5,7 @@ import lootquest.system.AISystem;
 import lootquest.system.MapRenderSystem;
 import lootquest.system.MovementSystem;
 import lootquest.system.PlayerInputSystem;
+import lootquest.system.UpdateFromMovementSystem;
 import lootquest.system.UseSwordSystem;
 import lootquest.system.WorldPhysicsSystem;
 import lutebox.core.GameListener;
@@ -23,12 +24,17 @@ public class LootquestGame extends GameListener {
         
         world = new World(16, 16);
         
-        // add systems 
+        // add render systems 
         Lutebox.scene.addSystem(new MapRenderSystem(48)); 
+        
+        // add update systems 
         Lutebox.scene.addSystem(new AISystem());
         Lutebox.scene.addSystem(new PlayerInputSystem());
         Lutebox.scene.addSystem(new UseSwordSystem());
+        
         Lutebox.scene.addSystem(new MovementSystem());
+        Lutebox.scene.addSystem(new UpdateFromMovementSystem()); 
+        
         Lutebox.scene.addSystem(new WorldPhysicsSystem()); 
         
         // add entities
