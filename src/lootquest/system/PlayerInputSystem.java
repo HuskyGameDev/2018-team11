@@ -26,7 +26,7 @@ public class PlayerInputSystem extends IteratingEntitySystem {
 		float dx = 0; 
 		float dy = 0; 
 		float s = v.maxSpeed; 
-		if (sword != null) sword.isUsing = Lutebox.input.getKey(Input.KEY_SPACE);
+		if (sword != null && Lutebox.input.getKey(Input.KEY_SPACE)) sword.use();
 		
 		if (Lutebox.input.getKey(Input.KEY_A) || Lutebox.input.getKey(Input.KEY_J)) {
 			d.direction = Direction.LEFT;

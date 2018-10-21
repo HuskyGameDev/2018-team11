@@ -10,7 +10,6 @@ import lutebox.core.Lutebox;
 import lutebox.ecs.Entity;
 import lutebox.ecs.Filter;
 import lutebox.ecs.IteratingEntitySystem;
-import lutebox.input.Input;
 
 public class UseSwordSystem extends IteratingEntitySystem {
 
@@ -20,14 +19,16 @@ public class UseSwordSystem extends IteratingEntitySystem {
 
     public void updateEntity(Entity e) {
         EquipedSword sword = e.get(EquipedSword.class); 
-        sword.cooldownCur --;
-         
+        
+        // attack enemies here 
+        
+        sword.addTime(Lutebox.deltaTime); 
     }
     
     public void renderEntity(Entity e) {
         EquipedSword sword = e.get(EquipedSword.class); 
         
-        if (sword.isUsing) {
+        if (sword.shouldShowAnimation()) {
             // sword logic here 
         	AABB swordHitbox = getSwordHitbox(e); 
         	if (swordHitbox == null) return; 
@@ -43,31 +44,24 @@ public class UseSwordSystem extends IteratingEntitySystem {
     }
     
     private static AABB getSwordHitbox(Entity e) {
-        EquipedSword sword = e.get(EquipedSword.class); 
         Direction dir = e.get(Direction.class);
         Position pos = e.get(Position.class);
         Size size = e.get(Size.class);
         
-        if (sword.isUsing && sword.cooldownCur <= 0) {
-            // sword logic here 
-            if (dir.direction == Direction.UP) {
-                //up
-            	sword.cooldownCur = sword.cooldownMax;
-            	return new AABB(pos.x - (size.w)/4,pos.y - size.h,(size.w) * 1.5f,size.h);
-            }else if (dir.direction == Direction.RIGHT) {
-                //right
-            	sword.cooldownCur = sword.cooldownMax;
-            	return new AABB(pos.x + (size.w),pos.y - (size.h)/4,(size.w),(size.h)*1.5f);
-            }else if (dir.direction == Direction.DOWN) {
-                //down
-            	sword.cooldownCur = sword.cooldownMax;
-            	return new AABB(pos.x - (size.w)/4,pos.y + (size.h),(size.w) * 1.5f,size.h);
-            }else if (dir.direction == Direction.LEFT) {
-                //left
-            	sword.cooldownCur = sword.cooldownMax;
-                return new AABB(pos.x - (size.w),pos.y - (size.h)/4,(size.w),(size.h)*1.5f);
-            } 
-        }
+        // sword logic here 
+        if (dir.direction == Direction.UP) {
+            //up
+        	return new AABB(pos.x - (size.w)/4,pos.y - size.h,(size.w) * 1.5f,size.h);
+        }else if (dir.direction == Direction.RIGHT) {
+            //right
+        	return new AABB(pos.x + (size.w),pos.y - (size.h)/4,(size.w),(size.h)*1.5f);
+        }else if (dir.direction == Direction.DOWN) {
+            //down
+        	return new AABB(pos.x - (size.w)/4,pos.y + (size.h),(size.w) * 1.5f,size.h);
+        }else if (dir.direction == Direction.LEFT) {
+            //left
+            return new AABB(pos.x - (size.w),pos.y - (size.h)/4,(size.w),(size.h)*1.5f);
+        } 
         
         return null; 
     }

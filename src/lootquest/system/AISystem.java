@@ -38,11 +38,10 @@ public class AISystem extends IteratingEntitySystem{
 		
 		if (Math.abs(yDiff) >= playerSize.h + 0.3 || Math.abs(xDiff) >= playerSize.h + 0.3) {
 			enemyMov.set(xDiff, yDiff);
-			armed.isUsing = false;
 		}else {
 			enemyMov.set(0, 0);
 			
-			armed.isUsing = true;
+			armed.use(); 
 		}
 		
 //		if (Math.abs(xDiff) > 3 || Math.abs(yDiff) > 3 || bob.counterCur < 0 || bob.counterCur > 35) {
