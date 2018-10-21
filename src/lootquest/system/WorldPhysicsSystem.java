@@ -2,7 +2,6 @@ package lootquest.system;
 
 import lootquest.LootquestGame;
 import lootquest.component.Collider;
-import lootquest.component.Direction;
 import lootquest.component.Movement;
 import lootquest.component.Position;
 import lootquest.component.Size;
@@ -16,7 +15,7 @@ import lutebox.ecs.IteratingEntitySystem;
 public class WorldPhysicsSystem extends IteratingEntitySystem {
 
 	public WorldPhysicsSystem() {
-		super(Filter.include(Position.class, Direction.class, Size.class, Collider.class).create()); 
+		super(Filter.include(Position.class, Movement.class, Size.class, Collider.class).create()); 
 	}
 	
 	public void updateEntity(Entity e) {
