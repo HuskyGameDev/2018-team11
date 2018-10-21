@@ -6,6 +6,6 @@ public class EquipedSword extends Component {
 
     public boolean isUsing; 
     public int damage = 1;
-    public int cooldownMax= 60;
+    public int cooldownMax = 0;
     public int cooldownCur = 0;
 }

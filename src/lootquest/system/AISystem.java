@@ -3,10 +3,10 @@ package lootquest.system;
 import java.util.List;
 
 import lootquest.component.AI;
-import lootquest.component.Direction;
 import lootquest.component.Enemy;
 import lootquest.component.EquipedSword;
 import lootquest.component.Health;
+import lootquest.component.Movement;
 import lootquest.component.Player;
 import lootquest.component.Position;
 import lootquest.component.Size;
@@ -17,7 +17,7 @@ import lutebox.ecs.IteratingEntitySystem;
 public class AISystem extends IteratingEntitySystem{
 
 	public AISystem() {
-		super(Filter.include(Position.class, Health.class, Enemy.class, AI.class, Size.class, Direction.class, EquipedSword.class).create());
+		super(Filter.include(Position.class, Health.class, Enemy.class, AI.class, Size.class, Movement.class, EquipedSword.class).create());
 	}
 	
 	public void updateEntity(Entity e) {
@@ -27,49 +27,67 @@ public class AISystem extends IteratingEntitySystem{
 		
 		Position enemyPos = e.get(Position.class);
 		Position playerPos = player.get(Position.class);
-		Direction enemyDir = e.get(Direction.class);
+		Movement enemyMov = e.get(Movement.class);
 		Size playerSize = player.get(Size.class);
 		EquipedSword armed = e.get(EquipedSword.class);
+		AI bob = e.get(AI.class);
 		
 		float xDiff = playerPos.x - enemyPos.x;
 		float yDiff = playerPos.y - enemyPos.y;
+		bob.counterCur--;
 		
-		if (Math.abs(xDiff) >= Math.abs(yDiff)) {
-			//move along x direction
-			if (xDiff < 0) {
-				enemyDir.direction = Direction.LEFT;
-			}else if (xDiff > 0) {
-				enemyDir.direction = Direction.RIGHT;
-			}
+		if (Math.abs(yDiff) >= playerSize.h + 0.3 || Math.abs(xDiff) >= playerSize.h + 0.3) {
+			enemyMov.set(xDiff, yDiff);
+			armed.isUsing = false;
+		}else {
+			enemyMov.set(0, 0);
 			
-			if (Math.abs(xDiff) <= playerSize.w + 0.5) {
-				//change if statement to change when enemy stops moving
-				enemyDir.moving = false;
-				//attack
-				armed.isUsing = true;
-			}else {
-				enemyDir.moving = true;
-				armed.isUsing = false;
-			}
+			armed.isUsing = true;
 		}
-		else if(Math.abs(xDiff) < Math.abs(yDiff)) {
-			//move along y direction
-			if (yDiff < 0) {
-				enemyDir.direction = Direction.UP;
-			}else if (yDiff > 0) {
-				enemyDir.direction = Direction.DOWN;
-			}
-			
-			if (Math.abs(yDiff) <= playerSize.h + 0.5) {
-				//change if statement to change when enemy stops moving
-				enemyDir.moving = false;
-				//attack
-				armed.isUsing = true;
-			}else {
-				enemyDir.moving = true;
-				armed.isUsing = false;
-			}
-		}
+		
+//		if (Math.abs(xDiff) > 3 || Math.abs(yDiff) > 3 || bob.counterCur < 0 || bob.counterCur > 35) {
+//			enemyDir.moving = true;
+//			if (bob.counterCur <= 0) {
+//				enemyDir.direction = (int) (Math.random()*4);
+//				bob.counterCur = bob.counterMax;
+//			}
+//		
+//		}else if (Math.abs(xDiff) >= Math.abs(yDiff)) {
+//			//move along x direction
+//			if (xDiff < 0) {
+//				enemyDir.direction = Direction.LEFT;
+//			}else if (xDiff > 0) {
+//				enemyDir.direction = Direction.RIGHT;
+//			}
+//			
+//			if (Math.abs(xDiff) <= playerSize.w + 0.3) {
+//				//change if statement to change when enemy stops moving
+//				enemyDir.moving = false;
+//				//attack
+//				armed.isUsing = true;
+//			}else {
+//				enemyDir.moving = true;
+//				armed.isUsing = false;
+//			}
+//		}
+//		else if(Math.abs(xDiff) < Math.abs(yDiff)) {
+//			//move along y direction
+//			if (yDiff < 0) {
+//				enemyDir.direction = Direction.UP;
+//			}else if (yDiff > 0) {
+//				enemyDir.direction = Direction.DOWN;
+//			}
+//			
+//			if (Math.abs(yDiff) <= playerSize.h + 0.3) {
+//				//change if statement to change when enemy stops moving
+//				enemyDir.moving = false;
+//				//attack
+//				armed.isUsing = true;
+//			}else {
+//				enemyDir.moving = true;
+//				armed.isUsing = false;
+//			}
+//		}
 		
 	}
 

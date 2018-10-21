@@ -21,8 +21,7 @@ public class UseSwordSystem extends IteratingEntitySystem {
     public void updateEntity(Entity e) {
         EquipedSword sword = e.get(EquipedSword.class); 
         sword.cooldownCur --;
-        
-        sword.isUsing = Lutebox.input.getKey(Input.KEY_SPACE); 
+         
     }
     
     public void renderEntity(Entity e) {

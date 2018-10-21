@@ -1,6 +1,7 @@
 package lootquest.system;
 
 import lootquest.component.Direction;
+import lootquest.component.EquipedSword;
 import lootquest.component.Player;
 import lootquest.component.Movement;
 import lutebox.core.Lutebox;
@@ -18,12 +19,14 @@ public class PlayerInputSystem extends IteratingEntitySystem {
 	public void updateEntity(Entity e) {
 		Direction d = e.get(Direction.class); 
 		Movement v = e.get(Movement.class);
+		EquipedSword sword = e.get(EquipedSword.class);
 		
 		d.moving = false;
 		
 		float dx = 0; 
 		float dy = 0; 
 		float s = v.maxSpeed; 
+		if (sword != null) sword.isUsing = Lutebox.input.getKey(Input.KEY_SPACE);
 		
 		if (Lutebox.input.getKey(Input.KEY_A) || Lutebox.input.getKey(Input.KEY_J)) {
 			d.direction = Direction.LEFT;

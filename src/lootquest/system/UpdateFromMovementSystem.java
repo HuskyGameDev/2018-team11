@@ -13,7 +13,7 @@ public class UpdateFromMovementSystem extends IteratingEntitySystem {
 	}
 	
 	public void preUpdateEntities() {
-		System.out.println("Start");
+		//System.out.println("Start");
 	}
 	
 	public void updateEntity(Entity e) {
@@ -28,27 +28,27 @@ public class UpdateFromMovementSystem extends IteratingEntitySystem {
 			if (Math.abs(m.getDx()) > Math.abs(m.getDy())) {
 				if (m.getDx() < 0) {
 					d.direction = Direction.LEFT; 
-					System.out.println("left");
+					//System.out.println("left");
 				}
 				else {
 					d.direction = Direction.RIGHT;
-					System.out.println("right");
+					//System.out.println("right");
 				}
 			}
 			else {
 				if (m.getDy() < 0) {
 					d.direction = Direction.UP; 
-					System.out.println("up");
+					//System.out.println("up");
 				}
 				else {
 					d.direction = Direction.DOWN;
-					System.out.println("down"); 
+					//System.out.println("down"); 
 				}
 			}
 		}
 		else {
 			d.moving = false; 
-			System.out.println("not moving");
+			//System.out.println("not moving");
 		}
 	}
 	
