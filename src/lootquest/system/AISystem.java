@@ -3,6 +3,7 @@ package lootquest.system;
 import java.util.List;
 
 import lootquest.component.AI;
+import lootquest.component.Direction;
 import lootquest.component.Enemy;
 import lootquest.component.EquipedSword;
 import lootquest.component.Health;
@@ -31,12 +32,35 @@ public class AISystem extends IteratingEntitySystem{
 		Size playerSize = player.get(Size.class);
 		EquipedSword armed = e.get(EquipedSword.class);
 		AI bob = e.get(AI.class);
+		Direction enemyDir = e.get(Direction.class);
 		
 		float xDiff = playerPos.x - enemyPos.x;
 		float yDiff = playerPos.y - enemyPos.y;
 		bob.counterCur--;
 		
-		if(Math.abs(xDiff) > 4 || Math.abs(yDiff) > 4 || bob.counterCur < 0 || bob.counterCur > 35) {
+		if (bob.ranged = true) {
+			if (Math.abs(xDiff) > bob.distance || Math.abs(yDiff) > bob.distance) {
+				enemyMov.set(0, 0);
+				enemyDir.updateFromMovement = false;
+				if(Math.abs(xDiff) > Math.abs(yDiff)) {
+					if (xDiff < 0) {
+						enemyDir.direction = Direction.LEFT;
+					}else {
+						enemyDir.direction = Direction.RIGHT;
+					}
+				}else {
+					if (yDiff < 0) {
+						enemyDir.direction = Direction.UP;
+					}else {
+						enemyDir.direction = Direction.DOWN;
+					}
+				}
+				//fire projectile
+			}else {
+				enemyDir.updateFromMovement = true;
+				enemyMov.set(-xDiff, -yDiff);
+			}
+		}else if(Math.abs(xDiff) > bob.distance || Math.abs(yDiff) > bob.distance) {
 			if(bob.counterCur < 0) {
 				enemyMov.set((float) (Math.random()*4 - 2), (float) (Math.random()*4 - 2));
 				bob.counterCur = bob.counterMax;
