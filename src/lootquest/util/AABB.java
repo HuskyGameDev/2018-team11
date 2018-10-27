@@ -19,6 +19,22 @@ public class AABB {
         this.h = h; 
     }
     
+    public AABB set(AABB from) {
+    	x = from.x; 
+    	y = from.y; 
+    	w = from.w; 
+    	h = from.h; 
+    	return this; 
+    }
+    
+    public AABB set(float x, float y, float w, float h) {
+    	this.x = x; 
+    	this.y = y; 
+    	this.w = w; 
+    	this.h = h; 
+    	return this; 
+    }
+    
     /**
      * Check if this AABB intersects with another AABB 
      */
@@ -26,6 +42,21 @@ public class AABB {
         if (x + w <= other.x || x >= other.x + other.w) return false; 
         if (y + h <= other.y || y >= other.y + other.h) return false;
         return true; 
+    }
+    
+    public float getIntersectionArea(AABB other) {
+    	if (!intersects(other)) return 0.0f; 
+    	
+    	float xStart = Math.max(x, other.x);
+    	float xEnd = Math.min(x + w, other.x + other.w); 
+    	float yStart = Math.max(y, other.y); 
+    	float yEnd = Math.min(y + h, other.y + other.h); 
+    	
+    	return (xEnd - xStart) * (yEnd - yStart); 
+    }
+    
+    public float getArea() {
+    	return w * h; 
     }
     
     public String toString() {
