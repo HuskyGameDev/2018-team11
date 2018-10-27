@@ -1,5 +1,7 @@
 package lootquest.system;
 
+import java.util.List;
+
 import lootquest.LootquestGame;
 import lootquest.component.Collider;
 import lootquest.component.Movement;
@@ -8,6 +10,7 @@ import lootquest.component.Size;
 import lootquest.dungeon.Tile;
 import lootquest.dungeon.World;
 import lootquest.util.AABB;
+import lutebox.core.Lutebox;
 import lutebox.ecs.Entity;
 import lutebox.ecs.Filter;
 import lutebox.ecs.IteratingEntitySystem;
@@ -18,13 +21,39 @@ public class WorldPhysicsSystem extends IteratingEntitySystem {
 		super(Filter.include(Position.class, Movement.class, Size.class, Collider.class).create()); 
 	}
 	
+	private Filter collisionFilter = Filter.include(Position.class, Size.class, Collider.class).create(); 
+	
 	public void updateEntity(Entity e) {
 		Collider col = e.get(Collider.class); 
 		Movement move = e.get(Movement.class); 
+		Position pos = e.get(Position.class); 
+		Size size = e.get(Size.class); 
 		
-		if (!col.collideWithWorld) return; 
+		col.isHittingWall = false; 
+		col.collidingEntities.clear(); 
 		
-		move(e, move.getDx(), move.getDy()); 
+		if (col.collideWithWorld) {
+			move(e, move.getDx(), move.getDy()); 
+		}
+		
+		if (col.collideWithEntities) {
+			AABB a = new AABB(pos.x, pos.y, size.w, size.h); 
+			AABB b = new AABB(0, 0, 0, 0); 
+			
+			List<Entity> entities = Lutebox.scene.getEntities(collisionFilter); 
+			
+			for (Entity other : entities) {
+				if (other != e) {
+					Position p2 = other.get(Position.class); 
+					Size s2 = other.get(Size.class); 
+					b.set(p2.x, p2.y, s2.w, s2.h); 
+					
+					if (a.intersects(b)) {
+						col.collidingEntities.add(other); 
+					}
+				}
+			}
+		}
 	}
 	
 	private static void move(Entity e, float dx, float dy) {
@@ -84,6 +113,8 @@ public class WorldPhysicsSystem extends IteratingEntitySystem {
 			}
 			
 			if (foundTile) collision = resolve(world, pos, size, move, bestX, bestY); 
+			
+			if (collision) col.isHittingWall = true; 
 		} while (collision && i++ < 10); 
 	}
 	
