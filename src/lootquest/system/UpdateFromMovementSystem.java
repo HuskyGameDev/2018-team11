@@ -13,7 +13,6 @@ public class UpdateFromMovementSystem extends IteratingEntitySystem {
 	}
 	
 	public void preUpdateEntities() {
-		//System.out.println("Start");
 	}
 	
 	public void updateEntity(Entity e) {
