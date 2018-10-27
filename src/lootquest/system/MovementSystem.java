@@ -27,19 +27,19 @@ public class MovementSystem extends IteratingEntitySystem
 	    if(pl != null)
 	    {
 	    	d.moving = false;
-		  if(Lutebox.input.getKey(Input.KEY_W) || Lutebox.input.getKey(Input.KEY_I)) {
+		  if(Lutebox.input.getKey(Input.KEY_W) || Lutebox.input.getKey(Input.KEY_I) || Lutebox.input.getKey(Input.KEY_UP)) {
 		    d.direction = Direction.UP;
 		    d.moving = true; 
 		  }
-          if(Lutebox.input.getKey(Input.KEY_S) || Lutebox.input.getKey(Input.KEY_K)) {
+          if(Lutebox.input.getKey(Input.KEY_S) || Lutebox.input.getKey(Input.KEY_K) || Lutebox.input.getKey(Input.KEY_DOWN)) {
             d.direction = Direction.DOWN;
             d.moving = true; 
           }
-          if(Lutebox.input.getKey(Input.KEY_A) || Lutebox.input.getKey(Input.KEY_J)) {
+          if(Lutebox.input.getKey(Input.KEY_A) || Lutebox.input.getKey(Input.KEY_J) || Lutebox.input.getKey(Input.KEY_LEFT)) {
             d.direction = Direction.LEFT;
             d.moving = true; 
           }
-          if(Lutebox.input.getKey(Input.KEY_D) || Lutebox.input.getKey(Input.KEY_L)) {
+          if(Lutebox.input.getKey(Input.KEY_D) || Lutebox.input.getKey(Input.KEY_L) || Lutebox.input.getKey(Input.KEY_RIGHT)) {
             d.direction = Direction.RIGHT;
             d.moving = true; 
           }

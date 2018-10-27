@@ -3,6 +3,7 @@ package lootquest;
 //<<<<<<< HEAD
 //import lootquest.dungeon.world.World;
 import lootquest.system.AISystem;
+
 //=======
 import lootquest.dungeon.World;
 //>>>>>>> master
@@ -24,7 +25,13 @@ public class LootquestGame extends GameListener {
         Lutebox.display.setSize(800, 600); 
         Lutebox.cursor.setVisible(true); 
         
-        world = new World(16, 16);
+        try {
+            world = new World(32, 32, 16, 16);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            System.out.println("A room file was not found or failed to load");
+            e.printStackTrace();
+        }
         
         // add systems 
         Lutebox.scene.addSystem(new MapRenderSystem(48)); 
