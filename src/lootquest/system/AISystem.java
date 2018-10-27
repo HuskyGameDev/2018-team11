@@ -5,6 +5,7 @@ import java.util.List;
 import lootquest.component.AI;
 import lootquest.component.Direction;
 import lootquest.component.Enemy;
+import lootquest.component.EquipedCrossbow;
 import lootquest.component.EquipedSword;
 import lootquest.component.Health;
 import lootquest.component.Movement;
@@ -33,6 +34,7 @@ public class AISystem extends IteratingEntitySystem{
 		EquipedSword armed = e.get(EquipedSword.class);
 		AI bob = e.get(AI.class);
 		Direction enemyDir = e.get(Direction.class);
+		EquipedCrossbow bow = e.get(EquipedCrossbow.class);
 		
 		float xDiff = playerPos.x - enemyPos.x;
 		float yDiff = playerPos.y - enemyPos.y;
@@ -57,7 +59,7 @@ public class AISystem extends IteratingEntitySystem{
 					}
 				}
 				
-				//fire projectile
+				bow.use();
 			}else {
 				enemyDir.updateFromMovement = true;
 				enemyMov.set(-xDiff, -yDiff);

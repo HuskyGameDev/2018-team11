@@ -36,13 +36,13 @@ public class UseRangedSystem extends IteratingEntitySystem{
 			if(dir.moving) {
 				EntityFactory.createArrow(pos.x + mov.getDx(), pos.y + mov.getDy(), mov.maxSpeed * mov.getDx(), mov.maxSpeed * mov.getDy());
 			}else {
-				if(dir.direction == 0) {
+				if(dir.direction == Direction.UP) {
 					EntityFactory.createArrow(pos.x, pos.y, 0, -mov.maxSpeed);
-				}else if(dir.direction == 1) {
+				}else if(dir.direction == Direction.DOWN) {
 					EntityFactory.createArrow(pos.x, pos.y, 0, mov.maxSpeed);
-				}else if(dir.direction == 2) {
+				}else if(dir.direction == Direction.LEFT) {
 					EntityFactory.createArrow(pos.x, pos.y, -mov.maxSpeed, 0);
-				}else if(dir.direction == 3) {
+				}else if(dir.direction == Direction.RIGHT) {
 					EntityFactory.createArrow(pos.x, pos.y, mov.maxSpeed, 0);
 				}
 			}
