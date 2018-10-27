@@ -8,6 +8,7 @@ import lootquest.component.EquipedSword;
 import lootquest.component.Health;
 import lootquest.component.Player;
 import lootquest.component.Position;
+import lootquest.component.Projectile;
 import lootquest.component.Size;
 import lootquest.component.Movement;
 import lutebox.core.Lutebox;
@@ -46,6 +47,19 @@ public final class EntityFactory {
 		e.attach(AI.class);
         
         return e; 
+    }
+    
+    public static Entity createArrow(float x,float y,float xVel,float yVel) {
+    	Entity e = Lutebox.scene.createEntity();
+    	
+    	e.attach(Position.class).set(x, y);
+    	e.attach(Movement.class).setMaxSpeed(6).set(xVel, yVel);
+    	e.attach(Size.class).set(0.8f, 0.8f);
+    	e.attach(Collider.class);
+    	e.attach(Projectile.class);
+    	
+    	
+    	return e;
     }
     
 }

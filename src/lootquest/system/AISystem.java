@@ -39,7 +39,7 @@ public class AISystem extends IteratingEntitySystem{
 		bob.counterCur--;
 		
 		if (bob.ranged = true) {
-			if (Math.abs(xDiff) > bob.distance || Math.abs(yDiff) > bob.distance) {
+			if (Math.abs(xDiff) > bob.distance || Math.abs(yDiff) > bob.distance || bob.counterCur < 0) {
 				enemyMov.set(0, 0);
 				enemyDir.updateFromMovement = false;
 				if(Math.abs(xDiff) > Math.abs(yDiff)) {
