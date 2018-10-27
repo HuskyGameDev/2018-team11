@@ -1,5 +1,7 @@
 package lutebox.core;
 
+import java.io.FileNotFoundException;
+
 /**
  * 
  * Your actual game implementation. Setup the starting 
@@ -27,6 +29,7 @@ public abstract class GameListener {
     /**
      * Called when the game is starting. 
      * All subsystems have been initialized at this point. 
+     * @throws FileNotFoundException 
      */
     public void init() {} 
     

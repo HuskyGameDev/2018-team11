@@ -1,7 +1,7 @@
 package lootquest.system;
 
-import lootquest.component.Position;
 import lootquest.component.Movement;
+import lootquest.component.Position;
 import lutebox.core.Lutebox;
 import lutebox.ecs.Entity;
 import lutebox.ecs.Filter;
