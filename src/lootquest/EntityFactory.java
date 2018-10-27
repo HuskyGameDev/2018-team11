@@ -4,6 +4,7 @@ import lootquest.component.AI;
 import lootquest.component.Collider;
 import lootquest.component.Direction;
 import lootquest.component.Enemy;
+import lootquest.component.EquipedCrossbow;
 import lootquest.component.EquipedSword;
 import lootquest.component.Health;
 import lootquest.component.Player;
@@ -45,7 +46,8 @@ public final class EntityFactory {
         e.attach(Health.class);
         e.attach(Collider.class);
 		e.attach(Enemy.class);
-		e.attach(AI.class);
+		e.attach(AI.class).setRanged(false);
+		e.attach(EquipedCrossbow.class);
         
         return e; 
     }
