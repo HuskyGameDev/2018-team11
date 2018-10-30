@@ -34,9 +34,12 @@ public class RoomCreater {
         if ( UP == true ) {
             for ( int y = 0; y < rH; y++ ) {
                 for ( int x = 0; x < rW; x++ ) {
-                    if ( (x == ((rW/2) - 1) || x == ((rW/2) + 1)) && y > (rH/2) ) {
-                        room[x][y] = "1";
-                    } else if ( x == (rW/2) && y > (rH/2) ) {
+                    if ( x == ((rW/2) - 2) && y < (rH/2) ) {
+                        room[x][y] = "wl";
+                    } else if ( x == ((rW/2) + 1) && y < (rH/2) ) {
+                        room[x][y] = "wr";
+                    }
+                     else if ( (x == ((rW/2) - 1) || x == (rW/2)) && y < (rH/2) ) {
                         room[x][y] = "0";
                     }
                 }
@@ -45,20 +48,26 @@ public class RoomCreater {
         if ( DOWN == true ) {
             for ( int y = 0; y < rH; y++ ) {
                 for ( int x = 0; x < rW; x++ ) {
-                    if ( (x == ((rW/2) - 1) || x == ((rW/2) + 1)) && y < (rH/2) ) {
-                        room[x][y] = "1";
-                    } else if ( x == (rW/2) && y < (rH/2) ) {
+                    if ( x == ((rW/2) - 2) && y > (rH/2) ) {
+                        room[x][y] = "wl";
+                    } else if ( x == ((rW/2) + 1) && y > (rH/2) ) {
+                        room[x][y] = "wr";
+                    }
+                     else if ( (x == ((rW/2) - 1) || x == (rW/2)) && y > (rH/2) ) {
                         room[x][y] = "0";
                     }
                 }
-            } 
+            }
         }
         if ( LEFT == true ) {
             for ( int y = 0; y < rH; y++ ) {
                 for ( int x = 0; x < rW; x++ ) {
-                    if ( (y == ((rH/2) - 1) || y == ((rH/2) + 1)) && x < (rW/2) ) {
-                        room[x][y] = "1";
-                    } else if ( y == (rH/2) && x < (rW/2) ) {
+                    if ( y == ((rH/2) - 2) && x < (rW/2) ) {
+                        room[x][y] = "wu";
+                    } else if ( y == ((rH/2) + 1) && x < (rW/2) ) {
+                        room[x][y] = "wd";
+                    }
+                     else if ( (y == ((rH/2) - 1) || y == (rH/2)) && x < (rW/2) ) {
                         room[x][y] = "0";
                     }
                 }
@@ -67,9 +76,12 @@ public class RoomCreater {
         if ( RIGHT == true ) {
             for ( int y = 0; y < rH; y++ ) {
                 for ( int x = 0; x < rW; x++ ) {
-                    if ( (y == ((rH/2) - 1) || y == ((rH/2) + 1)) && x > (rW/2) ) {
-                        room[x][y] = "1";
-                    } else if ( y == (rH/2) && x > (rW/2) ) {
+                    if ( y == ((rH/2) - 2) && x > (rW/2) ) {
+                        room[x][y] = "wu";
+                    } else if ( y == ((rH/2) + 1) && x > (rW/2) ) {
+                        room[x][y] = "wd";
+                    }
+                     else if ( (y == ((rH/2) - 1) || y == (rH/2)) && x > (rW/2) ) {
                         room[x][y] = "0";
                     }
                 }
@@ -77,30 +89,99 @@ public class RoomCreater {
         }
         
         //Creating the actual Room
-        int xScale = r.nextInt(7) - 3;
-        int yScale = r.nextInt(7) - 3;
+        int xScale = r.nextInt(5) - 2;
+        int yScale = r.nextInt(5) - 2;
         
-        int Xmin = 3 - xScale;
-        int Ymin = 3 - yScale;
-        int Xmax = (rW-3) + xScale;
-        int Ymax = (rH-3) + yScale;
+        int Xmin = 2 - xScale;
+        int Ymin = 2 - yScale;
+        int Xmax = (rW-2) + xScale;
+        int Ymax = (rH-2) + yScale;
         
         for ( int y = Ymin; y < Ymax; y++ ) {
             for ( int x = Xmin; x < Xmax ; x++ ) {
-                if ( y == Ymin || y == Ymax-1 ) {
+                if ( x == Xmin && y == Ymin ) {
                     if ( room[x][y].equals("0") ) {
-                        room[x][y] = "D";
+                        room[x][y] = "9";
                     } else {
-                        room[x][y] = "1";
+                        room[x][y] = "citl";
                     }
-                }else if (x == Xmin || x == Xmax-1 ) {
+                } else if ( x == Xmax-1 && y == Ymin ) {
+                    if ( room[x][y].equals("0") ) {
+                        room[x][y] = "9";
+                    } else {
+                        room[x][y] = "citr";
+                    }
+                } else if ( x == Xmin && y == Ymax-1 ) {
+                    if ( room[x][y].equals("0") ) {
+                        room[x][y] = "9";
+                    } else {
+                        room[x][y] = "cibl";
+                    }
+                } else if ( x == Xmax-1 && y == Ymax-1 ) {
+                    if ( room[x][y].equals("0") ) {
+                        room[x][y] = "9";
+                    } else {
+                        room[x][y] = "cibr";
+                    }
+                } else if ( y == Ymin ) {
                     if ( room[x][y].equals("0") ) {
                         room[x][y] = "D";
                     } else {
-                        room[x][y] = "1";
+                        room[x][y] = "wu";
+                    }
+                } else if ( y == Ymax-1 ) {
+                    if ( room[x][y].equals("0") ) {
+                        room[x][y] = "D";
+                    } else {
+                        room[x][y] = "wd";
+                    }
+                } else if (x == Xmin ) {
+                    if ( room[x][y].equals("0") ) {
+                        room[x][y] = "D";
+                    } else {
+                        room[x][y] = "wl";
+                    }
+                } else if ( x == Xmax-1 ) {
+                    if ( room[x][y].equals("0") ) {
+                        room[x][y] = "D";
+                    } else {
+                        room[x][y] = "wr";
                     }
                 } else {
                     room[x][y] = "0";
+                }
+            }
+        }
+        
+        //Finding doors and putting outer corner walls
+        for ( int y = Ymin; y < Ymax; y++ ) {
+            for ( int x = Xmin; x < Xmax; x++ ) {
+                if ( room[x][y].equals("D") ) {
+                    if ( y == Ymin ) {
+                        if ( room[x-1][y].equals("wu") ) {
+                            room[x-1][y] = "cobr";
+                        } else if ( room[x+1][y] == "wu") {
+                            room[x+1][y] = "cobl";
+                        }
+                    } else if ( y == Ymax-1 ) {
+                        if ( room[x-1][y].equals("wd") ) {
+                            room[x-1][y] = "cotr";
+                        } else if ( room[x+1][y] == "wd") {
+                            room[x+1][y] = "cotl";
+                        }
+                    } else if ( x == Xmin ) {
+                        if ( room[x][y-1].equals("wl") ) {
+                            room[x][y-1] = "cobr";
+                        } else if ( room[x][y+1] == "wl") {
+                            room[x][y+1] = "cotr";
+                        }
+                    } else if ( x == Xmax-1 ) {
+                        if ( room[x][y-1].equals("wr") ) {
+                            room[x][y-1] = "cobl";
+                        } else if ( room[x][y+1] == "wr") {
+                            room[x][y+1] = "cotl";
+                        }
+                    }
                 }
             }
         }
@@ -129,7 +210,7 @@ public class RoomCreater {
     }
     
     public String[][] createEmpty() {
-        String[][] room = new String[16][16];
+        String[][] room = new String[rW][rH];
         for ( int y = 0; y < rH; y++ ) {
             for ( int x = 0; x < rW; x++ ) {
                 room[x][y] = "e";
