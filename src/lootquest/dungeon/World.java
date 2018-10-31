@@ -35,10 +35,10 @@ public class World {
 		FloorCreater crtFlr = new FloorCreater();
 		RoomCreater crtRm = new RoomCreater(0, 0, 0, roomWidth, roomHeight);
 		
-		String[][]room = crtRm.createRoom( true, false, false, true);
+		String[][]room = crtRm.createStart( true, false, false, true);
 		addRoom( room, 0, 0);
 		
-		room = crtRm.createRoom( false, true, true, true );
+		room = crtRm.createExit( false, true, true, true );
 		addRoom( room, 1, 0);
 		
 		room = crtRm.createEmpty();
@@ -53,20 +53,7 @@ public class World {
 	    int name = 0;
 	    for ( int y = 0; y < roomHeight; y++ ) {
 	        for ( int x = 0; x < roomWidth; x++ ) {
-	            if ( room[x][y].equals("1") ) {
-	                if ( y == 0 && x > 0 && x < roomWidth-1 ) {
-	                    setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new WallTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size, "wall-up" ));
-	                } else if ( y == roomHeight-1 && x > 0 && x < roomWidth-1 ) {
-	                    setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new WallTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size, "wall-down" ));
-	                } else if ( x == 0 && y > 0 && y < roomHeight-1 ) {
-                        setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new WallTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size, "wall-down" ));
-                    } else if ( x == roomWidth-1 && y > 0 && y < roomHeight-1 ) {
-                        setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new WallTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size, "wall-down" ));
-                    } else {
-	                    setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new DirtTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size));
-	                }
-	                
-	            } else if ( room[x][y].equals("wu")) {
+	            if ( room[x][y].equals("wu")) {
                     setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new WallTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size, "wall-up"));
                 } else if ( room[x][y].equals("wd")) {
                     setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new WallTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size, "wall-down"));
@@ -90,7 +77,7 @@ public class World {
                     setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new WallTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size, "corner-obl"));
                 } else if ( room[x][y].equals("cobr")) {
                     setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new WallTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size, "corner-obr"));
-                } else if ( room[x][y].equals("0") || room[x][y].equals("D") ) {
+                } else if ( room[x][y].equals("0") || room[x][y].equals("D") || room[x][y].equals("1") ) {
 	                name = ran.nextInt(4);
 	                
 	                if ( name == 0 ) {

@@ -47,8 +47,8 @@ public class LootquestGame extends GameListener {
         Lutebox.scene.addSystem(new WorldPhysicsSystem()); 
         
         // add entities
-        EntityFactory.createPlayer(2, 2); 
-        EntityFactory.createEnemy1(5, 6);
+        EntityFactory.createPlayer(4, 4); 
+        EntityFactory.createEnemy1(7, 7);
 
     }
     

@@ -147,6 +147,8 @@ public class RoomCreater {
                     } else {
                         room[x][y] = "wr";
                     }
+                } else if ( x <= (Xmax-4) && x >= (Xmin+3) && y <= (Ymax-4) && (y >= Ymin+3)  ) {
+                    room[x][y] = "1";
                 } else {
                     room[x][y] = "0";
                 }
@@ -189,22 +191,44 @@ public class RoomCreater {
         return room;
     }
     
-    public String[][] createStart() throws FileNotFoundException {
-        int roomNum = r.nextInt(SR) + 1;
-        String[] roomInfo = loadRoom("assets/Rooms/Generic/Room" + roomNum + ".txt");
-        String[][] room = new String[64][64];
-        
-        roomTranslate( roomInfo, room );
+    public String[][] createStart( boolean UP, boolean DOWN, boolean LEFT, boolean RIGHT ) throws FileNotFoundException {
+        String[][] room = createRoom( UP, DOWN, LEFT, RIGHT );
+        boolean entrance = false;
+        int chance = 0;
+        while ( entrance == false ) {
+            for ( int y = 0; y < rH; y++ ) {
+                for ( int x = 0; x < rW; x++ ) {
+                    if ( room[x][y].equals("1") && entrance == false ) {
+                        chance = r.nextInt(15);
+                        if ( chance == 0 ) {
+                            room[x][y] = "S";
+                            entrance = true;
+                        }
+                    }
+                }
+            }
+        }
         
         return room;
     }
     
-    public String[][] createExit() throws FileNotFoundException {
-        int roomNum = r.nextInt(ER) + 1;
-        String[] roomInfo = loadRoom("assets/Rooms/Generic/Room" + roomNum + ".txt");
-        String[][] room = new String[64][64];
-        
-        roomTranslate( roomInfo, room );
+    public String[][] createExit( boolean UP, boolean DOWN, boolean LEFT, boolean RIGHT ) throws FileNotFoundException {
+        String[][] room = createRoom( UP, DOWN, LEFT, RIGHT );
+        boolean exit = false;
+        int chance = 0;
+        while ( exit == false ) {
+            for ( int y = 0; y < rH; y++ ) {
+                for ( int x = 0; x < rW; x++ ) {
+                    if ( room[x][y].equals("1") && exit == false ) {
+                        chance = r.nextInt(15);
+                        if ( chance == 0 ) {
+                            room[x][y] = "E";
+                            exit = true;
+                        }
+                    }
+                }
+            }
+        }
         
         return room;
     }
