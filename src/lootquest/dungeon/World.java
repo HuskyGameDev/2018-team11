@@ -35,17 +35,48 @@ public class World {
 		FloorCreater crtFlr = new FloorCreater();
 		RoomCreater crtRm = new RoomCreater(0, 0, 0, roomWidth, roomHeight);
 		
-		String[][]room = crtRm.createStart( true, false, false, true);
-		addRoom( room, 0, 0);
+		Random r = new Random();
 		
-		room = crtRm.createExit( false, true, true, true );
-		addRoom( room, 1, 0);
+//		boolean UP = r.nextBoolean();
+//		boolean DOWN = r.nextBoolean();
+//		boolean LEFT = r.nextBoolean();
+//		boolean RIGHT = r.nextBoolean();
+//		
+//		String[][]room = crtRm.createStart( UP, DOWN, LEFT, RIGHT );
+//		addRoom( room, 0, 0);
+//		
+//		UP = r.nextBoolean();
+//      DOWN = r.nextBoolean();
+//      LEFT = r.nextBoolean();
+//      RIGHT = r.nextBoolean();
+//		room = crtRm.createCorridor( UP, DOWN, LEFT, RIGHT );
+//		addRoom( room, 1, 0);
+//		
+//		UP = r.nextBoolean();
+//      DOWN = r.nextBoolean();
+//      LEFT = r.nextBoolean();
+//      RIGHT = r.nextBoolean();
+//		room = crtRm.createEmpty();
+//		addRoom( room, 0, 1);
+//		
+//		UP = r.nextBoolean();
+//      DOWN = r.nextBoolean();
+//      LEFT = r.nextBoolean();
+//      RIGHT = r.nextBoolean();
+//		room = crtRm.createRoom( UP, DOWN, LEFT, RIGHT );
+//		addRoom( room, 1, 1);
 		
-		room = crtRm.createEmpty();
-		addRoom( room, 0, 1);
-		
-		room = crtRm.createRoom( true, false, false, false );
-		addRoom( room, 1, 1);
+		String[][]room = crtRm.createStart( false , true, false, true );
+        addRoom( room, 0, 0);
+        
+        room = crtRm.createCorridor( false , true, true, false );
+        addRoom( room, 1, 0);
+        
+        room = crtRm.createCorridor( true , false, false, true );
+        addRoom( room, 0, 1);
+        
+        room = crtRm.createRoom( true , false, true, false );
+        addRoom( room, 1, 1);
 	}
 	
 	public void addRoom( String[][] room, int xOffset, int yOffset ) {

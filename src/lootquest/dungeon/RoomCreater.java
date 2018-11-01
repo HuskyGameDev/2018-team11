@@ -147,7 +147,7 @@ public class RoomCreater {
                     } else {
                         room[x][y] = "wr";
                     }
-                } else if ( x <= (Xmax-4) && x >= (Xmin+3) && y <= (Ymax-4) && (y >= Ymin+3)  ) {
+                } else if ( x < (Xmax) && x >= (Xmin) && y < (Ymax) && (y >= Ymin)  ) {
                     room[x][y] = "1";
                 } else {
                     room[x][y] = "0";
@@ -233,6 +233,284 @@ public class RoomCreater {
         return room;
     }
     
+    public String[][] createCorridor( boolean UP, boolean DOWN, boolean LEFT, boolean RIGHT ) {
+        String[][] room = new String[rW][rH];
+        room = createEmpty();
+        
+        if ( UP == true ) {
+            for ( int y = 0; y < rH; y++ ) {
+                for ( int x = 0; x < rW; x++ ) {
+                    if ( y >= 0 && y <= (rH/2)-3 ) {
+                        if ( x == (rW/2)-2 ) {
+                            room[x][y] = "wl";
+                        } else if ( x == (rW/2) + 1 ) {
+                            room[x][y] = "wr";
+                        } else if ( x == (rW/2)-1 || x == (rW/2) ) {
+                            room[x][y] = "0";
+                        }
+                    } else if ( y == (rH/2)-2 ) {
+                        if ( x == (rW/2)-1 || x == (rW/2) ) {
+                            room[x][y] = "wd";
+                        } else if ( x == (rW/2)-2 ) {
+                            room[x][y] = "cibl";
+                        } else if ( x == (rW/2)+1 ) {
+                            room[x][y] = "cibr";
+                        }
+                    }
+                }
+            }
+        }
+        if ( DOWN == true ) {
+            for ( int y = 0; y < rH; y++ ) {
+                for ( int x = 0; x < rW; x++ ) {
+                    if ( y < rH && y > (rH/2)+1 && y != (rH/2)+1 ) {
+                        if ( x == (rW/2)-2 ) {
+                            room[x][y] = "wl";
+                        } else if ( x == (rW/2) + 1 ) {
+                            room[x][y] = "wr";
+                        } else if ( x == (rW/2)-1 || x == (rW/2) ) {
+                            room[x][y] = "0";
+                        }
+                    } else if ( y == (rH/2)+1 ) {
+                        if ( x == (rW/2)-1 || x == (rW/2) ) {
+                            room[x][y] = "wu";
+                        } else if ( x == (rW/2)-2 ) {
+                            room[x][y] = "citl";
+                        } else if ( x == (rW/2)+1 ) {
+                            room[x][y] = "citr";
+                        }
+                    }
+                }
+            }
+        }
+        if ( LEFT == true ) {
+            for ( int y = 0; y < rH; y++ ) {
+                for ( int x = 0; x < rW; x++ ) {
+                    if ( x >= 0 && x <= (rW/2)-3 ) {
+                        if ( y == (rH/2)-2 ) {
+                            room[x][y] = "wu";
+                        } else if ( y == (rH/2) + 1 ) {
+                            room[x][y] = "wd";
+                        } else if ( y == (rH/2)-1 || y == (rH/2) ) {
+                            room[x][y] = "0";
+                        }
+                    } else if ( x == (rW/2)-2 ) {
+                        if ( y == (rH/2)-1 || y == (rH/2) ) {
+                            room[x][y] = "wr";
+                        } else if ( y == (rH/2)-2 ) {
+                            room[x][y] = "citr";
+                        } else if ( y == (rH/2)+1 ) {
+                            room[x][y] = "cibr";
+                        }
+                    }
+                }
+            }
+        }
+        if ( RIGHT == true ) {
+            for ( int y = 0; y < rH; y++ ) {
+                for ( int x = 0; x < rW; x++ ) {
+                    if ( x < rW && x >= (rW/2)+2 ) {
+                        if ( y == (rH/2)-2 ) {
+                            room[x][y] = "wu";
+                        } else if ( y == (rH/2) + 1 ) {
+                            room[x][y] = "wd";
+                        } else if ( y == (rH/2)-1 || y == (rH/2) ) {
+                            room[x][y] = "0";
+                        }
+                    } else if ( x == (rW/2)+1 ) {
+                        if ( y == (rH/2)-1 || y == (rH/2) ) {
+                            room[x][y] = "wl";
+                        } else if ( y == (rH/2)-2 ) {
+                            room[x][y] = "citl";
+                        } else if ( y == (rH/2)+1 ) {
+                            room[x][y] = "cibl";
+                        }
+                    }
+                }
+            }
+        }
+        
+        //Clean up
+        int yMin = (rH/2)-2;
+        int yMax = (rH/2)+1;
+        int xMin = (rW/2)-2;
+        int xMax = (rW/2)+1;
+        if ( UP && DOWN && !LEFT && !RIGHT ) {
+            //Up and Down
+            for ( int y = yMin; y <= yMax; y++ ) {
+                for ( int x = xMin; x <= xMax; x++ ) {
+                    if ( x == xMin ) {
+                        room[x][y] = "wl";
+                    } else if ( x == xMax ) {
+                        room[x][y] = "wr";
+                    } else {
+                        room[x][y] = "0";
+                    }
+                }
+            }
+        } else if ( UP && !DOWN && !LEFT && RIGHT ) {
+            //Up and Right
+            for ( int y = yMin; y <= yMax; y++ ) {
+                for ( int x = xMin; x <= xMax; x++ ) {
+                    if ( y == yMax && x > xMin ) {
+                        room[x][y] = "wd";
+                    } else if ( y == yMax && x == xMin ) {
+                        room[x][y] = "cibl";
+                    } else if ( x == xMin ) {
+                        room[x][y] = "wl";
+                    } else if ( x == xMax && y == yMin ) {
+                        room[x][y] = "cobl";
+                    } else {
+                        room[x][y] = "0";
+                    }
+                }
+            }
+        } else if ( UP && !DOWN && LEFT && !RIGHT ) {
+            //Up and Left
+            for ( int y = yMin; y <= yMax; y++ ) {
+                for ( int x = xMin; x <= xMax; x++ ) {
+                    if ( y == yMax && x < xMax ) {
+                        room[x][y] = "wd";
+                    } else if ( y == yMax && x == xMax ) {
+                        room[x][y] = "cibr";
+                    } else if ( x == xMax ) {
+                        room[x][y] = "wr";
+                    } else if ( x == xMin && y == yMin ) {
+                        room[x][y] = "cobr";
+                    } else {
+                        room[x][y] = "0";
+                    }
+                }
+            }
+        } else if ( !UP && DOWN && !LEFT && RIGHT ) {
+            //Down and Right
+            for ( int y = yMin; y <= yMax; y++ ) {
+                for ( int x = xMin; x <= xMax; x++ ) {
+                    if ( y == yMin && x > xMin ) {
+                        room[x][y] = "wu";
+                    } else if ( y == yMin && x == xMin ) {
+                        room[x][y] = "citl";
+                    } else if ( x == xMin ) {
+                        room[x][y] = "wl";
+                    } else if ( x == xMax && y == yMax ) {
+                        room[x][y] = "cotl";
+                    } else {
+                        room[x][y] = "0";
+                    }
+                }
+            }
+        } else if ( !UP && DOWN && LEFT && !RIGHT ) {
+            //Down and Left
+            for ( int y = yMin; y <= yMax; y++ ) {
+                for ( int x = xMin; x <= xMax; x++ ) {
+                    if ( y == yMin && x < xMax ) {
+                        room[x][y] = "wu";
+                    } else if ( y == yMin && x == xMax ) {
+                        room[x][y] = "citr";
+                    } else if ( x == xMax ) {
+                        room[x][y] = "wr";
+                    } else if ( x == xMin && y == yMax ) {
+                        room[x][y] = "cotr";
+                    } else {
+                        room[x][y] = "0";
+                    }
+                }
+            }
+        } else if ( !UP && !DOWN && LEFT && RIGHT ) {
+            //Left and Right
+            for ( int y = yMin; y <= yMax; y++ ) {
+                for ( int x = xMin; x <= xMax; x++ ) {
+                    if ( y == yMin ) {
+                        room[x][y] = "wu";
+                    } else if ( y == yMax ) {
+                        room[x][y] = "wd";
+                    } else {
+                        room[x][y] = "0";
+                    }
+                }
+            }
+        }  else if ( UP && DOWN && LEFT && !RIGHT ) {
+            //Up and Down and Left
+            for ( int y = yMin; y <= yMax; y++ ) {
+                for ( int x = xMin; x <= xMax; x++ ) {
+                    if ( x == xMax ) {
+                        room[x][y] = "wr";
+                    } else if ( x == xMin && y == yMin ) {
+                        room[x][y] = "cobr";
+                    } else if ( x == xMin && y == yMax ) {
+                        room[x][y] = "cotr";
+                    } else {
+                        room[x][y] = "0";
+                    }
+                }
+            }
+        }  else if ( UP && DOWN && !LEFT && RIGHT ) {
+            //Up and Down and Right
+            for ( int y = yMin; y <= yMax; y++ ) {
+                for ( int x = xMin; x <= xMax; x++ ) {
+                    if ( x == xMin ) {
+                        room[x][y] = "wl";
+                    } else if ( x == xMax && y == yMin ) {
+                        room[x][y] = "cobl";
+                    } else if ( x == xMax && y == yMax ) {
+                        room[x][y] = "cotl";
+                    } else {
+                        room[x][y] = "0";
+                    }
+                }
+            }
+        } else if ( UP && !DOWN && LEFT && RIGHT ) {
+            //Up and Left and Right
+            for ( int y = yMin; y <= yMax; y++ ) {
+                for ( int x = xMin; x <= xMax; x++ ) {
+                    if ( y == yMax ) {
+                        room[x][y] = "wd";
+                    } else if ( x == xMin && y == yMin ) {
+                        room[x][y] = "cobr";
+                    } else if ( x == xMax && y == yMin ) {
+                        room[x][y] = "cobl";
+                    } else {
+                        room[x][y] = "0";
+                    }
+                }
+            }
+        } else if ( !UP && DOWN && LEFT && RIGHT ) {
+            //Down and Left and Right
+            for ( int y = yMin; y <= yMax; y++ ) {
+                for ( int x = xMin; x <= xMax; x++ ) {
+                    if ( y == yMin ) {
+                        room[x][y] = "wu";
+                    } else if ( x == xMin && y == yMax ) {
+                        room[x][y] = "cotr";
+                    } else if ( x == xMax && y == yMax ) {
+                        room[x][y] = "cotl";
+                    } else {
+                        room[x][y] = "0";
+                    }
+                }
+            }
+        } else if ( UP && DOWN && LEFT && RIGHT ) {
+            //CrossRoads
+            for ( int y = yMin; y <= yMax; y++ ) {
+                for ( int x = xMin; x <= xMax; x++ ) {
+                    if ( y == yMin && x == xMin ) {
+                        room[x][y] = "cobr";
+                    } else if ( x == xMin && y == yMax ) {
+                        room[x][y] = "cotr";
+                    } else if ( x == xMax && y == yMax ) {
+                        room[x][y] = "cotl";
+                    } else if ( x == xMax && y == yMin ) {
+                        room[x][y] = "cobl";
+                    } else {
+                        room[x][y] = "0";
+                    }
+                }
+            }
+        }
+        
+        return room;
+    }
+    
     public String[][] createEmpty() {
         String[][] room = new String[rW][rH];
         for ( int y = 0; y < rH; y++ ) {
@@ -241,108 +519,5 @@ public class RoomCreater {
             }
         }
         return room;
-    }
-    
-    public String [] loadRoom ( String fileName ) throws FileNotFoundException {
-        File f = new File("/Users/Kevin/eclipse-workspace/Test/Rooms/"+ fileName + ".txt");
-        Scanner scan = new Scanner(f);
-        
-        String name = scan.next();
-        int width = Integer.parseInt(scan.next());
-        int height = Integer.parseInt(scan.next());
-        
-        String [] room = new String [ 3 + (width * height)];
-        room[0] = name;
-        room[1] = "" + width;
-        room[2] = "" + height;
-        
-        String tile;
-        int counter = 3;
-        
-        while (scan.hasNext() ) {
-            tile = scan.next();
-            room[counter] = tile;
-            counter++;
-        }
-        
-        scan.close();
-        return room;
-    }
-    
-    public void roomTranslate( String[] roomInfo, String[][] room ) {
-        int index = 3;
-        for ( int y = 63; y >= 0; y-- ) {
-            for ( int x = 0; x < 64; x++ ) {
-                if ( index < roomInfo.length ) {
-                    room[x][y] = roomInfo[index];
-                    index++;
-                } else {
-                    room[x][y] = "e";
-                }
-            }
-        }
-    }
-    
-    public String[][] createRoomSide () throws FileNotFoundException {
-      String[][] room = new String[16][16];
-      
-      for ( int y = 0; y < 16; y++ ) {
-          for ( int x = 0; x < 16; x++ ) {
-              if ( x == 15 && ( y== 7 || y == 8 ) ) {
-                  room[x][y] = "0";
-              }else if ( y == 0 || y == 15 ) {
-                  room[x][y] = "1";
-              }else if (x == 0 || x == 15) {
-                  room[x][y] = "1";
-              } else {
-                  room[x][y] = "0";
-              }
-          }
-      }
-      return room;
-  }
-    
-    public String[][] createRoomUp () throws FileNotFoundException {
-        String[][] room = new String[16][16];
-        
-        for ( int y = 0; y < 16; y++ ) {
-            for ( int x = 0; x < 16; x++ ) {
-                if ( (x == 7 || x == 8) && y == 0 ) {
-                    room[x][y] = "0";
-                }else if ( y == 0 || y == 15 ) {
-                    room[x][y] = "1";
-                }else if (x == 0 || x == 15) {
-                    room[x][y] = "1";
-                } else {
-                    room[x][y] = "0";
-                }
-            }
-        }
-        
-        return room;
-    }
-    
-    public String[][] createCorridor () {
-        String[][] corr = new String[16][16];
-        
-        for ( int y = 0; y < 16; y++ ) {
-            for ( int x = 0; x < 16; x++ ) {
-                if ( (x == 6 && y == 8) || ( x == 6 && y == 7 ) ) {
-                    corr[x][y] = "0";
-                } else if ( x == 9 && y > 6 ) {
-                    corr[x][y] = "1";
-                } else if ( x == 6 && y > 6 ) {
-                    corr[x][y] = "1";
-                } else if ( y == 6 && x < 10 ) {
-                    corr[x][y] = "1";
-                } else if ( y == 9 && x < 7 ) {
-                    corr[x][y] = "1";
-                } else {
-                    corr[x][y] = "0";
-                }
-            }
-        }
-        
-        return corr;
     }
 }
