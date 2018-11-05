@@ -7,20 +7,18 @@ import java.util.Random;
 public class World {
 
     private Tile[] tiles; 
-    private int worldIndex;
-    private String[] floor;
     private int worldWidth; 
     private int worldHeight; 
     public int roomWidth;
     public int roomHeight;
-    private Random r;
+    private int spawnX;
+    private int spawnY;
 	
 	public World( int worldWidth, int worldHeight, int roomWidth, int roomHeight ) {
 		this.worldHeight = worldHeight;
 		this.worldWidth = worldWidth;
 		this.roomHeight = roomHeight;
         this.roomWidth = roomWidth;
-		this.worldIndex = 0;
 		
 		try {
             generateWorld();
@@ -32,51 +30,100 @@ public class World {
 	
 	public void generateWorld() throws FileNotFoundException {
 		tiles = new Tile[worldWidth * worldHeight]; 
-		FloorCreater crtFlr = new FloorCreater();
+		FloorGen2 crtFlr = new FloorGen2();
 		RoomCreater crtRm = new RoomCreater(0, 0, 0, roomWidth, roomHeight);
+		String[][] floor = crtFlr.createFloor(6, 6, 3, 3);
+		String[][] path = crtFlr.createExitPath(floor, 6, 6, 3, 3);
+		String[][] cors = crtFlr.corridorCreater(floor, path, 6, 6);
 		
+		boolean U = false;
+		boolean D = false; 
+		boolean L = false;
+		boolean R = false;
 		Random r = new Random();
+		int chance = 0;
+		String[][] room;
+		for ( int y = 0; y < 6; y++ ) {
+		    for ( int x = 0; x < 6; x++ ) {
+		        if ( floor[x][y].equals("X") ) {
+		            //Checking for connections to generic room
+		            if ( cors[x][y].contains("^") ) {
+		                U = true;
+		            }
+		            if ( cors[x][y].contains("v") ) {
+		                D = true;
+		            }
+		            if ( cors[x][y].contains("<") ) {
+		                L = true;
+		            }
+		            if ( cors[x][y].contains(">") ) {
+		                R = true;
+		            }
+		            
+		            //Creating Generic room or Corridor
+		            chance = r.nextInt(3);
+		            if ( chance == 0 ) {
+		                room = crtRm.createCorridor(U, D, L, R);
+		                addRoom( room, x, y);
+		            } else {
+		                room = crtRm.createRoom(U, D, L, R);
+                        addRoom( room, x, y);
+		            }
+		        } else if ( floor[x][y].equals("S") ) {
+		            //Checking for connections to start room
+                    if ( cors[x][y].contains("^") ) {
+                        U = true;
+                    }
+                    if ( cors[x][y].contains("v") ) {
+                        D = true;
+                    }
+                    if ( cors[x][y].contains("<") ) {
+                        L = true;
+                    }
+                    if ( cors[x][y].contains(">") ) {
+                        R = true;
+                    }
+                    room = crtRm.createStart(U, D, L, R);
+                    addRoom( room, x, y);
+		        } else if ( floor[x][y].equals("E") ) {
+		            //Checking for connections to exit room
+                    if ( cors[x][y].contains("^") ) {
+                        U = true;
+                    }
+                    if ( cors[x][y].contains("v") ) {
+                        D = true;
+                    }
+                    if ( cors[x][y].contains("<") ) {
+                        L = true;
+                    }
+                    if ( cors[x][y].contains(">") ) {
+                        R = true;
+                    }
+                    room = crtRm.createExit(U, D, L, R);
+                    addRoom( room, x, y );
+		        } else {
+		            room = crtRm.createEmpty();
+		            addRoom( room, x, y );
+		        }
+		        U = false;
+		        D = false;
+		        L = false;
+		        R = false;
+		    }
+		}
 		
-//		boolean UP = r.nextBoolean();
-//		boolean DOWN = r.nextBoolean();
-//		boolean LEFT = r.nextBoolean();
-//		boolean RIGHT = r.nextBoolean();
-//		
-//		String[][]room = crtRm.createStart( UP, DOWN, LEFT, RIGHT );
+//		String[][] room;
+//		room = crtRm.createStart(false, true, false, true);
 //		addRoom( room, 0, 0);
 //		
-//		UP = r.nextBoolean();
-//      DOWN = r.nextBoolean();
-//      LEFT = r.nextBoolean();
-//      RIGHT = r.nextBoolean();
-//		room = crtRm.createCorridor( UP, DOWN, LEFT, RIGHT );
-//		addRoom( room, 1, 0);
-//		
-//		UP = r.nextBoolean();
-//      DOWN = r.nextBoolean();
-//      LEFT = r.nextBoolean();
-//      RIGHT = r.nextBoolean();
-//		room = crtRm.createEmpty();
-//		addRoom( room, 0, 1);
-//		
-//		UP = r.nextBoolean();
-//      DOWN = r.nextBoolean();
-//      LEFT = r.nextBoolean();
-//      RIGHT = r.nextBoolean();
-//		room = crtRm.createRoom( UP, DOWN, LEFT, RIGHT );
-//		addRoom( room, 1, 1);
-		
-		String[][]room = crtRm.createStart( false , true, false, true );
-        addRoom( room, 0, 0);
-        
-        room = crtRm.createCorridor( false , true, true, false );
-        addRoom( room, 1, 0);
-        
-        room = crtRm.createCorridor( true , false, false, true );
-        addRoom( room, 0, 1);
-        
-        room = crtRm.createRoom( true , false, true, false );
-        addRoom( room, 1, 1);
+//		room = crtRm.createExit(true, false, false, true);
+//        addRoom( room, 0, 1);
+//        
+//        room = crtRm.createCorridor(false, true, true, false);
+//        addRoom( room, 1, 0);
+//        
+//        room = crtRm.createRoom(true, false, true, false);
+//        addRoom( room, 1, 1);
 	}
 	
 	public void addRoom( String[][] room, int xOffset, int yOffset ) {
@@ -108,6 +155,12 @@ public class World {
                     setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new WallTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size, "corner-obl"));
                 } else if ( room[x][y].equals("cobr")) {
                     setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new WallTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size, "corner-obr"));
+                } else if ( room[x][y].equals("S")) {
+                    spawnX = x + (roomWidth * xOffset);
+                    spawnY = y + (roomHeight * yOffset);
+                    setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new FloorTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size, "entrance0"));
+                } else if ( room[x][y].equals("E")) {
+                    setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new FloorTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size, "entrance1"));
                 } else if ( room[x][y].equals("0") || room[x][y].equals("D") || room[x][y].equals("1") ) {
 	                name = ran.nextInt(4);
 	                
@@ -124,6 +177,14 @@ public class World {
 	            }
 	        }
 	    }
+	}
+	
+	public int getSpawnX() {
+	    return spawnX;
+	}
+	
+	public int getSpawnY() {
+	    return spawnY;
 	}
 	
 	public boolean inBounds(int x, int y) {
