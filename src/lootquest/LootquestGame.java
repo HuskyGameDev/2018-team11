@@ -23,9 +23,11 @@ public class LootquestGame extends GameListener {
         Lutebox.display.setSize(800, 600);
         Lutebox.cursor.setVisible(true); 
         
+        int tiles = 16;
+        int rooms = tiles * 10;
         try {
             // int #ofRoomsX, #ofRoomsY, #ofTiles/RoomX, #ofTiles/RoomY
-            world = new World(96, 96, 16, 16);
+            world = new World(rooms, rooms, tiles, tiles);
         } catch (Exception e) {
             System.out.println("Something went wrong with world creating. Look at the world call to see if it is properly called.");
             e.printStackTrace();
@@ -48,7 +50,7 @@ public class LootquestGame extends GameListener {
         
         // add entities
         EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY()); 
-        EntityFactory.createEnemy1(7, 7);
+        EntityFactory.createEnemy1(world.getSpawnX()+5, world.getSpawnY()+5);
 
     }
     

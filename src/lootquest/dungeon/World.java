@@ -6,13 +6,14 @@ import java.util.Random;
 
 public class World {
 
-    private Tile[] tiles; 
+    private Tile[][] tiles; 
     private int worldWidth; 
     private int worldHeight; 
     public int roomWidth;
     public int roomHeight;
     private int spawnX;
     private int spawnY;
+    private String[][] floor;
 	
 	public World( int worldWidth, int worldHeight, int roomWidth, int roomHeight ) {
 		this.worldHeight = worldHeight;
@@ -29,12 +30,17 @@ public class World {
 	}
 	
 	public void generateWorld() throws FileNotFoundException {
-		tiles = new Tile[worldWidth * worldHeight]; 
+		tiles = new Tile[worldWidth][worldHeight]; 
 		FloorGen2 crtFlr = new FloorGen2();
 		RoomCreater crtRm = new RoomCreater(0, 0, 0, roomWidth, roomHeight);
-		String[][] floor = crtFlr.createFloor(6, 6, 3, 3);
-		String[][] path = crtFlr.createExitPath(floor, 6, 6, 3, 3);
-		String[][] cors = crtFlr.corridorCreater(floor, path, 6, 6);
+		
+		//floor = crtFlr.createFloor((worldWidth/roomWidth), (worldHeight/roomHeight), (worldWidth/roomWidth)/2, (worldHeight/roomHeight)/2);
+		floor = crtFlr.createFloor((worldWidth/roomWidth), (worldHeight/roomHeight), 0, 0);
+		
+		//String[][] path = crtFlr.createExitPath(floor, (worldWidth/roomWidth), (worldHeight/roomHeight), (worldWidth/roomWidth)/2, (worldHeight/roomHeight)/2);
+		String[][] path = crtFlr.createExitPath(floor, (worldWidth/roomWidth), (worldHeight/roomHeight), 0, 0);
+		
+		String[][] cors = crtFlr.corridorCreater(floor, path, (worldWidth/roomWidth), (worldHeight/roomHeight));
 		
 		boolean U = false;
 		boolean D = false; 
@@ -43,8 +49,8 @@ public class World {
 		Random r = new Random();
 		int chance = 0;
 		String[][] room;
-		for ( int y = 0; y < 6; y++ ) {
-		    for ( int x = 0; x < 6; x++ ) {
+		for ( int y = 0; y < (worldHeight/roomHeight); y++ ) {
+		    for ( int x = 0; x < (worldWidth/roomWidth); x++ ) {
 		        if ( floor[x][y].equals("X") ) {
 		            //Checking for connections to generic room
 		            if ( cors[x][y].contains("^") ) {
@@ -61,7 +67,7 @@ public class World {
 		            }
 		            
 		            //Creating Generic room or Corridor
-		            chance = r.nextInt(3);
+		            chance = r.nextInt(2);
 		            if ( chance == 0 ) {
 		                room = crtRm.createCorridor(U, D, L, R);
 		                addRoom( room, x, y);
@@ -102,8 +108,8 @@ public class World {
                     room = crtRm.createExit(U, D, L, R);
                     addRoom( room, x, y );
 		        } else {
-		            room = crtRm.createEmpty();
-		            addRoom( room, x, y );
+//		            room = crtRm.createEmpty();
+//		            addRoom( room, x, y );
 		        }
 		        U = false;
 		        D = false;
@@ -171,7 +177,7 @@ public class World {
 	                }
 	                
 	            } else if ( room[x][y].equals("e")) {
-	                setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new FillerTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size));
+	                //setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new FillerTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size));
 	            } else {
 	                setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new GrassTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size));
 	            }
@@ -187,35 +193,101 @@ public class World {
 	    return spawnY;
 	}
 	
+	public String[][] getFloor() {
+	    return floor;
+	}
+	
+	public int[] getEnemySpawn( int flrX, int flrY ) {
+	    int [] loc = new int [4];
+	    
+	    int yMin = roomHeight;
+	    int yMax = 0;
+	    int xMin = roomWidth;
+	    int xMax = 0;
+	    
+	    for ( int y = roomHeight*flrY; y < (roomHeight*flrY)+roomHeight; y++ ) {
+	        for ( int x = roomWidth*flrX; x < (roomWidth*flrX)+roomWidth; x++ ) {
+	            if ( tiles[x][y] != null ) {
+	                Tile t = tiles[x][y];
+	                if ( t.getType().equals("FLOOR") ) {
+	                    if ( x < xMin ) {
+	                        xMin = x;
+	                    }
+	                    if ( x > xMax ) {
+	                        xMax = x;
+	                    }
+	                    if ( y < yMin ) {
+	                        yMin = y;
+	                    }
+	                    if ( y > yMax ) {
+	                        yMax = y;
+	                    }
+	                }
+	            }
+	        }
+	    }
+	    if ( xMin > xMax || yMin > yMax ) {
+	        loc[0] = -1;
+	        loc[1] = -1;
+	        loc[2] = -1;
+	        loc[3] = -1;
+	        return loc;
+	    }
+	    loc[0] = xMin;
+        loc[1] = yMin;
+        loc[2] = xMax;
+        loc[3] = yMax;
+	    return loc;
+	}
+	
 	public boolean inBounds(int x, int y) {
 		return x >= 0 && x < worldWidth && y >= 0 && y < worldHeight; 
 	}
 	
 	public Tile getTile(int x, int y) {
 		if (!inBounds(x, y)) throw new IllegalArgumentException("Position is out of bounds: " + x + ", " + y); 
-	    return tiles[x + y * worldWidth]; 
+	    return tiles[x][y]; 
 	}
 	
 	public void setTile(int x, int y, Tile t) {
 		if (!inBounds(x, y)) throw new IllegalArgumentException("Position is out of bounds: " + x + ", " + y); 
-	    tiles[x + y * worldWidth] = t;
+	    tiles[x][y] = t;
 	}
 	
 	public boolean isSolid(int x, int y) {
 		if (!inBounds(x, y)) return true; 
+		if ( getTile(x,y) == null ) return true;
 		return getTile(x, y).isSolid; 
 	}
 	
 	public void tick() {
-		for( Tile t : tiles ) {
-			t.tick();
-		}
+	    for ( int y = 0; y < worldHeight; y++ ) {
+            for ( int x = 0; x < worldWidth; x++ ) {
+                Tile t = tiles[x][y];
+                t.tick();
+            }
+        }
+//	    
+//		for( Tile t : tiles ) {
+//			t.tick();
+//		}
 	}
 	
 	public void render() {
-		for( Tile t : tiles ) {
-			t.render();
-		}
+	    for ( int y = 0; y < worldHeight; y++ ) {
+	        for ( int x = 0; x < worldWidth; x++ ) {
+	            Tile t = tiles[x][y];
+	            if ( t != null ) {
+	                t.render();
+	            }
+	        }
+	    }
+	    
+//		for( Tile t : tiles ) {
+//		    if ( t != null ) {
+//		        t.render();
+//		    }
+//		}
 	}
 	
 }
