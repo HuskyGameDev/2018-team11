@@ -2,6 +2,7 @@ package lootquest;
 
 import lootquest.component.AI;
 import lootquest.component.Collider;
+import lootquest.component.Consumable;
 import lootquest.component.Direction;
 import lootquest.component.Enemy;
 import lootquest.component.EquipedCrossbow;
@@ -65,4 +66,13 @@ public final class EntityFactory {
     	return e;
     }
     
+    public static Entity createConsumable(float x,float y,int HP, int SDmg, int BDmg, float Speed) {
+    	Entity e = Lutebox.scene.createEntity();
+    	
+    	e.attach(Position.class).set(x, y);
+    	e.attach(Collider.class);
+    	e.attach(Consumable.class).SetHpRestore(HP).SetSwordDmgUp(SDmg).SetBowDmgUp(BDmg).SetSpeedUp(Speed);
+    	
+    	return e;
+    }
 }
