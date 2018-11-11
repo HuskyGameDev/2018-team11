@@ -25,6 +25,8 @@ public class AISystem extends IteratingEntitySystem{
 	public void updateEntity(Entity e) {
 		Filter playerSearch = Filter.include(Position.class,Player.class).create();
 		List<Entity> players = getScene().getEntities(playerSearch);
+		
+		if (players.isEmpty()) return; 
 		Entity player = players.get(0);
 		
 		Position enemyPos = e.get(Position.class);
