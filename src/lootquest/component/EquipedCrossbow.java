@@ -4,7 +4,7 @@ import lutebox.ecs.Component;
 
 public class EquipedCrossbow  extends Component{
 
-	public float cooldownTime = 0.5f; 
+	public float cooldownTime = 2.5f; 
 	public float animationTime = 0.2f; 
 	
 	public float curTime = 0; 

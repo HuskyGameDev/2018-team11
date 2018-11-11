@@ -1,9 +1,9 @@
 package lootquest.dungeon;
 
-import lutebox.graphics.Texture;
+import lootquest.util.TextureCache;
 
 public class DirtTile extends Tile {
 	public DirtTile(int x, int y) {
-		super(x, y, new Texture("assets/textures/Dirt.png"), true, TileType.DIRT);
+		super(x, y, TextureCache.get("assets/textures/Dirt.png"), true, TileType.DIRT);
 	}
 }

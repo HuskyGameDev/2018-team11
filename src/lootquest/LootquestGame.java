@@ -63,9 +63,8 @@ public class LootquestGame extends GameListener {
             for ( int x = 0; x < 2; x++ ) {
                 if ( flr[x][y].equals("X") ) {
                     Random r = new Random();
-                    //int numE = r.nextInt(3);
                     for ( int e = 0; e < 3; e++ ) {
-                        EntityFactory.createEnemy1((tiles * x) + (tiles)/2, (tiles * y) + (tiles/2));
+                        EntityFactory.createEnemy1((tiles * x) + (tiles)/2 + r.nextInt(tiles/2) - tiles/4, (tiles * y) + (tiles/2) + r.nextInt(tiles/2) - tiles/4);
                     }
                 }
             }

@@ -1,9 +1,9 @@
 package lootquest.dungeon;
 
-import lutebox.graphics.Texture;
+import lootquest.util.TextureCache;
 
 public class WallTile extends Tile {
     public WallTile(int x, int y, String name ) {
-        super(x, y, new Texture("assets/textures/cave/"+ name +".png"), true, TileType.WALL);
+        super(x, y, TextureCache.get("assets/textures/cave/"+ name +".png"), true, TileType.WALL);
     }
 }
