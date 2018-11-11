@@ -30,7 +30,7 @@ public class Entity {
      * Check if this entity has a specific component 
      */
     public <T extends Component> boolean contains(Class<T> type) {
-        return contains(ComponentId.get(type)); 
+        return contains(ComponentId.get(type));
     }
     
     private Component get(int id) {

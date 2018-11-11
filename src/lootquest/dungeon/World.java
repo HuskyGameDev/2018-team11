@@ -68,7 +68,8 @@ public class World {
 		            
 		            //Creating Generic room or Corridor
 		            chance = r.nextInt(2);
-		            if ( chance == 0 ) {
+		            if ( chance <= 0 ) {
+		                floor[x][y] = "C";
 		                room = crtRm.createCorridor(U, D, L, R);
 		                addRoom( room, x, y);
 		            } else {
@@ -267,10 +268,6 @@ public class World {
                 t.tick();
             }
         }
-//	    
-//		for( Tile t : tiles ) {
-//			t.tick();
-//		}
 	}
 	
 	public void render() {
@@ -282,12 +279,6 @@ public class World {
 	            }
 	        }
 	    }
-	    
-//		for( Tile t : tiles ) {
-//		    if ( t != null ) {
-//		        t.render();
-//		    }
-//		}
 	}
 	
 }
