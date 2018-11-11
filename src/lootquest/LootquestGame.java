@@ -4,11 +4,13 @@ import java.util.Random;
 
 import lootquest.dungeon.World;
 import lootquest.system.AISystem;
+import lootquest.system.DeathSystem;
 import lootquest.system.MapRenderSystem;
 import lootquest.system.MovementSystem;
-import lootquest.system.DeathSystem;
 import lootquest.system.PlayerInputSystem;
+import lootquest.system.ProjectileSystem;
 import lootquest.system.UpdateFromMovementSystem;
+import lootquest.system.UseRangedSystem;
 import lootquest.system.UseSwordSystem;
 import lootquest.system.WorldPhysicsSystem;
 import lutebox.core.GameListener;
@@ -42,6 +44,8 @@ public class LootquestGame extends GameListener {
         Lutebox.scene.addSystem(new AISystem());
         Lutebox.scene.addSystem(new PlayerInputSystem());
         Lutebox.scene.addSystem(new UseSwordSystem());
+        Lutebox.scene.addSystem(new UseRangedSystem()); 
+        Lutebox.scene.addSystem(new ProjectileSystem());
         
         Lutebox.scene.addSystem(new MovementSystem());
         Lutebox.scene.addSystem(new UpdateFromMovementSystem()); 
@@ -55,13 +59,12 @@ public class LootquestGame extends GameListener {
         EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY()); 
         //Enemies
         String[][] flr = world.getFloor();
-        for ( int y = 0; y < 10; y++ ) {
-            for ( int x = 0; x < 10; x++ ) {
+        for ( int y = 0; y < 2; y++ ) {
+            for ( int x = 0; x < 2; x++ ) {
                 if ( flr[x][y].equals("X") ) {
                     Random r = new Random();
-                    //int numE = r.nextInt(3);
                     for ( int e = 0; e < 3; e++ ) {
-                        EntityFactory.createEnemy1((tiles * x) + (tiles)/2, (tiles * y) + (tiles/2));
+                        EntityFactory.createEnemy1((tiles * x) + (tiles)/2 + r.nextInt(tiles/2) - tiles/4, (tiles * y) + (tiles/2) + r.nextInt(tiles/2) - tiles/4);
                     }
                 }
             }

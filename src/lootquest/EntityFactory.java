@@ -2,6 +2,7 @@ package lootquest;
 
 import lootquest.component.AI;
 import lootquest.component.Collider;
+import lootquest.component.Consumable;
 import lootquest.component.Direction;
 import lootquest.component.Enemy;
 import lootquest.component.EquipedCrossbow;
@@ -46,23 +47,32 @@ public final class EntityFactory {
         e.attach(Health.class);
         e.attach(Collider.class);
 		e.attach(Enemy.class);
-		e.attach(AI.class).setRanged(false);
+		e.attach(AI.class).setRanged(true);
 		e.attach(EquipedCrossbow.class);
         
         return e; 
     }
     
-    public static Entity createArrow(float x,float y,float xVel,float yVel) {
+    public static Entity createArrow(Entity from, float x,float y,float xVel,float yVel) {
     	Entity e = Lutebox.scene.createEntity();
     	
     	e.attach(Position.class).set(x, y);
     	e.attach(Movement.class).setMaxSpeed(6).set(xVel, yVel);
-    	e.attach(Size.class).set(0.8f, 0.8f);
+    	e.attach(Size.class).set(0.3f, 0.3f);
     	e.attach(Collider.class);
-    	e.attach(Projectile.class);
+    	e.attach(Projectile.class).setShooter(from);
     	
     	
     	return e;
     }
     
+    public static Entity createConsumable(float x,float y,int HP, int SDmg, int BDmg, float Speed) {
+    	Entity e = Lutebox.scene.createEntity();
+    	
+    	e.attach(Position.class).set(x, y);
+    	e.attach(Collider.class);
+    	e.attach(Consumable.class).SetHpRestore(HP).SetSwordDmgUp(SDmg).SetBowDmgUp(BDmg).SetSpeedUp(Speed);
+    	
+    	return e;
+    }
 }

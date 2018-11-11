@@ -1,11 +1,11 @@
 package lootquest.dungeon;
 
-import lutebox.graphics.Texture;
+import lootquest.util.TextureCache;
 
 public class GrassTile extends Tile {
 
 	public GrassTile(int x, int y) {
-		super(x, y, new Texture("assets/textures/Grass.png"), false, TileType.GRASS);
+		super(x, y, TextureCache.get("assets/textures/Grass.png"), false, TileType.GRASS);
 	}
 	
 }
