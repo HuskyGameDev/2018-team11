@@ -2,8 +2,8 @@ package lootquest.system;
 
 import lootquest.component.Direction;
 import lootquest.component.EquipedSword;
-import lootquest.component.Player;
 import lootquest.component.Movement;
+import lootquest.component.Player;
 import lutebox.core.Lutebox;
 import lutebox.ecs.Entity;
 import lutebox.ecs.Filter;

@@ -47,20 +47,20 @@ public final class EntityFactory {
         e.attach(Health.class);
         e.attach(Collider.class);
 		e.attach(Enemy.class);
-		e.attach(AI.class).setRanged(false);
+		e.attach(AI.class).setRanged(true);
 		e.attach(EquipedCrossbow.class);
         
         return e; 
     }
     
-    public static Entity createArrow(float x,float y,float xVel,float yVel) {
+    public static Entity createArrow(Entity from, float x,float y,float xVel,float yVel) {
     	Entity e = Lutebox.scene.createEntity();
     	
     	e.attach(Position.class).set(x, y);
     	e.attach(Movement.class).setMaxSpeed(6).set(xVel, yVel);
-    	e.attach(Size.class).set(0.8f, 0.8f);
+    	e.attach(Size.class).set(0.3f, 0.3f);
     	e.attach(Collider.class);
-    	e.attach(Projectile.class);
+    	e.attach(Projectile.class).setShooter(from);
     	
     	
     	return e;
