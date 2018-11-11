@@ -59,8 +59,8 @@ public class LootquestGame extends GameListener {
         EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY()); 
         //Enemies
         String[][] flr = world.getFloor();
-        for ( int y = 0; y < 10; y++ ) {
-            for ( int x = 0; x < 10; x++ ) {
+        for ( int y = 0; y < 2; y++ ) {
+            for ( int x = 0; x < 2; x++ ) {
                 if ( flr[x][y].equals("X") ) {
                     Random r = new Random();
                     //int numE = r.nextInt(3);

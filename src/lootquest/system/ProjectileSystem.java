@@ -3,6 +3,7 @@ package lootquest.system;
 import lootquest.component.Projectile;
 import lootquest.component.Collider;
 import lootquest.component.Health;
+import lootquest.component.Player;
 import lutebox.ecs.Entity;
 import lutebox.ecs.Filter;
 import lutebox.ecs.IteratingEntitySystem;
@@ -23,6 +24,7 @@ public class ProjectileSystem extends IteratingEntitySystem{
 		}else {
 			for(Entity other : col.collidingEntities) {
 				if (other == pro.shooter) continue; 
+				if (other.get(Player.class) == null) continue; 
 				Health hp = other.get(Health.class);
 				if (hp == null) {
 					continue;

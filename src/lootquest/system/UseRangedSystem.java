@@ -51,7 +51,7 @@ public class UseRangedSystem extends IteratingEntitySystem{
 				}else if(dir.direction == Direction.RIGHT) {
 					EntityFactory.createArrow(e, pos.x, pos.y, mov.maxSpeed, 0);
 				}
-//			}
+//			}k
 		}
 	}
 }
