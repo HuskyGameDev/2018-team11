@@ -112,7 +112,7 @@ public class Entity {
      * scene after the current update. 
      */
     public void destroy() {
-        destroyed = true; 
+    	destroyed = true; 
     }
     
     public boolean isDestroyed() {

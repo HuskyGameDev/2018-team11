@@ -3,8 +3,8 @@ package lootquest.component;
 import lutebox.ecs.Component;
 
 public class Health extends Component{
-	public int max;
-	public int current;
+	public int max = 1;
+	public int current = 1;
 	
 	public int getMax()
 	{

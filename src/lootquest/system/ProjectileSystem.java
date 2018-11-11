@@ -18,14 +18,17 @@ public class ProjectileSystem extends IteratingEntitySystem{
 		Projectile pro = e.get(Projectile.class);
 		
 		if(col.isHittingWall) {
+			System.out.println("ProjectileSystem: destroy arrow");
 			e.destroy();
 		}else {
-			for(Entity other:col.collidingEntities) {
+			for(Entity other : col.collidingEntities) {
+				if (other == pro.shooter) continue; 
 				Health hp = other.get(Health.class);
 				if (hp == null) {
 					continue;
 				}else {
 					hp.current -= pro.damage;
+					System.out.println("ProjectileSystem: used up arrow");
 					e.destroy();
 				}
 			}

@@ -131,11 +131,6 @@ public class WorldPhysicsSystem extends IteratingEntitySystem {
 		vx *= invlen; 
 		vy *= invlen; 
 		
-		float scaleX = vx == 0 ? 0 : (move.getDx() < 0 ? -1 : 1); 
-		float scaleY = vy == 0 ? 0 : (move.getDy() < 0 ? -1 : 1); 
-		
-//		System.out.println(vx + " " + vy);
-		
 		float x = pos.x; 
 		float y = pos.y;
 		float w = size.w; 
@@ -151,7 +146,6 @@ public class WorldPhysicsSystem extends IteratingEntitySystem {
 			if (world.isSolid(cx + 1, cy)) vx = 0; 
 			dx = cx + 1 - x; 
 		}
-//		System.out.println("dx " + dx); 
 		
 		if (vy > 0) {
 			dy = cy - y - h; 
@@ -159,7 +153,6 @@ public class WorldPhysicsSystem extends IteratingEntitySystem {
 		else {
 			dy = cy + 1 - y; 
 		}
-//		System.out.println("dy " + dy); 
 		
 		float sx = dx / vx; 
 		float sy = dy / vy; 
@@ -167,41 +160,22 @@ public class WorldPhysicsSystem extends IteratingEntitySystem {
 		boolean corrected = false; 
 		
 		if (vy == 0 && vx != 0) {
-//			System.out.println("!vy and vx");
 			pos.x += dx; 
-			scaleX = 0; 
 			corrected = true; 
 		}
 		else if (vy != 0 && vx == 0) {
-//			System.out.println("vy and !vx"); 
 			pos.y += dy; 
-			scaleY = 0; 
 			corrected = true; 
 		}
 		else if (vy != 0 && vx != 0) {
 			if (Math.abs(sx) < Math.abs(sy)) {
-//				System.out.println("sx < sy");
 				pos.x += dx; 
-				scaleX = 0; 
 			}
 			else {
-//				System.out.println("sy < sx");
 				pos.y += dy; 
-				scaleY = 0; 
 			}
 			corrected = true; 
 		}
-		
-//		if (keepVel) {
-//			if (scaleX != 0) {
-//				// adjusted y, add extra vel to x 
-//				pos.x += (move.getSpeed() - Math.abs(move.getDx())) * scaleX * Lutebox.deltaTime; 
-//			}
-//			else if (scaleY != 0) {
-//				// adjusted x, add extra vel to y 
-//				pos.y += (move.getSpeed() - Math.abs(move.getDy())) * scaleY * Lutebox.deltaTime; 
-//			}
-//		}
 		
 		return corrected; 
 	}

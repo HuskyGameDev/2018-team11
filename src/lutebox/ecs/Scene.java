@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Scene {
 
-    private EntityManager entities = new EntityManager(this); 
+    protected EntityManager entities = new EntityManager(this); 
     private FilterRegistry filters = new FilterRegistry(this); 
     private SystemManager systems = new SystemManager(this); 
     private boolean updating = false; 
@@ -34,6 +34,10 @@ public class Scene {
         addEntity(e); 
         return e; 
     }
+    
+//    public void removeEntity(Entity e) {
+//    	entities.removeEntity(e, updating); 
+//    }
     
     /**
      * Returns an immutable list of all entities linked with this 
@@ -64,9 +68,15 @@ public class Scene {
      * handle a filtered list of entities. 
      */
     public void update() {
+//    	System.out.println(entities.getEntities().size());
         updating = true; 
         for (SceneSystem system : systems.getSystems()) {
             system.update(); 
+        }
+        for (Entity e : entities.getEntities()) {
+        	if (e.isDestroyed()) {
+        		entities.removeEntity(e, true); 
+        	}
         }
         updating = false; 
         entities.flush(); 

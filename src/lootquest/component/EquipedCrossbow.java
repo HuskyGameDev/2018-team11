@@ -7,7 +7,7 @@ public class EquipedCrossbow  extends Component{
 	public float cooldownTime = 0.5f; 
 	public float animationTime = 0.2f; 
 	
-	private float curTime = 0; 
+	public float curTime = 0; 
 	private boolean inUse = false; 
 	
 	public boolean use() {

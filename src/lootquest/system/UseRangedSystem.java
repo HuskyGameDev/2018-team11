@@ -20,11 +20,12 @@ public class UseRangedSystem extends IteratingEntitySystem{
 	public void updateEntity(Entity e) {
         EquipedCrossbow crossbow = e.get(EquipedCrossbow.class); 
         
+        spawnProjectile(e); 
         crossbow.addTime(Lutebox.deltaTime);
         
         //arrow.addTime(Lutebox.deltaTime); 
         
-        spawnProjectile(e); 
+        
     }
 	
 	public void spawnProjectile(Entity e) {
@@ -34,25 +35,23 @@ public class UseRangedSystem extends IteratingEntitySystem{
         Position pos = e.get(Position.class);
         Movement mov = e.get(Movement.class);
 		
-        System.out.println("Using: " + crossbow.isUsing());
-        
-		if (crossbow.isUsing()) {//crossbow.shouldFire()) {
+		if (crossbow.shouldFire()) {//crossbow.shouldFire()) {
 			
-			System.out.println("Should fire");
+			System.out.println("UseRangedSystem: Firing array from " + e);
 			
-			if(dir.moving) {
-				EntityFactory.createArrow(pos.x + mov.getDx(), pos.y + mov.getDy(), mov.maxSpeed * mov.getDx(), mov.maxSpeed * mov.getDy());
-			}else {
+//			if(dir.moving) {
+//				EntityFactory.createArrow(e, pos.x + mov.getDx(), pos.y + mov.getDy(), mov.maxSpeed * mov.getDx(), mov.maxSpeed * mov.getDy());
+//			}else {
 				if(dir.direction == Direction.UP) {
-					EntityFactory.createArrow(pos.x, pos.y, 0, -mov.maxSpeed);
+					EntityFactory.createArrow(e, pos.x, pos.y, 0, -mov.maxSpeed);
 				}else if(dir.direction == Direction.DOWN) {
-					EntityFactory.createArrow(pos.x, pos.y, 0, mov.maxSpeed);
+					EntityFactory.createArrow(e, pos.x, pos.y, 0, mov.maxSpeed);
 				}else if(dir.direction == Direction.LEFT) {
-					EntityFactory.createArrow(pos.x, pos.y, -mov.maxSpeed, 0);
+					EntityFactory.createArrow(e, pos.x, pos.y, -mov.maxSpeed, 0);
 				}else if(dir.direction == Direction.RIGHT) {
-					EntityFactory.createArrow(pos.x, pos.y, mov.maxSpeed, 0);
+					EntityFactory.createArrow(e, pos.x, pos.y, mov.maxSpeed, 0);
 				}
-			}
+//			}
 		}
 	}
 }

@@ -25,7 +25,9 @@ public class AISystem extends IteratingEntitySystem{
 	public void updateEntity(Entity e) {
 		Filter playerSearch = Filter.include(Position.class,Player.class).create();
 		List<Entity> players = getScene().getEntities(playerSearch);
-		Entity player = players.get(0);
+		Entity player = players.size() > 0 ? players.get(0) : null;
+		
+		if (player == null) return; 
 		
 		Position enemyPos = e.get(Position.class);
 		Position playerPos = player.get(Position.class);
@@ -59,7 +61,7 @@ public class AISystem extends IteratingEntitySystem{
 					}
 				}
 				
-				System.out.println("Trying to fire");
+//				System.out.println("Trying to fire");
 				bow.use();
 			}else {
 				enemyDir.updateFromMovement = true;

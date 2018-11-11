@@ -74,6 +74,7 @@ public class EntityManager {
                 break; 
             }
         }
+        opQueue.clear(); 
     }
     
     public void updateEntity(Entity e, boolean wait) {
