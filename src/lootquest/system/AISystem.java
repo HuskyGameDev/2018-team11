@@ -25,9 +25,7 @@ public class AISystem extends IteratingEntitySystem{
 	public void updateEntity(Entity e) {
 		Filter playerSearch = Filter.include(Position.class,Player.class).create();
 		List<Entity> players = getScene().getEntities(playerSearch);
-		Entity player = players.size() > 0 ? players.get(0) : null;
-		
-		if (player == null) return; 
+		Entity player = players.get(0);
 		
 		Position enemyPos = e.get(Position.class);
 		Position playerPos = player.get(Position.class);
@@ -42,42 +40,44 @@ public class AISystem extends IteratingEntitySystem{
 		float yDiff = playerPos.y - enemyPos.y;
 		bob.counterCur--;
 		
-		if (bob.ranged == true) {
-			if (Math.abs(xDiff) > bob.distance || Math.abs(yDiff) > bob.distance) {// || bob.counterCur < 0) {
-				enemyMov.set(0, 0);
-				enemyDir.updateFromMovement = false;
-//				bob.counterCur = bob.counterMax;
-				if(Math.abs(xDiff) > Math.abs(yDiff)) {
-					if (xDiff < 0) {
-						enemyDir.direction = Direction.LEFT;
-					}else {
-						enemyDir.direction = Direction.RIGHT;
+		if (Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2)) < 20) {
+			if (bob.ranged == true) {
+				if (Math.abs(xDiff) > bob.distance || Math.abs(yDiff) > bob.distance || bob.counterCur < 0) {
+					enemyMov.set(0, 0);
+					enemyDir.updateFromMovement = false;
+
+					if (Math.abs(xDiff) > Math.abs(yDiff)) {
+						if (xDiff < 0) {
+							enemyDir.direction = Direction.LEFT;
+						} else {
+							enemyDir.direction = Direction.RIGHT;
+						}
+					} else {
+						if (yDiff < 0) {
+							enemyDir.direction = Direction.UP;
+						} else {
+							enemyDir.direction = Direction.DOWN;
+						}
 					}
-				}else {
-					if (yDiff < 0) {
-						enemyDir.direction = Direction.UP;
-					}else {
-						enemyDir.direction = Direction.DOWN;
-					}
+
+					bow.use();
+					bob.counterCur = bob.counterMax;
+				} else {
+					enemyDir.updateFromMovement = true;
+					enemyMov.set(-xDiff, -yDiff);
 				}
-				
-//				System.out.println("Trying to fire");
-				bow.use();
-			}else {
-				enemyDir.updateFromMovement = true;
-				enemyMov.set(-xDiff, -yDiff);
+			} else if (Math.abs(xDiff) > bob.distance || Math.abs(yDiff) > bob.distance) {
+				if (bob.counterCur < 0) {
+					enemyMov.set((float) (Math.random() * 4 - 2), (float) (Math.random() * 4 - 2));
+					bob.counterCur = bob.counterMax;
+				}
+			} else if (Math.abs(yDiff) >= playerSize.h + 0.25 || Math.abs(xDiff) >= playerSize.h + 0.25) {
+				enemyMov.set(xDiff, yDiff);
+			} else {
+				enemyMov.set(0, 0);
+
+				armed.use();
 			}
-		}else if(Math.abs(xDiff) > bob.distance || Math.abs(yDiff) > bob.distance) {
-			if(bob.counterCur < 0) {
-				enemyMov.set((float) (Math.random()*4 - 2), (float) (Math.random()*4 - 2));
-				bob.counterCur = bob.counterMax;
-			}
-		}else if (Math.abs(yDiff) >= playerSize.h + 0.25 || Math.abs(xDiff) >= playerSize.h + 0.25) {
-			enemyMov.set(xDiff, yDiff);
-		}else {
-			enemyMov.set(0, 0);
-			
-			armed.use(); 
 		}
 		
 //		if (Math.abs(xDiff) > 3 || Math.abs(yDiff) > 3 || bob.counterCur < 0 || bob.counterCur > 35) {
