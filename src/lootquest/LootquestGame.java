@@ -21,14 +21,16 @@ public class LootquestGame extends GameListener {
     
     public void init() {
         Lutebox.display.setTitle("Lootquest: Depths of Koderia");
-        Lutebox.display.setSize(800, 600); 
+        Lutebox.display.setSize(800, 600);
         Lutebox.cursor.setVisible(true); 
         
+        int tiles = 16;
+        int rooms = tiles * 10;
         try {
-            world = new World(32, 32, 16, 16);
+            // int #ofRoomsX, #ofRoomsY, #ofTiles/RoomX, #ofTiles/RoomY
+            world = new World(rooms, rooms, tiles, tiles);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            System.out.println("A room file was not found or failed to load");
+            System.out.println("Something went wrong with world creating. Look at the world call to see if it is properly called.");
             e.printStackTrace();
         }
         
@@ -49,8 +51,8 @@ public class LootquestGame extends GameListener {
         Lutebox.scene.addSystem(new WorldPhysicsSystem()); 
         
         // add entities
-        EntityFactory.createPlayer(2, 2); 
-        EntityFactory.createEnemy1(5, 6);
+        EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY()); 
+        EntityFactory.createEnemy1(world.getSpawnX()+5, world.getSpawnY()+5);
 
     }
     

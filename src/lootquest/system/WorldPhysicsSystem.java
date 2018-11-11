@@ -93,8 +93,10 @@ public class WorldPhysicsSystem extends IteratingEntitySystem {
 					tmp.y = y; 
 					
 					if (world.inBounds(x, y)) {
-						Tile tile = world.getTile(x, y); 
-						if (!tile.isSolid) continue; 
+						Tile tile = world.getTile(x, y);
+						if ( tile != null ) {
+						    if (!tile.isSolid) continue; 
+						}
 					}
 					
 					if (tmp.intersects(entityCollider)) {

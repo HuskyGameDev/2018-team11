@@ -25,6 +25,10 @@ public class Tile {
 		this.tileType = tileType;
 	}
 	
+	public String getType () {
+	    return tileType.toString();
+	}
+	
 	public void tick() {
 		
 	}

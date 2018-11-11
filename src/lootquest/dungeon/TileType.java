@@ -2,5 +2,8 @@ package lootquest.dungeon;
 
 public enum TileType {
 	GRASS,
-	DIRT
+	DIRT,
+	FLOOR,
+	WALL,
+	FILLER
 }
