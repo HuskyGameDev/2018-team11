@@ -9,7 +9,7 @@ public class FloorGen2 {
     public int cDOWN = 9;
     public int cLEFT = 9;
     public int cRIGHT = 12;
-    public int cc = 3;
+    public int cc = 2;
     public int xE = -1;
     public int yE = -1;
     

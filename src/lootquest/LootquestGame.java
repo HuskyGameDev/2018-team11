@@ -1,5 +1,7 @@
 package lootquest;
 
+import java.util.Random;
+
 import lootquest.dungeon.World;
 import lootquest.system.AISystem;
 import lootquest.system.MapRenderSystem;
@@ -49,9 +51,23 @@ public class LootquestGame extends GameListener {
         Lutebox.scene.addSystem(new WorldPhysicsSystem()); 
         
         // add entities
+        //Player
         EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY()); 
-        EntityFactory.createEnemy1(world.getSpawnX()+5, world.getSpawnY()+5);
-
+        //Enemies
+        String[][] flr = world.getFloor();
+        for ( int y = 0; y < 10; y++ ) {
+            for ( int x = 0; x < 10; x++ ) {
+                if ( flr[x][y].equals("X") ) {
+                    Random r = new Random();
+                    //int numE = r.nextInt(3);
+                    for ( int e = 0; e < 3; e++ ) {
+                        EntityFactory.createEnemy1((tiles * x) + (tiles)/2, (tiles * y) + (tiles/2));
+                    }
+                }
+            }
+        }
+        
+        
     }
     
     public static void main(String[] args) {
