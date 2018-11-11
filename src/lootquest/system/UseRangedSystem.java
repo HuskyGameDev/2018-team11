@@ -6,6 +6,7 @@ import lootquest.component.EquipedCrossbow;
 import lootquest.component.Movement;
 import lootquest.component.Position;
 import lootquest.component.Size;
+import lutebox.core.Lutebox;
 import lutebox.ecs.Entity;
 import lutebox.ecs.Filter;
 import lutebox.ecs.IteratingEntitySystem;
@@ -19,7 +20,11 @@ public class UseRangedSystem extends IteratingEntitySystem{
 	public void updateEntity(Entity e) {
         EquipedCrossbow crossbow = e.get(EquipedCrossbow.class); 
         
+        crossbow.addTime(Lutebox.deltaTime);
+        
         //arrow.addTime(Lutebox.deltaTime); 
+        
+        spawnProjectile(e); 
     }
 	
 	public void spawnProjectile(Entity e) {
@@ -29,9 +34,11 @@ public class UseRangedSystem extends IteratingEntitySystem{
         Position pos = e.get(Position.class);
         Movement mov = e.get(Movement.class);
 		
+        System.out.println("Using: " + crossbow.isUsing());
         
-        
-		if (crossbow.shouldShowAnimation()) {
+		if (crossbow.isUsing()) {//crossbow.shouldFire()) {
+			
+			System.out.println("Should fire");
 			
 			if(dir.moving) {
 				EntityFactory.createArrow(pos.x + mov.getDx(), pos.y + mov.getDy(), mov.maxSpeed * mov.getDx(), mov.maxSpeed * mov.getDy());

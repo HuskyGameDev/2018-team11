@@ -5,7 +5,7 @@ import lutebox.ecs.Component;
 public class EquipedCrossbow  extends Component{
 
 	public float cooldownTime = 0.5f; 
-	public float animationTime = 0.2f;
+	public float animationTime = 0.2f; 
 	
 	private float curTime = 0; 
 	private boolean inUse = false; 
@@ -23,6 +23,10 @@ public class EquipedCrossbow  extends Component{
 	
     public boolean shouldShowAnimation() {
     	return inUse && curTime < animationTime; 
+    }
+    
+    public boolean shouldFire() {
+    	return inUse && curTime == 0; 
     }
     
     public void addTime(float time) {

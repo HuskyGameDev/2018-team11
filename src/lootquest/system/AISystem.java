@@ -41,10 +41,10 @@ public class AISystem extends IteratingEntitySystem{
 		bob.counterCur--;
 		
 		if (bob.ranged == true) {
-			if (Math.abs(xDiff) > bob.distance || Math.abs(yDiff) > bob.distance || bob.counterCur < 0) {
+			if (Math.abs(xDiff) > bob.distance || Math.abs(yDiff) > bob.distance) {// || bob.counterCur < 0) {
 				enemyMov.set(0, 0);
 				enemyDir.updateFromMovement = false;
-				bob.counterCur = bob.counterMax;
+//				bob.counterCur = bob.counterMax;
 				if(Math.abs(xDiff) > Math.abs(yDiff)) {
 					if (xDiff < 0) {
 						enemyDir.direction = Direction.LEFT;
@@ -59,6 +59,7 @@ public class AISystem extends IteratingEntitySystem{
 					}
 				}
 				
+				System.out.println("Trying to fire");
 				bow.use();
 			}else {
 				enemyDir.updateFromMovement = true;

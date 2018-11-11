@@ -2,11 +2,12 @@ package lootquest;
 
 import lootquest.dungeon.World;
 import lootquest.system.AISystem;
+import lootquest.system.DeathSystem;
 import lootquest.system.MapRenderSystem;
 import lootquest.system.MovementSystem;
-import lootquest.system.DeathSystem;
 import lootquest.system.PlayerInputSystem;
 import lootquest.system.UpdateFromMovementSystem;
+import lootquest.system.UseRangedSystem;
 import lootquest.system.UseSwordSystem;
 import lootquest.system.WorldPhysicsSystem;
 import lutebox.core.GameListener;
@@ -38,6 +39,7 @@ public class LootquestGame extends GameListener {
         Lutebox.scene.addSystem(new AISystem());
         Lutebox.scene.addSystem(new PlayerInputSystem());
         Lutebox.scene.addSystem(new UseSwordSystem());
+        Lutebox.scene.addSystem(new UseRangedSystem()); 
         
         Lutebox.scene.addSystem(new MovementSystem());
         Lutebox.scene.addSystem(new UpdateFromMovementSystem()); 
