@@ -25,7 +25,6 @@ public class MapRenderSystem extends IteratingEntitySystem {
     
     public void preRenderEntities() {
         Lutebox.graphics.setColor(0x000000);
-        //Lutebox.graphics.setColor(0x66BBFF); 
         Lutebox.graphics.clear();
         
         LootquestGame.world.render();
