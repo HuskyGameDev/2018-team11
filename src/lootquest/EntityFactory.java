@@ -40,14 +40,14 @@ public final class EntityFactory {
     	Entity e = Lutebox.scene.createEntity(); 
     	
     	e.attach(Position.class).set(x, y); 
-    	e.attach(Movement.class).setMaxSpeed(4); 
+    	e.attach(Movement.class).setMaxSpeed(3); 
     	e.attach(Direction.class); 
         e.attach(Size.class).set(0.8f, 0.8f); 
         e.attach(EquipedSword.class);
         e.attach(Health.class);
         e.attach(Collider.class);
 		e.attach(Enemy.class);
-		e.attach(AI.class).setRanged(true);
+		e.attach(AI.class).setRangedRandom();
 		e.attach(EquipedCrossbow.class);
         
         return e; 
@@ -55,23 +55,26 @@ public final class EntityFactory {
     
     public static Entity createArrow(Entity from, float x,float y,float xVel,float yVel) {
     	Entity e = Lutebox.scene.createEntity();
+    	EquipedCrossbow bow = from.get(EquipedCrossbow.class);
     	
     	e.attach(Position.class).set(x, y);
     	e.attach(Movement.class).setMaxSpeed(6).set(xVel, yVel);
     	e.attach(Size.class).set(0.3f, 0.3f);
     	e.attach(Collider.class);
-    	e.attach(Projectile.class).setShooter(from);
+    	e.attach(Projectile.class).setShooter(from).setDamage(bow.damage);
     	
     	
     	return e;
     }
     
-    public static Entity createConsumable(float x,float y,int HP, int SDmg, int BDmg, float Speed) {
+    public static Entity createConsumable(float x,float y,int HP, int SDmg, float Speed) {
     	Entity e = Lutebox.scene.createEntity();
     	
+    	e.attach(Size.class).set(0.6f, 0.6f);
     	e.attach(Position.class).set(x, y);
     	e.attach(Collider.class);
-    	e.attach(Consumable.class).SetHpRestore(HP).SetSwordDmgUp(SDmg).SetBowDmgUp(BDmg).SetSpeedUp(Speed);
+    	e.attach(Consumable.class).SetHpRestore(HP).SetSwordDmgUp(SDmg).SetSpeedUp(Speed);
+    	e.attach(Movement.class);
     	
     	return e;
     }

@@ -6,9 +6,15 @@ public class EquipedCrossbow  extends Component{
 
 	public float cooldownTime = 2.5f; 
 	public float animationTime = 0.2f; 
+	public int damage = 1;
 	
 	public float curTime = 0; 
 	private boolean inUse = false; 
+	
+	public EquipedCrossbow setDamage(int x) {
+		damage = x;
+		return this;
+	}
 	
 	public boolean use() {
 		if (isUsing()) return false; 

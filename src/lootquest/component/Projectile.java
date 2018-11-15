@@ -13,4 +13,10 @@ public class Projectile extends Component{
 		return this; 
 	}
 	
+	public Projectile setDamage(int x) {
+		damage = x;
+		return this;
+	}
+	
+	
 }

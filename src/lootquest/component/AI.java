@@ -17,4 +17,12 @@ public class AI extends Component{
 		this.ranged = b;
 		return this;
 	}
+	public AI setRangedRandom() {
+		if(Math.random() < 0.5) {
+			this.ranged = true;
+		} else {
+			this.ranged = false;
+		}
+		return this;
+	}
 }

@@ -3,6 +3,7 @@ package lootquest.system;
 import java.util.List;
 
 import lootquest.component.AI;
+import lootquest.component.Collider;
 import lootquest.component.Direction;
 import lootquest.component.Enemy;
 import lootquest.component.EquipedCrossbow;
@@ -37,6 +38,7 @@ public class AISystem extends IteratingEntitySystem{
 		AI bob = e.get(AI.class);
 		Direction enemyDir = e.get(Direction.class);
 		EquipedCrossbow bow = e.get(EquipedCrossbow.class);
+		Collider col = e.get(Collider.class);
 		
 		float xDiff = playerPos.x - enemyPos.x;
 		float yDiff = playerPos.y - enemyPos.y;
@@ -44,7 +46,7 @@ public class AISystem extends IteratingEntitySystem{
 		
 		if (Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2)) < 20) {
 			if (bob.ranged == true) {
-				if (Math.abs(xDiff) > bob.distance || Math.abs(yDiff) > bob.distance || bob.counterCur < 0) {
+				if (bob.counterCur < 0) {
 					enemyMov.set(0, 0);
 					enemyDir.updateFromMovement = false;
 
@@ -64,7 +66,9 @@ public class AISystem extends IteratingEntitySystem{
 
 					bow.use();
 					bob.counterCur = bob.counterMax;
-				} else {
+					enemyDir.updateFromMovement = true;
+					enemyMov.set((float) (Math.random() * 4 - 2), (float) (Math.random() * 4 - 2));
+				} else if (Math.sqrt( Math.pow(xDiff, 2) + Math.pow(yDiff, 2)) < bob.distance){
 					enemyDir.updateFromMovement = true;
 					enemyMov.set(-xDiff, -yDiff);
 				}
@@ -74,7 +78,13 @@ public class AISystem extends IteratingEntitySystem{
 					bob.counterCur = bob.counterMax;
 				}
 			} else if (Math.abs(yDiff) >= playerSize.h + 0.25 || Math.abs(xDiff) >= playerSize.h + 0.25) {
-				enemyMov.set(xDiff, yDiff);
+				if (!col.collidingEntities.isEmpty() && col.collidingEntities.get(0).get(Enemy.class) != null) {
+					float colX = enemyPos.x - col.collidingEntities.get(0).get(Position.class).x;
+					float colY = enemyPos.y - col.collidingEntities.get(0).get(Position.class).y;
+					enemyMov.set(colX, colY);
+				}else {
+					enemyMov.set(xDiff, yDiff);
+				}
 			} else {
 				enemyMov.set(0, 0);
 
