@@ -118,19 +118,6 @@ public class World {
 		        R = false;
 		    }
 		}
-		
-//		String[][] room;
-//		room = crtRm.createStart(false, true, false, true);
-//		addRoom( room, 0, 0);
-//		
-//		room = crtRm.createExit(true, false, false, true);
-//        addRoom( room, 0, 1);
-//        
-//        room = crtRm.createCorridor(false, true, true, false);
-//        addRoom( room, 1, 0);
-//        
-//        room = crtRm.createRoom(true, false, true, false);
-//        addRoom( room, 1, 1);
 	}
 	
 	public void addRoom( String[][] room, int xOffset, int yOffset ) {
@@ -178,7 +165,7 @@ public class World {
 	                }
 	                
 	            } else if ( room[x][y].equals("e")) {
-	                setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new FillerTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size));
+	                //setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new FillerTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size));
 	            } else {
 	                setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new GrassTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size));
 	            }

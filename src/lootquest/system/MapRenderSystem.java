@@ -45,7 +45,7 @@ public class MapRenderSystem extends IteratingEntitySystem {
         Position p = e.get(Position.class); 
         Size s = e.get(Size.class);
         if ( e.contains(Player.class) ) {
-            Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player.png"), p.x*scale, p.y*scale, s.w*scale, s.h*scale);
+            Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player_0.png"), p.x*scale, p.y*scale, s.w*scale, s.h*scale);
         }else if ( e.contains(Enemy.class) ) {
             Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/sprite_0.png"), p.x*scale, p.y*scale, s.w*scale, s.h*scale);
         } else {

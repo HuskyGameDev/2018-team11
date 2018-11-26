@@ -52,7 +52,7 @@ public class LootquestGame extends GameListener {
         
         Lutebox.scene.addSystem(new DeathSystem());
         
-        Lutebox.scene.addSystem(new WorldPhysicsSystem()); 
+        Lutebox.scene.addSystem(new WorldPhysicsSystem());
         
         // add entities
         //Player
@@ -69,12 +69,9 @@ public class LootquestGame extends GameListener {
                 }
             }
         }
-        
-        
     }
     
     public static void main(String[] args) {
         Lutebox.start(new LootquestGame()); 
     }
-    
 }
