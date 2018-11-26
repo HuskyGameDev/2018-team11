@@ -4,6 +4,7 @@ import java.util.Random;
 
 import lootquest.dungeon.World;
 import lootquest.system.AISystem;
+import lootquest.system.ConsumableSystem;
 import lootquest.system.DeathSystem;
 import lootquest.system.MapRenderSystem;
 import lootquest.system.MovementSystem;
@@ -54,6 +55,8 @@ public class LootquestGame extends GameListener {
         
         Lutebox.scene.addSystem(new WorldPhysicsSystem());
         
+        Lutebox.scene.addSystem(new ConsumableSystem());
+        
         // add entities
         //Player
         EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY()); 
@@ -69,6 +72,12 @@ public class LootquestGame extends GameListener {
                 }
             }
         }
+<<<<<<< HEAD
+=======
+        //consumable
+        EntityFactory.createConsumable(world.getSpawnX() + 1, world.getSpawnY() + 1, 1, 0, 0);
+        
+>>>>>>> fbbf09716073c275cef2324735f4096ed397bf04
     }
     
     public static void main(String[] args) {
