@@ -69,8 +69,15 @@ public class AISystem extends IteratingEntitySystem{
 					enemyDir.updateFromMovement = true;
 					enemyMov.set((float) (Math.random() * 4 - 2), (float) (Math.random() * 4 - 2));
 				} else if (Math.sqrt( Math.pow(xDiff, 2) + Math.pow(yDiff, 2)) < bob.distance){
-					enemyDir.updateFromMovement = true;
 					enemyMov.set(-xDiff, -yDiff);
+					//if its back is to a wall it tries to line up with the player.
+					if(col.isHittingWall) {
+						if (xDiff < yDiff) {
+							enemyMov.set(xDiff *5, -yDiff);
+						}else {
+							enemyMov.set(-xDiff, yDiff *5);
+						}
+					}
 				}
 			} else if (Math.abs(xDiff) > bob.distance || Math.abs(yDiff) > bob.distance) {
 				if (bob.counterCur < 0) {

@@ -5,7 +5,7 @@ import lutebox.ecs.Component;
 public class AI extends Component{
 	public int counterCur = 0;
 	public int counterMax = (int) Math.random()*120 + 30;
-	public float distance = 3;
+	public float distance = 4;
 	public boolean ranged = false;
 	
 	public AI setDistance(float d) {
