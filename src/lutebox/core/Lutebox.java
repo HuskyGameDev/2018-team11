@@ -49,6 +49,11 @@ public class Lutebox {
     public static Scene scene; 
     
     /**
+     * Current game camera. 
+     */
+    public static Camera camera; 
+    
+    /**
      * For internal use only. 
      */
     public static GraphicsBackend graphicsBackend; 
@@ -69,6 +74,7 @@ public class Lutebox {
         input = backend.getKeyboard(); 
         
         scene = new Scene(); 
+        camera = new Camera(0, 0, 48); 
         
         graphicsBackend = backend.getGraphicsBackend(); 
     }

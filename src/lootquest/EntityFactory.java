@@ -25,7 +25,7 @@ public final class EntityFactory {
         Entity e = Lutebox.scene.createEntity(); 
         
         e.attach(Position.class).set(x, y); 
-        e.attach(Movement.class).setMaxSpeed(3); 
+        e.attach(Movement.class).setMaxSpeed(4); 
         e.attach(Size.class).set(0.8f, 0.8f); 
         e.attach(Direction.class);
         e.attach(Health.class);

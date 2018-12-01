@@ -1,15 +1,14 @@
 package lootquest.system;
 
-import lootquest.LootquestGame;
 import lootquest.component.Direction;
 import lootquest.component.EquipedSword;
 import lootquest.component.Position;
 import lootquest.component.Size;
-import lootquest.util.AABB;
 import lutebox.core.Lutebox;
 import lutebox.ecs.Entity;
 import lutebox.ecs.Filter;
 import lutebox.ecs.IteratingEntitySystem;
+import lutebox.util.AABB;
 
 public class UseSwordSystem extends IteratingEntitySystem {
 
@@ -35,10 +34,10 @@ public class UseSwordSystem extends IteratingEntitySystem {
         	
         	Lutebox.graphics.setColor(0xff00ff);
         	Lutebox.graphics.drawRect(
-        			swordHitbox.x * LootquestGame.scale, 
-        			swordHitbox.y * LootquestGame.scale, 
-        			swordHitbox.w * LootquestGame.scale, 
-        			swordHitbox.h * LootquestGame.scale);
+        			swordHitbox.x, 
+        			swordHitbox.y, 
+        			swordHitbox.w, 
+        			swordHitbox.h);
         	
         }
     }

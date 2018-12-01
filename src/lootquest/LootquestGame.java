@@ -6,10 +6,11 @@ import lootquest.dungeon.World;
 import lootquest.system.AISystem;
 import lootquest.system.ConsumableSystem;
 import lootquest.system.DeathSystem;
-import lootquest.system.MapRenderSystem;
+import lootquest.system.FollowPlayerCameraSystem;
 import lootquest.system.MovementSystem;
 import lootquest.system.PlayerInputSystem;
 import lootquest.system.ProjectileSystem;
+import lootquest.system.RenderSystem;
 import lootquest.system.UpdateFromMovementSystem;
 import lootquest.system.UseRangedSystem;
 import lootquest.system.UseSwordSystem;
@@ -20,13 +21,13 @@ import lutebox.core.Lutebox;
 public class LootquestGame extends GameListener {
     // add map
     public static World world; 
-    
-    public static float scale = 48; 
+//    public static float scale = 48; 
     
     public void init() {
         Lutebox.display.setTitle("Lootquest: Depths of Koderia");
         Lutebox.display.setSize(800, 600);
         Lutebox.cursor.setVisible(true); 
+        Lutebox.camera.setUnitSize(64); 
         
         int tiles = 16;
         int rooms = tiles * 10;
@@ -39,9 +40,10 @@ public class LootquestGame extends GameListener {
         }
         
         // add render systems 
-        Lutebox.scene.addSystem(new MapRenderSystem(48)); 
+        Lutebox.scene.addSystem(new RenderSystem(48)); 
         
         // add update systems 
+        Lutebox.scene.addSystem(new FollowPlayerCameraSystem());
         Lutebox.scene.addSystem(new AISystem());
         Lutebox.scene.addSystem(new PlayerInputSystem());
         Lutebox.scene.addSystem(new UseSwordSystem());

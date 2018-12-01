@@ -1,4 +1,4 @@
-package lootquest.util;
+package lutebox.util;
 
 /**
  * 
