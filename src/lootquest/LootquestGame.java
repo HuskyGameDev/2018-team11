@@ -15,6 +15,7 @@ import lootquest.system.UpdateFromMovementSystem;
 import lootquest.system.UseRangedSystem;
 import lootquest.system.UseSwordSystem;
 import lootquest.system.WorldPhysicsSystem;
+import lutebox.audio.Sound;
 import lutebox.core.GameListener;
 import lutebox.core.Lutebox;
 
@@ -77,6 +78,9 @@ public class LootquestGame extends GameListener {
         }
         //consumable
         EntityFactory.createConsumable(world.getSpawnX() + 1, world.getSpawnY() + 1, 1, 0, 0);
+        
+        Sound music = new Sound("assets/music/Dungeon.wav"); 
+        Lutebox.audio.play(music, true, true); 
     }
     
     public static void main(String[] args) {

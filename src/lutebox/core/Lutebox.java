@@ -2,6 +2,8 @@ package lutebox.core;
 
 import java.awt.event.KeyEvent;
 
+import lutebox.audio.Audio;
+import lutebox.backend.AudioBackend;
 import lutebox.backend.Backend;
 import lutebox.backend.GraphicsBackend;
 import lutebox.backend.awt.AwtBackend;
@@ -37,6 +39,12 @@ public class Lutebox {
     public static Graphics graphics; 
     
     /**
+     * Audio interface. 
+     * Use this to play, pause, stop sounds. 
+     */
+    public static Audio audio; 
+    
+    /**
      * Input interface. 
      * Use this to get information about the keyboard and mouse. 
      */
@@ -57,6 +65,7 @@ public class Lutebox {
      * For internal use only. 
      */
     public static GraphicsBackend graphicsBackend; 
+    public static AudioBackend audioBackend; 
     
     public static float deltaTime = 1 / 60f; 
     
@@ -72,11 +81,13 @@ public class Lutebox {
         display = backend.getDisplay(); 
         graphics = backend.getGraphics(); 
         input = backend.getKeyboard(); 
+        audio = backend.getAudio(); 
         
         scene = new Scene(); 
         camera = new Camera(0, 0, 48); 
         
-        graphicsBackend = backend.getGraphicsBackend(); 
+        graphicsBackend = backend.getGraphicsBackend();
+        audioBackend = backend.getAudioBackend(); 
     }
     
     /**

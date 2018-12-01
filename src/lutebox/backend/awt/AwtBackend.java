@@ -1,5 +1,7 @@
 package lutebox.backend.awt;
 
+import lutebox.audio.Audio;
+import lutebox.backend.AudioBackend;
 import lutebox.backend.Backend;
 import lutebox.backend.GraphicsBackend;
 import lutebox.core.Display;
@@ -11,7 +13,8 @@ public class AwtBackend implements Backend {
     
     private AwtGraphicsBackend graphicsBackend = new AwtGraphicsBackend(); 
     private AwtDisplay display = new AwtDisplay();
-
+    private AwtAudio audio = new AwtAudio(); 
+    
     @Override
     public Display getDisplay() {
         return display; 
@@ -31,6 +34,16 @@ public class AwtBackend implements Backend {
     public Graphics getGraphics() {
         return display.getGraphics(); 
     } 
+    
+    @Override
+    public Audio getAudio() {
+        return audio; 
+    }
+    
+    @Override
+    public AudioBackend getAudioBackend() {
+        return audio; 
+    }
     
     @Override
     public GraphicsBackend getGraphicsBackend() {
