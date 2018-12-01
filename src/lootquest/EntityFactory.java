@@ -28,7 +28,7 @@ public final class EntityFactory {
         e.attach(Movement.class).setMaxSpeed(4); 
         e.attach(Size.class).set(0.8f, 0.8f); 
         e.attach(Direction.class);
-        e.attach(Health.class);
+        e.attach(Health.class).set(10, 10);
         e.attach(EquipedSword.class);
         e.attach(Player.class);
         e.attach(Collider.class); 

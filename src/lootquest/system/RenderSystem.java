@@ -65,7 +65,7 @@ public class RenderSystem extends IteratingEntitySystem {
         Position p = e.get(Position.class); 
         Size s = e.get(Size.class);
         if ( e.contains(Player.class) ) {
-            Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player_0.png"), p.x, p.y, s.w, s.h);
+            Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player_0.png"), p.x, p.y - s.h, s.w, s.h * 2);
         }else if ( e.contains(Enemy.class) ) {
             Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/sprite_0.png"), p.x, p.y, s.w, s.h);
         } else {
