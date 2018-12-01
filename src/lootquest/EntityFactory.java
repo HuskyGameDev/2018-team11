@@ -52,8 +52,7 @@ public final class EntityFactory {
         e.attach(Health.class);
         e.attach(Collider.class);
 		e.attach(Enemy.class);
-		e.attach(AI.class).setTypeEnemy(type);
-		e.attach(AI.class).setRanged(type == 2);
+		e.attach(AI.class).setTypeEnemy(type).setRanged(type == 2);
 		e.attach(EquipedCrossbow.class);
         
         return e; 
