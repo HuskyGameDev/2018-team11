@@ -64,9 +64,12 @@ public class LootquestGame extends GameListener {
         EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY()); 
         //Enemies
         String[][] flr = world.getFloor();
-        for ( int y = 0; y < 2; y++ ) {
-            for ( int x = 0; x < 2; x++ ) {
-                if ( flr[x][y].equals("X") ) {
+        for ( int y = 0; y < flr[0].length; y++ ) {
+            for ( int x = 0; x < flr.length; x++ ) {
+                if (flr[x][y].equals("S") || flr[x][y].equals("E")) {
+                	Random r = new Random();
+                	EntityFactory.createConsumable((float) ((tiles * x) + (tiles)/2 + r.nextInt(tiles/2) - tiles/4),(float) ((tiles * y) + (tiles/2) + r.nextInt(tiles/2) - tiles/4) , 1, 0, 0);
+                }else if ( flr[x][y].equals("X") ) {
                     Random r = new Random();
                     for ( int e = 0; e < 3; e++ ) {
                         EntityFactory.createEnemy1((float) ((tiles * x) + (tiles)/2 + r.nextInt(tiles/2) - tiles/4), (float) ((tiles * y) + (tiles/2) + r.nextInt(tiles/2) - tiles/4), 
@@ -75,8 +78,8 @@ public class LootquestGame extends GameListener {
                 }
             }
         }
-        //consumable
-        EntityFactory.createConsumable(world.getSpawnX() + 1, world.getSpawnY() + 1, 1, 0, 0);
+        
+        
     }
     
     public static void main(String[] args) {
