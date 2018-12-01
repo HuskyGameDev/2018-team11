@@ -70,7 +70,7 @@ public class LootquestGame extends GameListener {
                     Random r = new Random();
                     for ( int e = 0; e < 3; e++ ) {
                         EntityFactory.createEnemy1((float) ((tiles * x) + (tiles)/2 + r.nextInt(tiles/2) - tiles/4), (float) ((tiles * y) + (tiles/2) + r.nextInt(tiles/2) - tiles/4), 
-                        		(int) (Math.random() * 3 + 1));
+                        		(int) (Math.random() * 3));
                     }
                 }
             }
