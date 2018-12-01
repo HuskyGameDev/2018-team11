@@ -38,7 +38,7 @@ public final class EntityFactory {
     
     public static Entity createEnemy1(float x, float y, int type) {
     	Entity e = Lutebox.scene.createEntity(); 
-    	System.out.println(type);
+    	
     	e.attach(Position.class).set(x, y);
     	if(type == 2)
     	  e.attach(Movement.class).setMaxSpeed(2);
