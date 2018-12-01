@@ -1,11 +1,17 @@
 package lootquest.system;
 
+import java.util.List;
+
 import lootquest.LootquestGame;
 import lootquest.component.Direction;
+import lootquest.component.Enemy;
 import lootquest.component.EquipedSword;
+import lootquest.component.Health;
+import lootquest.component.Player;
 import lootquest.component.Position;
 import lootquest.component.Size;
 import lootquest.util.AABB;
+import lootquest.util.EntityUtil;
 import lutebox.core.Lutebox;
 import lutebox.ecs.Entity;
 import lutebox.ecs.Filter;
@@ -13,8 +19,13 @@ import lutebox.ecs.IteratingEntitySystem;
 
 public class UseSwordSystem extends IteratingEntitySystem {
 
+	private Filter playerFilter, enemyFilter; 
+	
     public UseSwordSystem() {
         super(Filter.include(Position.class, Direction.class, EquipedSword.class, Size.class).create());
+        
+        playerFilter = Filter.include(Player.class).create(); 
+        enemyFilter = Filter.include(Enemy.class).create();
     }
 
     public void updateEntity(Entity e) {
@@ -22,7 +33,40 @@ public class UseSwordSystem extends IteratingEntitySystem {
         
         // attack enemies here 
         
-        sword.addTime(Lutebox.deltaTime); 
+        
+        
+        if (sword.shouldApplyDamage()) {
+        	AABB swordHitbox = getSwordHitbox(e);
+        	List<Entity> playerList = Lutebox.scene.getEntities(playerFilter); 
+            List<Entity> enemyList = Lutebox.scene.getEntities(enemyFilter); 
+            
+        	if (e.get(Player.class) != null) {
+        		for(Entity other : enemyList) {
+            		if (!swordHitbox.intersects(EntityUtil.getAABB(other))) continue; 
+            		System.out.println("player hit an enemy");
+            		Health hp = other.get(Health.class);
+            		if (hp == null) {
+            			continue;
+            		}else {
+            			hp.current -= sword.damage;
+            		}
+            	}
+        	}else {
+        		for(Entity other : playerList) {
+        			if (!swordHitbox.intersects(EntityUtil.getAABB(other))) continue;
+            		System.out.println("enemy hit a player");
+            		Health hp = other.get(Health.class);
+            		if (hp == null) {
+            			continue;
+            		}else {
+            			hp.current -= sword.damage;
+            		}
+            	}
+        	}
+        	
+        }
+        
+        sword.addTime(Lutebox.deltaTime);
     }
     
     public void renderEntity(Entity e) {
