@@ -42,18 +42,19 @@ public class UseSwordSystem extends IteratingEntitySystem {
         	if (e.get(Player.class) != null) {
         		for(Entity other : enemyList) {
             		if (!swordHitbox.intersects(EntityUtil.getAABB(other))) continue; 
-            		System.out.println("player hit an enemy");
+            		
             		Health hp = other.get(Health.class);
             		if (hp == null) {
             			continue;
             		}else {
+            			
             			hp.current -= sword.damage;
             		}
             	}
         	}else {
         		for(Entity other : playerList) {
         			if (!swordHitbox.intersects(EntityUtil.getAABB(other))) continue;
-            		System.out.println("enemy hit a player");
+            		
             		Health hp = other.get(Health.class);
             		if (hp == null) {
             			continue;

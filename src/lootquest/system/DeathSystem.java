@@ -11,7 +11,7 @@ public class DeathSystem extends IteratingEntitySystem {
 	
 	public DeathSystem()
 	{
-		super(Filter.include(Player.class, Health.class, Enemy.class).create());	
+		super(Filter.include(Health.class).create());	
 	}
 	
 	public void updateEntity(Entity e)
