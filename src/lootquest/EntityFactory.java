@@ -44,7 +44,7 @@ public final class EntityFactory {
     	  e.attach(Movement.class).setMaxSpeed(2);
     	else if(type == 1)
     	  e.attach(Movement.class).setMaxSpeed(3);
-    	else if(type == 0)
+    	else
     	  e.attach(Movement.class).setMaxSpeed(1);
     	e.attach(Direction.class); 
         e.attach(Size.class).set(0.8f, 0.8f); 
