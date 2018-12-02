@@ -1,5 +1,6 @@
 package lutebox.backend;
 
+import lutebox.audio.Audio;
 import lutebox.core.Display;
 import lutebox.graphics.Graphics;
 import lutebox.input.Cursor;
@@ -17,6 +18,10 @@ public interface Backend {
     
     Graphics getGraphics();
     
+    Audio getAudio(); 
+    
     GraphicsBackend getGraphicsBackend(); 
+    
+    AudioBackend getAudioBackend(); 
     
 }

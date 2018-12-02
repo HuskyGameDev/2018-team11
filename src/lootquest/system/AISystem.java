@@ -44,8 +44,8 @@ public class AISystem extends IteratingEntitySystem{
 		float yDiff = playerPos.y - enemyPos.y;
 		bob.counterCur--;
 		
-		if (Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2)) < 20) {
-			if (bob.ranged == true) {
+		if (true) {
+			if (bob.getEnemyType() == 2) {
 				if (bob.counterCur < 0) {
 					enemyMov.set(0, 0);
 					enemyDir.updateFromMovement = false;

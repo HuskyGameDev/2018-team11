@@ -9,11 +9,11 @@ import lootquest.component.Position;
 import lootquest.component.Size;
 import lootquest.dungeon.Tile;
 import lootquest.dungeon.World;
-import lootquest.util.AABB;
 import lutebox.core.Lutebox;
 import lutebox.ecs.Entity;
 import lutebox.ecs.Filter;
 import lutebox.ecs.IteratingEntitySystem;
+import lutebox.util.AABB;
 
 public class WorldPhysicsSystem extends IteratingEntitySystem {
 

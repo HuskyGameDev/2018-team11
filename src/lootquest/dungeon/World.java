@@ -29,6 +29,14 @@ public class World {
         }
 	}
 	
+	public int getWidth() {
+	    return worldWidth; 
+	}
+	
+	public int getHeight() {
+	    return worldHeight; 
+	}
+	
 	public void generateWorld() throws FileNotFoundException {
 		tiles = new Tile[worldWidth][worldHeight]; 
 		FloorGen2 crtFlr = new FloorGen2();
@@ -165,7 +173,7 @@ public class World {
 	                }
 	                
 	            } else if ( room[x][y].equals("e")) {
-	                //setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new FillerTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size));
+	                setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new FillerTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size));
 	            } else {
 	                setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new GrassTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size));
 	            }
@@ -213,24 +221,24 @@ public class World {
 		return getTile(x, y).isSolid; 
 	}
 	
-	public void tick() {
-	    for ( int y = 0; y < worldHeight; y++ ) {
-            for ( int x = 0; x < worldWidth; x++ ) {
-                Tile t = tiles[x][y];
-                t.tick();
-            }
-        }
-	}
-	
-	public void render() {
-	    for ( int y = 0; y < worldHeight; y++ ) {
-	        for ( int x = 0; x < worldWidth; x++ ) {
-	            Tile t = tiles[x][y];
-	            if ( t != null ) {
-	                t.render();
-	            }
-	        }
-	    }
-	}
+//	public void tick() {
+//	    for ( int y = 0; y < worldHeight; y++ ) {
+//            for ( int x = 0; x < worldWidth; x++ ) {
+//                Tile t = tiles[x][y];
+//                t.tick();
+//            }
+//        }
+//	}
+//	
+//	public void render() {
+//	    for ( int y = 0; y < worldHeight; y++ ) {
+//	        for ( int x = 0; x < worldWidth; x++ ) {
+//	            Tile t = tiles[x][y];
+//	            if ( t != null ) {
+//	                t.render();
+//	            }
+//	        }
+//	    }
+//	}
 	
 }

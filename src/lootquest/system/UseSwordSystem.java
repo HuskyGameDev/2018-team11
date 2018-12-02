@@ -1,20 +1,48 @@
 package lootquest.system;
 
-import lootquest.LootquestGame;
+import java.util.List;
+
+import lootquest.component.AI;
 import lootquest.component.Direction;
+import lootquest.component.Enemy;
 import lootquest.component.EquipedSword;
+import lootquest.component.Health;
+import lootquest.component.Player;
 import lootquest.component.Position;
 import lootquest.component.Size;
-import lootquest.util.AABB;
+import lootquest.util.EntityUtil;
+import lutebox.audio.Sound;
 import lutebox.core.Lutebox;
 import lutebox.ecs.Entity;
 import lutebox.ecs.Filter;
 import lutebox.ecs.IteratingEntitySystem;
+import lutebox.util.AABB;
 
 public class UseSwordSystem extends IteratingEntitySystem {
 
+	private Filter playerFilter, enemyFilter; 
+	
+	private Sound[] swordSounds, batSounds; 
+	
     public UseSwordSystem() {
         super(Filter.include(Position.class, Direction.class, EquipedSword.class, Size.class).create());
+        
+        playerFilter = Filter.include(Player.class).create(); 
+        enemyFilter = Filter.include(Enemy.class).create();
+        
+        swordSounds = new Sound[3 * 2]; 
+        for (int i = 0; i < swordSounds.length; i++) {
+            swordSounds[i] = new Sound("assets/sounds/sword_" + (i % 3) + ".wav"); 
+        }
+        
+        batSounds = new Sound[3 * 2]; 
+        for (int i = 0; i < batSounds.length; i++) {
+            batSounds[i] = new Sound("assets/sounds/bat_" + (i % 3) + ".wav"); 
+        }
+    }
+    
+    private void playSound(Sound[] sounds) {
+        Lutebox.audio.play(sounds[(int)(Math.random() * sounds.length)], true, false); 
     }
 
     public void updateEntity(Entity e) {
@@ -22,7 +50,47 @@ public class UseSwordSystem extends IteratingEntitySystem {
         
         // attack enemies here 
         
-        sword.addTime(Lutebox.deltaTime); 
+        
+        
+        if (sword.shouldApplyDamage()) {
+            if (e.get(AI.class) != null) {
+                playSound(batSounds); 
+            }
+            else {
+                playSound(swordSounds); 
+            }
+        	AABB swordHitbox = getSwordHitbox(e);
+        	List<Entity> playerList = Lutebox.scene.getEntities(playerFilter); 
+            List<Entity> enemyList = Lutebox.scene.getEntities(enemyFilter); 
+            
+        	if (e.get(Player.class) != null) {
+        		for(Entity other : enemyList) {
+            		if (!swordHitbox.intersects(EntityUtil.getAABB(other))) continue; 
+            		
+            		Health hp = other.get(Health.class);
+            		if (hp == null) {
+            			continue;
+            		}else {
+            			
+            			hp.current -= sword.damage;
+            		}
+            	}
+        	}else {
+        		for(Entity other : playerList) {
+        			if (!swordHitbox.intersects(EntityUtil.getAABB(other))) continue;
+            		
+            		Health hp = other.get(Health.class);
+            		if (hp == null) {
+            			continue;
+            		}else {
+            			hp.current -= sword.damage;
+            		}
+            	}
+        	}
+        	
+        }
+        
+        sword.addTime(Lutebox.deltaTime);
     }
     
     public void renderEntity(Entity e) {
@@ -35,10 +103,10 @@ public class UseSwordSystem extends IteratingEntitySystem {
         	
         	Lutebox.graphics.setColor(0xff00ff);
         	Lutebox.graphics.drawRect(
-        			swordHitbox.x * LootquestGame.scale, 
-        			swordHitbox.y * LootquestGame.scale, 
-        			swordHitbox.w * LootquestGame.scale, 
-        			swordHitbox.h * LootquestGame.scale);
+        			swordHitbox.x, 
+        			swordHitbox.y, 
+        			swordHitbox.w, 
+        			swordHitbox.h);
         	
         }
     }

@@ -37,7 +37,7 @@ public class UseRangedSystem extends IteratingEntitySystem{
 		
 		if (crossbow.shouldFire()) {//crossbow.shouldFire()) {
 			
-			System.out.println("UseRangedSystem: Firing array from " + e);
+//			System.out.println("UseRangedSystem: Firing arrow from " + e);
 			
 //			if(dir.moving) {
 //				EntityFactory.createArrow(e, pos.x + mov.getDx(), pos.y + mov.getDy(), mov.maxSpeed * mov.getDx(), mov.maxSpeed * mov.getDy());

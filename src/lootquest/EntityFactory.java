@@ -25,10 +25,10 @@ public final class EntityFactory {
         Entity e = Lutebox.scene.createEntity(); 
         
         e.attach(Position.class).set(x, y); 
-        e.attach(Movement.class).setMaxSpeed(3); 
+        e.attach(Movement.class).setMaxSpeed(4); 
         e.attach(Size.class).set(0.8f, 0.8f); 
         e.attach(Direction.class);
-        e.attach(Health.class);
+        e.attach(Health.class).set(10, 10);
         e.attach(EquipedSword.class);
         e.attach(Player.class);
         e.attach(Collider.class); 
@@ -36,18 +36,23 @@ public final class EntityFactory {
         return e; 
     }
     
-    public static Entity createEnemy1(float x, float y) {
+    public static Entity createEnemy1(float x, float y, int type) {
     	Entity e = Lutebox.scene.createEntity(); 
     	
-    	e.attach(Position.class).set(x, y); 
-    	e.attach(Movement.class).setMaxSpeed(3); 
+    	e.attach(Position.class).set(x, y);
+    	if(type == 2)
+    	  e.attach(Movement.class).setMaxSpeed(2);
+    	else if(type == 1)
+    	  e.attach(Movement.class).setMaxSpeed(3);
+    	else
+    	  e.attach(Movement.class).setMaxSpeed(1);
     	e.attach(Direction.class); 
         e.attach(Size.class).set(0.8f, 0.8f); 
         e.attach(EquipedSword.class);
         e.attach(Health.class);
         e.attach(Collider.class);
 		e.attach(Enemy.class);
-		e.attach(AI.class).setRangedRandom();
+		e.attach(AI.class).setTypeEnemy(type).setRanged(type == 2);
 		e.attach(EquipedCrossbow.class);
         
         return e; 
