@@ -65,19 +65,20 @@ public class LootquestGame extends GameListener {
         for ( int y = 0; y < 2; y++ ) {
             for ( int x = 0; x < 2; x++ ) {
                 if ( flr[x][y].equals("X") ) {
-                    Random r = new Random();
                     for ( int e = 0; e < 3; e++ ) {
-                        EntityFactory.createEnemy1((tiles * x) + (tiles)/2 + r.nextInt(tiles/2) - tiles/4, (tiles * y) + (tiles/2) + r.nextInt(tiles/2) - tiles/4);
+                        int [] point = world.getEnemySpawn(x, y);
+                        EntityFactory.createEnemy1(point[0], point[1]);
                     }
+                } else if ( flr[x][y].equals("S") ) {
+                    int [] point = world.getEnemySpawn(x, y);
+                    EntityFactory.createConsumable(point[0], point[1], 1, 0, 0);
                 }
             }
         }
-<<<<<<< HEAD
-=======
+
         //consumable
-        EntityFactory.createConsumable(world.getSpawnX() + 1, world.getSpawnY() + 1, 1, 0, 0);
+//        EntityFactory.createConsumable(world.getSpawnX() + 1, world.getSpawnY() + 1, 1, 0, 0);
         
->>>>>>> fbbf09716073c275cef2324735f4096ed397bf04
     }
     
     public static void main(String[] args) {

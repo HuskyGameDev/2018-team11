@@ -186,46 +186,11 @@ public class World {
 	}
 	
 	public int[] getEnemySpawn( int flrX, int flrY ) {
-	    int [] loc = new int [4];
-	    
-	    int yMin = roomHeight;
-	    int yMax = 0;
-	    int xMin = roomWidth;
-	    int xMax = 0;
-	    
-	    for ( int y = roomHeight*flrY; y < (roomHeight*flrY)+roomHeight; y++ ) {
-	        for ( int x = roomWidth*flrX; x < (roomWidth*flrX)+roomWidth; x++ ) {
-	            if ( tiles[x][y] != null ) {
-	                Tile t = tiles[x][y];
-	                if ( t.getType().equals("FLOOR") ) {
-	                    if ( x < xMin ) {
-	                        xMin = x;
-	                    }
-	                    if ( x > xMax ) {
-	                        xMax = x;
-	                    }
-	                    if ( y < yMin ) {
-	                        yMin = y;
-	                    }
-	                    if ( y > yMax ) {
-	                        yMax = y;
-	                    }
-	                }
-	            }
-	        }
-	    }
-	    if ( xMin > xMax || yMin > yMax ) {
-	        loc[0] = -1;
-	        loc[1] = -1;
-	        loc[2] = -1;
-	        loc[3] = -1;
-	        return loc;
-	    }
-	    loc[0] = xMin;
-        loc[1] = yMin;
-        loc[2] = xMax;
-        loc[3] = yMax;
-	    return loc;
+	    Random r = new Random();
+	    int x = r.nextInt(6)+5;
+	    int y = r.nextInt(6)+5;
+	    int [] point = {(flrX * roomWidth) + x, (flrY * roomHeight) + y};
+	    return point;
 	}
 	
 	public boolean inBounds(int x, int y) {
