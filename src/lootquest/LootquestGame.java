@@ -41,7 +41,7 @@ public class LootquestGame extends GameListener {
         }
         
         // add render systems 
-        Lutebox.scene.addSystem(new RenderSystem(48)); 
+        Lutebox.scene.addSystem(new RenderSystem()); 
         
         // add update systems 
         Lutebox.scene.addSystem(new FollowPlayerCameraSystem());
@@ -50,14 +50,10 @@ public class LootquestGame extends GameListener {
         Lutebox.scene.addSystem(new UseSwordSystem());
         Lutebox.scene.addSystem(new UseRangedSystem()); 
         Lutebox.scene.addSystem(new ProjectileSystem());
-        
         Lutebox.scene.addSystem(new MovementSystem());
         Lutebox.scene.addSystem(new UpdateFromMovementSystem()); 
-        
         Lutebox.scene.addSystem(new DeathSystem());
-        
         Lutebox.scene.addSystem(new WorldPhysicsSystem());
-        
         Lutebox.scene.addSystem(new ConsumableSystem());
         
         // add entities
@@ -65,18 +61,26 @@ public class LootquestGame extends GameListener {
         EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY()); 
         //Enemies
         String[][] flr = world.getFloor();
+<<<<<<< HEAD
 
+=======
+//<<<<<<< HEAD
+>>>>>>> 323a092196a7b5f2e9eaaba5b34c10f3523d163e
 //        for ( int y = 0; y < 2; y++ ) {
 //            for ( int x = 0; x < 2; x++ ) {
 //                if ( flr[x][y].equals("X") ) {
 //                    for ( int e = 0; e < 3; e++ ) {
 //                        int [] point = world.getEnemySpawn(x, y);
 //                        EntityFactory.createEnemy1(point[0], point[1]);
+<<<<<<< HEAD
 //                    }
 //                }
 //            }
 //        }
 
+=======
+//=======
+>>>>>>> 323a092196a7b5f2e9eaaba5b34c10f3523d163e
         for ( int y = 0; y < flr[0].length; y++ ) {
             for ( int x = 0; x < flr.length; x++ ) {
                 if (flr[x][y].equals("S") || flr[x][y].equals("E")) {
@@ -84,6 +88,7 @@ public class LootquestGame extends GameListener {
                 	EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
                 }else if ( flr[x][y].equals("X") ) {
                     Random r = new Random();
+<<<<<<< HEAD
                     int roomType = r.nextInt(3);
                     if ( roomType == 0 ) {
                         float [] point = world.getEnemySpawn(x, y);
@@ -92,6 +97,12 @@ public class LootquestGame extends GameListener {
                         for ( int e = 0; e < 3; e++ ) {
                             EntityFactory.createEnemy1((float) ((tiles * x) + (tiles)/2 + r.nextInt(tiles/2) - tiles/4), (float) ((tiles * y) + (tiles/2) + r.nextInt(tiles/2) - tiles/4), (int) (Math.random() * 3));
                         }
+=======
+                    for ( int e = 0; e < 3; e++ ) {
+                        EntityFactory.createEnemy1((float) ((tiles * x) + (tiles)/2 + r.nextInt(tiles/2) - tiles/4), (float) ((tiles * y) + (tiles/2) + r.nextInt(tiles/2) - tiles/4), 
+                        		(int) (Math.random() * 3));
+//>>>>>>> 23c1825a6bf916e30224886e7d6be917e0297883
+>>>>>>> 323a092196a7b5f2e9eaaba5b34c10f3523d163e
                     }
                     
                 } else if ( flr[x][y].equals("S") ) {
@@ -101,9 +112,13 @@ public class LootquestGame extends GameListener {
             }
         }
 
+<<<<<<< HEAD
         //consumable
 //        EntityFactory.createConsumable(world.getSpawnX() + 1, world.getSpawnY() + 1, 1, 0, 0);
         
+=======
+        // background music 
+>>>>>>> 323a092196a7b5f2e9eaaba5b34c10f3523d163e
         Sound music = new Sound("assets/music/Dungeon.wav"); 
         Lutebox.audio.play(music, true, true); 
     }
