@@ -30,10 +30,12 @@ public class Camera {
         this.y = y; 
     }
     
+    // how many pixels an item of size 1 is 
     public void setUnitSize(float size) {
         this.size = size; 
     }
     
+    // camera view bounds, in world coordinates 
     public AABB computeViewport() {
         float width = Lutebox.display.getWidth() / size; 
         float height = Lutebox.display.getHeight() / size; 

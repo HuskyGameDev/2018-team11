@@ -11,6 +11,7 @@ public class Collider extends Component {
 	public boolean collideWithWorld = true; 
 	public boolean collideWithEntities = true; 
 	
+	// info about the entity for the current frame 
 	public boolean isHittingWall = false; 
 	public final List<Entity> collidingEntities = new ArrayList<>(); 
 	

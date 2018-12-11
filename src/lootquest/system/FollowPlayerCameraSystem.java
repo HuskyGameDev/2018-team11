@@ -15,10 +15,11 @@ public class FollowPlayerCameraSystem extends SceneSystem {
     private Filter playerFilter = Filter.include(Player.class, Position.class, Size.class).create(); 
     
     public FollowPlayerCameraSystem() {
-        super(0); 
+        super(0); // very high priority, camera should update before drawing anything 
     }
     
-    public void update() {
+    // find player and update camera position 
+    public void render() {
         List<Entity> playerList = Lutebox.scene.getEntities(playerFilter); 
         
         if (playerList.size() > 0) {

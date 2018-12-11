@@ -30,10 +30,14 @@ public class UseSwordSystem extends IteratingEntitySystem {
         playerFilter = Filter.include(Player.class).create(); 
         enemyFilter = Filter.include(Enemy.class).create();
         
+        // get a variety of sword sounds 
+        
         swordSounds = new Sound[3 * 2]; 
         for (int i = 0; i < swordSounds.length; i++) {
             swordSounds[i] = new Sound("assets/sounds/sword_" + (i % 3) + ".wav"); 
         }
+        
+        // damage sounds 
         
         batSounds = new Sound[3 * 2]; 
         for (int i = 0; i < batSounds.length; i++) {
@@ -63,6 +67,7 @@ public class UseSwordSystem extends IteratingEntitySystem {
         	List<Entity> playerList = Lutebox.scene.getEntities(playerFilter); 
             List<Entity> enemyList = Lutebox.scene.getEntities(enemyFilter); 
             
+            // cause damage to target 
         	if (e.get(Player.class) != null) {
         		for(Entity other : enemyList) {
             		if (!swordHitbox.intersects(EntityUtil.getAABB(other))) continue; 
