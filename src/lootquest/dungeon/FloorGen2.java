@@ -5,7 +5,7 @@ public class FloorGen2 {
     public Random r = new Random();
     public int totalRooms = 0;
     public int roomChance = 1;
-    public int cUP = 7;
+    public int cUP = 5;
     public int cDOWN = 9;
     public int cLEFT = 9;
     public int cRIGHT = 12;

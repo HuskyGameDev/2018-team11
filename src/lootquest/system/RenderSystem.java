@@ -3,9 +3,12 @@ package lootquest.system;
 import java.util.List;
 
 import lootquest.LootquestGame;
+import lootquest.component.Consumable;
+import lootquest.component.Direction;
 import lootquest.component.Enemy;
 import lootquest.component.Player;
 import lootquest.component.Position;
+import lootquest.component.Projectile;
 import lootquest.component.Size;
 import lootquest.dungeon.Tile;
 import lootquest.util.TextureCache;
@@ -68,6 +71,19 @@ public class RenderSystem extends IteratingEntitySystem {
             Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player_0.png"), p.x, p.y - s.h, s.w, s.h * 2);
         }else if ( e.contains(Enemy.class) ) {
             Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/sprite_0.png"), p.x, p.y, s.w, s.h);
+        }else if ( e.contains(Consumable.class) ) {
+            Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/potion.png"), p.x, p.y, s.w, s.h);
+        }else if ( e.contains(Projectile.class) ) {
+            int d = e.get(Direction.class).direction;
+            if ( d == 0 ) {
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/arrow0.png"), p.x, p.y, s.w*2, s.h*2);
+            } else if ( d == 1 ) {
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/arrow2.png"), p.x, p.y, s.w*2, s.h*2);
+            } else if ( d== 2 ) {
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/arrow1.png"), p.x, p.y, s.w*2, s.h*2);
+            } else {
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/arrow3ww.png"), p.x, p.y, s.w*2, s.h*2);
+            }
         } else {
             Lutebox.graphics.setColor(0xFF0000);
             Lutebox.graphics.fillRect(p.x, p.y, s.w, s.h);

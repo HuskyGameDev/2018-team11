@@ -66,6 +66,7 @@ public final class EntityFactory {
     	e.attach(Movement.class).setMaxSpeed(6).set(xVel*5, yVel*5);
     	e.attach(Size.class).set(0.3f, 0.3f);
     	e.attach(Collider.class);
+    	e.attach(Direction.class);
     	e.attach(Projectile.class).setShooter(from).setDamage(bow.damage);
     	
     	

@@ -13,6 +13,8 @@ public class World {
     public int roomHeight;
     private int spawnX;
     private int spawnY;
+    private int exitX;
+    private int exitY;
     private String[][] floor;
 	
 	public World( int worldWidth, int worldHeight, int roomWidth, int roomHeight ) {
@@ -42,11 +44,11 @@ public class World {
 		FloorGen2 crtFlr = new FloorGen2();
 		RoomCreater crtRm = new RoomCreater(0, 0, 0, roomWidth, roomHeight);
 		
-		//floor = crtFlr.createFloor((worldWidth/roomWidth), (worldHeight/roomHeight), (worldWidth/roomWidth)/2, (worldHeight/roomHeight)/2);
-		floor = crtFlr.createFloor((worldWidth/roomWidth), (worldHeight/roomHeight), 0, 0);
+		floor = crtFlr.createFloor((worldWidth/roomWidth), (worldHeight/roomHeight), (worldWidth/roomWidth)/2, (worldHeight/roomHeight)/2);
+		//floor = crtFlr.createFloor((worldWidth/roomWidth), (worldHeight/roomHeight), 0, 0);
 		
-		//String[][] path = crtFlr.createExitPath(floor, (worldWidth/roomWidth), (worldHeight/roomHeight), (worldWidth/roomWidth)/2, (worldHeight/roomHeight)/2);
-		String[][] path = crtFlr.createExitPath(floor, (worldWidth/roomWidth), (worldHeight/roomHeight), 0, 0);
+		String[][] path = crtFlr.createExitPath(floor, (worldWidth/roomWidth), (worldHeight/roomHeight), (worldWidth/roomWidth)/2, (worldHeight/roomHeight)/2);
+		//String[][] path = crtFlr.createExitPath(floor, (worldWidth/roomWidth), (worldHeight/roomHeight), 0, 0);
 		
 		String[][] cors = crtFlr.corridorCreater(floor, path, (worldWidth/roomWidth), (worldHeight/roomHeight));
 		
@@ -75,7 +77,7 @@ public class World {
 		            }
 		            
 		            //Creating Generic room or Corridor
-		            chance = r.nextInt(2);
+		            chance = r.nextInt(5)-2;
 		            if ( chance <= 0 ) {
 		                floor[x][y] = "C";
 		                room = crtRm.createCorridor(U, D, L, R);
@@ -117,8 +119,8 @@ public class World {
                     room = crtRm.createExit(U, D, L, R);
                     addRoom( room, x, y );
 		        } else {
-//		            room = crtRm.createEmpty();
-//		            addRoom( room, x, y );
+		            room = crtRm.createEmpty();
+		            addRoom( room, x, y );
 		        }
 		        U = false;
 		        D = false;
@@ -162,6 +164,8 @@ public class World {
                     spawnY = y + (roomHeight * yOffset);
                     setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new FloorTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size, "entrance0"));
                 } else if ( room[x][y].equals("E")) {
+                    exitX = x + (roomWidth * xOffset);
+                    exitY = y + (roomHeight * yOffset);
                     setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new FloorTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size, "entrance1"));
                 } else if ( room[x][y].equals("0") || room[x][y].equals("D") || room[x][y].equals("1") ) {
 	                name = ran.nextInt(4);
@@ -189,15 +193,23 @@ public class World {
 	    return spawnY;
 	}
 	
+	public int getExitX() {
+        return exitX;
+    }
+	
+	public int getExitY() {
+        return exitY;
+    }
+	
 	public String[][] getFloor() {
 	    return floor;
 	}
 	
-	public int[] getEnemySpawn( int flrX, int flrY ) {
+	public float[] getEnemySpawn( int flrX, int flrY ) {
 	    Random r = new Random();
 	    int x = r.nextInt(6)+5;
 	    int y = r.nextInt(6)+5;
-	    int [] point = {(flrX * roomWidth) + x, (flrY * roomHeight) + y};
+	    float [] point = {(flrX * roomWidth) + x, (flrY * roomHeight) + y};
 	    return point;
 	}
 	
