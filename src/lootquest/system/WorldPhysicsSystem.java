@@ -15,6 +15,9 @@ import lutebox.ecs.Filter;
 import lutebox.ecs.IteratingEntitySystem;
 import lutebox.util.AABB;
 
+/**
+ * Keeps entities out of walls, and checks what entities they are colliding with 
+ */
 public class WorldPhysicsSystem extends IteratingEntitySystem {
 
 	public WorldPhysicsSystem() {
@@ -32,10 +35,13 @@ public class WorldPhysicsSystem extends IteratingEntitySystem {
 		col.isHittingWall = false; 
 		col.collidingEntities.clear(); 
 		
+		// do world collision detection and resolution 
+		// if that collider property is set (default: true) 
 		if (col.collideWithWorld) {
 			move(e, move.getDx(), move.getDy()); 
 		}
 		
+		// detect collision with entities (resolving collisions not supported) 
 		if (col.collideWithEntities) {
 			AABB a = new AABB(pos.x, pos.y, size.w, size.h); 
 			AABB b = new AABB(0, 0, 0, 0); 
@@ -80,12 +86,11 @@ public class WorldPhysicsSystem extends IteratingEntitySystem {
 			foundTile = false; 
 			bestArea = 0; 
 			
+			// set tile range to check 
 			int xStart = (int) Math.floor(pos.x); 
 			int yStart = (int) Math.floor(pos.y); 
 			int xSize = xStart + (int) Math.ceil(size.w) + 1; 
 			int ySize = yStart + (int) Math.ceil(size.h) + 1; 
-			
-	//		System.out.println(xStart + " " + yStart + " " + xSize + " " + ySize); 
 			
 			for (int y = yStart; y < yStart + ySize; y++) {
 				for (int x = xStart; x < xStart + xSize; x++) {
@@ -93,6 +98,7 @@ public class WorldPhysicsSystem extends IteratingEntitySystem {
 					tmp.y = y; 
 					
 					if (world.inBounds(x, y)) {
+						// we don't care about collision if the tile isn't solid 
 						Tile tile = world.getTile(x, y);
 						if ( tile != null ) {
 						    if (!tile.isSolid) continue; 
@@ -101,7 +107,6 @@ public class WorldPhysicsSystem extends IteratingEntitySystem {
 					
 					if (tmp.intersects(entityCollider)) {
 						// collision 
-	//					System.out.println("Collision"); 
 						float area = entityCollider.getIntersectionArea(tmp); 
 						if (area > bestArea) {
 							bestX = x; 
@@ -114,12 +119,14 @@ public class WorldPhysicsSystem extends IteratingEntitySystem {
 				} 
 			}
 			
+			// actual collision resolution 
 			if (foundTile) collision = resolve(world, pos, size, move, bestX, bestY); 
-			
 			if (collision) col.isHittingWall = true; 
+			
 		} while (collision && i++ < 10); 
 	}
 	
+	// moves entity out of a solid tile 
 	private static boolean resolve(World world, Position pos, Size size, Movement move, int cx, int cy) {
 		float vx = move.getDx(); 
 		float vy = move.getDy(); 

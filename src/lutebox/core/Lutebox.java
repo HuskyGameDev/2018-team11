@@ -65,6 +65,10 @@ public class Lutebox {
      * For internal use only. 
      */
     public static GraphicsBackend graphicsBackend; 
+    
+    /**
+     * For internal use only. 
+     */
     public static AudioBackend audioBackend; 
     
     public static float deltaTime = 1 / 60f; 

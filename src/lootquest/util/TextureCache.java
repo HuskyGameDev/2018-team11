@@ -11,6 +11,10 @@ public class TextureCache {
 	
 	private TextureCache() {} 
 	
+	/**
+	 * Use this instead of loading textures yourself, 
+	 * Much more efficient
+	 */
 	public static Texture get(String filename) {
 		if (!textures.containsKey(filename)) {
 			textures.put(filename, new Texture(filename)); 

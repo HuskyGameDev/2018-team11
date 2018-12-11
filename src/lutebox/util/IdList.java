@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
+// list of elements, with reusable IDs
 public class IdList<T> {
 
     private List<T> list = new ArrayList<>(); 

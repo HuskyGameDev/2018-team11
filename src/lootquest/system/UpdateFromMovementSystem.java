@@ -6,6 +6,10 @@ import lutebox.ecs.Entity;
 import lutebox.ecs.Filter;
 import lutebox.ecs.IteratingEntitySystem;
 
+/**
+ * If an entity is set to keep track of its direction based on its 
+ * velocity direction, this system will do that 
+ */
 public class UpdateFromMovementSystem extends IteratingEntitySystem {
 
 	public UpdateFromMovementSystem() {

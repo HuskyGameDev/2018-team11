@@ -17,18 +17,14 @@ import lutebox.util.AABB;
 
 public class RenderSystem extends IteratingEntitySystem {
 
-    public float scale; 
     public float camX = 0; 
     public float camY = 0; 
     
-    public RenderSystem(float scale) {
+    public RenderSystem() {
         super(Filter.include(Position.class, Size.class).create()); 
-        
-        this.scale = scale;
-        
-        
     }
     
+    // draw the world behind entities 
     public void preRenderEntities() {
         Lutebox.graphics.setColor(0x000000);
         Lutebox.graphics.clear();
@@ -47,6 +43,7 @@ public class RenderSystem extends IteratingEntitySystem {
         int endX = (int) (view.x + view.w) + 1; 
         int endY = (int) (view.y + view.h) + 1; 
         
+        // optimize rendering, draw only tiles that are visible from the camera 
         for (int y = startY; y <= endY; y++) {
             if (y < 0 || y >= LootquestGame.world.getHeight()) continue; 
             for (int x = startX; x <= endX; x++) {
@@ -64,6 +61,7 @@ public class RenderSystem extends IteratingEntitySystem {
     public void renderEntity(Entity e) {
         Position p = e.get(Position.class); 
         Size s = e.get(Size.class);
+        // TODO should really have a sprite component 
         if ( e.contains(Player.class) ) {
             Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player_0.png"), p.x, p.y - s.h, s.w, s.h * 2);
         }else if ( e.contains(Enemy.class) ) {
