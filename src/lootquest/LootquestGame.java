@@ -24,6 +24,8 @@ public class LootquestGame extends GameListener {
     public static World world; 
 //    public static float scale = 48; 
     
+    
+    //Init will initialize the rooms, all of the systems, and the player. 
     public void init() {
         Lutebox.display.setTitle("Lootquest: Depths of Koderia");
         Lutebox.display.setSize(800, 600);
