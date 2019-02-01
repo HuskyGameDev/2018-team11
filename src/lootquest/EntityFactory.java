@@ -61,6 +61,7 @@ public final class EntityFactory {
         return e; 
     }
     
+    //createArrow(<entity firing arrow>, <x pos>, <y pos>, <x velocity>, <y velocity>)
     public static Entity createArrow(Entity from, float x,float y,float xVel,float yVel) {
     	Entity e = Lutebox.scene.createEntity();
     	EquipedCrossbow bow = from.get(EquipedCrossbow.class);
@@ -76,6 +77,7 @@ public final class EntityFactory {
     	return e;
     }
     
+    //arguments are x and y position followed by stat values that can be increased.
     public static Entity createConsumable(float x,float y,int HP, int SDmg, float Speed) {
     	Entity e = Lutebox.scene.createEntity();
     	
