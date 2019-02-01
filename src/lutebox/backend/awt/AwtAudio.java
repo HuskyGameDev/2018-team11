@@ -1,6 +1,7 @@
 package lutebox.backend.awt;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -13,7 +14,8 @@ import lutebox.backend.AudioBackend;
 import lutebox.backend.NativeSound;
 
 public class AwtAudio implements Audio, AudioBackend {
-
+    private ArrayList<Sound> sounds = new ArrayList<>();
+    
     @Override
     public NativeSound createNativeSound(String filename) {
         try {
@@ -42,6 +44,8 @@ public class AwtAudio implements Audio, AudioBackend {
             }
             
             if (!c.clip.isRunning()) c.clip.start();
+            
+            sounds.add( sound );
         }
     }
 
@@ -75,6 +79,14 @@ public class AwtAudio implements Audio, AudioBackend {
         }
         
         return false; 
+    }
+    
+    public void stopAll() {
+        for ( int i = 0; i < sounds.size(); i++ ) {
+            if ( isPlaying( sounds.get(i)) ) {
+                stop( sounds.get(i) );
+            }
+        }
     }
 
 }

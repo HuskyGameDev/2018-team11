@@ -3,6 +3,7 @@ package lutebox.backend.awt;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 import lutebox.core.Lutebox;
 import lutebox.graphics.Graphics;
@@ -42,6 +43,7 @@ public class AwtGraphics implements Graphics {
     public void drawTexture(Texture t, float x, float y, float w, float h) {
         Image img = ((BufferedImageTexture) t.getNativeTexture()).getImage(); 
         g.drawImage(img, camx(x), camy(y), camw(w), camh(h), null); 
+        //g.drawImage(img, camx(x), camy(y), img.getWidth(null), img.getHeight(null), null);
     }
 
     public void drawScreenLine(float x, float y, float x2, float y2) {

@@ -23,8 +23,7 @@ import lutebox.core.Lutebox;
 public class LootquestGame extends GameListener {
     // add map
     public static World world; 
-//    public static float scale = 48; 
-    
+//    public static float scale = 48;
 
     public static int endX = -1;
     public static int endY = -1;
@@ -110,13 +109,12 @@ public class LootquestGame extends GameListener {
     }
     
     public static void reload( ) {
-//        Sound music = new Sound("assets/music/Dungeon.wav"); 
-//        Lutebox.audio.stop(music);
+        Lutebox.audio.stopAll();
         
-        //Lutebox.stop();
-        //Lutebox.display.dispose();
-        
-        //Lutebox.start(null, new LootquestGame());
+//        Lutebox.stop();
+//        Lutebox.display.dispose();
+//        
+//        Lutebox.start(null, new LootquestGame());
     }
     
     public static void main(String [] args) {

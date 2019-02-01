@@ -10,4 +10,5 @@ public interface Audio {
     
     public void setVolume(Sound sound, float volume); 
     
+    public void stopAll();
 }
