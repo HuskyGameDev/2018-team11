@@ -6,7 +6,6 @@ import lootquest.dungeon.World;
 import lootquest.system.AISystem;
 import lootquest.system.ConsumableSystem;
 import lootquest.system.DeathSystem;
-import lootquest.system.DungeonLoopSystem;
 import lootquest.system.FollowPlayerCameraSystem;
 import lootquest.system.MovementSystem;
 import lootquest.system.PlayerInputSystem;
@@ -61,7 +60,7 @@ public class LootquestGame extends GameListener {
         Lutebox.scene.addSystem(new UseRangedSystem()); 
         Lutebox.scene.addSystem(new ProjectileSystem());
         
-        Lutebox.scene.addSystem(new DungeonLoopSystem( endX, endY ));
+
         
         Lutebox.scene.addSystem(new MovementSystem());
         Lutebox.scene.addSystem(new UpdateFromMovementSystem()); 
