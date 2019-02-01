@@ -162,11 +162,11 @@ public class World {
                 } else if ( room[x][y].equals("S")) {
                     spawnX = x + (roomWidth * xOffset);
                     spawnY = y + (roomHeight * yOffset);
-                    setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new FloorTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size, "entrance0"));
+                    setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new FloorTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size, "stairs"));
                 } else if ( room[x][y].equals("E")) {
                     exitX = x + (roomWidth * xOffset);
                     exitY = y + (roomHeight * yOffset);
-                    setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new FloorTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size, "entrance1"));
+                    setTile(x + (roomWidth * xOffset), y + (roomHeight * yOffset), new FloorTile((x + (roomWidth * xOffset)) * Tile.size, (y + (roomHeight * yOffset)) * Tile.size, "stairs"));
                 } else if ( room[x][y].equals("0") || room[x][y].equals("D") || room[x][y].equals("1") ) {
 	                name = ran.nextInt(4);
 	                

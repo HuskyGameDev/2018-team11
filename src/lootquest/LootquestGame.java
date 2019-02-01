@@ -4,6 +4,7 @@ import java.util.Random;
 
 import lootquest.dungeon.World;
 import lootquest.system.AISystem;
+import lootquest.system.BossSystem;
 import lootquest.system.ConsumableSystem;
 import lootquest.system.DeathSystem;
 import lootquest.system.FollowPlayerCameraSystem;
@@ -22,8 +23,7 @@ import lutebox.core.Lutebox;
 public class LootquestGame extends GameListener {
     // add map
     public static World world; 
-//    public static float scale = 48; 
-    
+//    public static float scale = 48;
 
     public static int endX = -1;
     public static int endY = -1;
@@ -71,6 +71,8 @@ public class LootquestGame extends GameListener {
         
         Lutebox.scene.addSystem(new ConsumableSystem());
         
+        Lutebox.scene.addSystem(new BossSystem());
+        
         // add entities
         //Player
         EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY()); 
@@ -80,9 +82,11 @@ public class LootquestGame extends GameListener {
 
         for ( int y = 0; y < flr[0].length; y++ ) {
             for ( int x = 0; x < flr.length; x++ ) {
-                if (flr[x][y].equals("S") || flr[x][y].equals("E")) {
+            	if (flr[x][y].equals("E")) {
                 	float [] point = world.getEnemySpawn(x, y);
-                	EntityFactory.createConsumable(point[0], point[1], 1000, 0, 10);
+                	//EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
+                	EntityFactory.createEnemyBoss(point[0], point[1]);
+
                 }else if ( flr[x][y].equals("X") ) {
                     Random r = new Random();
                     int roomType = r.nextInt(3);
@@ -109,13 +113,12 @@ public class LootquestGame extends GameListener {
     }
     
     public static void reload( ) {
-//        Sound music = new Sound("assets/music/Dungeon.wav"); 
-//        Lutebox.audio.stop(music);
+        Lutebox.audio.stopAll();
         
-        //Lutebox.stop();
-        //Lutebox.display.dispose();
-        
-        //Lutebox.start(null, new LootquestGame());
+//        Lutebox.stop();
+//        Lutebox.display.dispose();
+//        
+//        Lutebox.start(null, new LootquestGame());
     }
     
     public static void main(String [] args) {

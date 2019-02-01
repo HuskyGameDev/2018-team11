@@ -3,11 +3,10 @@ package lootquest.system;
 
 import java.util.List;
 
+
 import lootquest.LootquestGame;
 import lootquest.component.Player;
 import lootquest.component.Position;
-import lutebox.audio.Sound;
-import lutebox.core.Lutebox;
 import lutebox.ecs.Entity;
 import lutebox.ecs.Filter;
 import lutebox.ecs.IteratingEntitySystem;

@@ -71,16 +71,16 @@ public class RenderSystem extends IteratingEntitySystem {
             int d = e.get(Direction.class).direction;
             if ( d == 0 ) {
                 //Up
-                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player_1.png"), p.x, p.y - s.h, s.w, s.h * 2);
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player-back0.png"), p.x, p.y - s.h, s.w, s.h * 2);
             } else if ( d == 1 ) {
                 //Down
-                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player_0.png"), p.x, p.y - s.h, s.w, s.h * 2);
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player-front0.png"), p.x, p.y - s.h, s.w, s.h * 2);
             } else if ( d== 2 ) {
                 //Left
-                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player1.png"), p.x, p.y - s.h, s.w, s.h * 2);
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player-side0.png"), (float) (p.x+0.75), p.y - s.h, s.w*-1, s.h * 2);
             } else {
                 //Right
-                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player0.png"), p.x, p.y - s.h, s.w, s.h * 2);
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player-side0.png"), p.x, p.y - s.h, s.w, s.h * 2);
             }
         }else if ( e.contains(Enemy.class) ) {
             if ( e.contains(EquipedCrossbow.class)) {
@@ -88,7 +88,7 @@ public class RenderSystem extends IteratingEntitySystem {
             } else {
                 float speed = e.get(Movement.class).maxSpeed;
                 if ( speed == 3.0 ) {
-                    Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/sprite_0.png"), p.x, p.y, s.w, s.h);
+                    Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/bat0.png"), p.x, p.y, s.w, s.h);
                 } else {
                     Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/slime0.png"), p.x, p.y, s.w, s.h);
                 }
