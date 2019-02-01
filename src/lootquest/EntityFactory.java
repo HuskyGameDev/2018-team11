@@ -100,7 +100,7 @@ public final class EntityFactory {
 		e.attach(Boss.class);
 		e.attach(EquipedSword.class);
 		e.attach(Enemy.class);
-		e.attach(Health.class);
+		e.attach(Health.class).set(5, 5);
 		e.attach(Direction.class);
 
 		return e;
