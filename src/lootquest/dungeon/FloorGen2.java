@@ -551,7 +551,7 @@ public class FloorGen2 {
         System.out.println("Path from Start to Exit: ");
         for ( int y = 0; y < height; y++ ) {
             for ( int x = 0; x < width; x++ ) {
-                System.out.print(" [ " + path[x][y] + " ] ");
+                System.out.print("[" + path[x][y] + "] ");
             }
             System.out.println();
         }

@@ -28,22 +28,22 @@ public class PlayerInputSystem extends IteratingEntitySystem {
 		float s = v.maxSpeed; 
 		if (sword != null && Lutebox.input.getKey(Input.KEY_SPACE)) sword.use();
 		
-		if (Lutebox.input.getKey(Input.KEY_A) || Lutebox.input.getKey(Input.KEY_J)) {
+		if (Lutebox.input.getKey(Input.KEY_A) || Lutebox.input.getKey(Input.KEY_J) || Lutebox.input.getKey(Input.KEY_LEFT)) {
 			d.direction = Direction.LEFT;
 			dx -= s; 
 			d.moving = true;
 		}
-		if (Lutebox.input.getKey(Input.KEY_D) || Lutebox.input.getKey(Input.KEY_L)) {
+		if (Lutebox.input.getKey(Input.KEY_D) || Lutebox.input.getKey(Input.KEY_L) || Lutebox.input.getKey(Input.KEY_RIGHT)) {
 			d.direction = Direction.RIGHT;
 			dx += s; 
 			d.moving = true;
 		}
-		if (Lutebox.input.getKey(Input.KEY_W) || Lutebox.input.getKey(Input.KEY_I)) {
+		if (Lutebox.input.getKey(Input.KEY_W) || Lutebox.input.getKey(Input.KEY_I) || Lutebox.input.getKey(Input.KEY_UP)) {
 			d.direction = Direction.UP;
 			dy -= s; 
 			d.moving = true;
 		}
-		if (Lutebox.input.getKey(Input.KEY_S) || Lutebox.input.getKey(Input.KEY_K)) {
+		if (Lutebox.input.getKey(Input.KEY_S) || Lutebox.input.getKey(Input.KEY_K) || Lutebox.input.getKey(Input.KEY_DOWN)) {
 			d.direction = Direction.DOWN;
 			dy += s; 
 			d.moving = true;

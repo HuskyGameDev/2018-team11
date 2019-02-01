@@ -19,4 +19,5 @@ public interface Display {
     
     boolean shouldClose(); 
     
+    void dispose();
 }

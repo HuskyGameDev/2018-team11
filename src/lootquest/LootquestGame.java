@@ -6,6 +6,7 @@ import lootquest.dungeon.World;
 import lootquest.system.AISystem;
 import lootquest.system.ConsumableSystem;
 import lootquest.system.DeathSystem;
+import lootquest.system.DungeonLoopSystem;
 import lootquest.system.FollowPlayerCameraSystem;
 import lootquest.system.MovementSystem;
 import lootquest.system.PlayerInputSystem;
@@ -24,6 +25,10 @@ public class LootquestGame extends GameListener {
     public static World world; 
 //    public static float scale = 48; 
     
+    public static int endX = -1;
+    public static int endY = -1;
+    public static boolean end = false;
+    
     public void init() {
         Lutebox.display.setTitle("Lootquest: Depths of Koderia");
         Lutebox.display.setSize(800, 600);
@@ -40,6 +45,9 @@ public class LootquestGame extends GameListener {
             e.printStackTrace();
         }
         
+        endX = world.getExitX();
+        endY = world.getExitY();
+        
         // add render systems 
         Lutebox.scene.addSystem(new RenderSystem()); 
         
@@ -50,6 +58,8 @@ public class LootquestGame extends GameListener {
         Lutebox.scene.addSystem(new UseSwordSystem());
         Lutebox.scene.addSystem(new UseRangedSystem()); 
         Lutebox.scene.addSystem(new ProjectileSystem());
+        
+        Lutebox.scene.addSystem(new DungeonLoopSystem( endX, endY ));
         
         Lutebox.scene.addSystem(new MovementSystem());
         Lutebox.scene.addSystem(new UpdateFromMovementSystem()); 
@@ -63,6 +73,7 @@ public class LootquestGame extends GameListener {
         // add entities
         //Player
         EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY()); 
+
         //Enemies
         String[][] flr = world.getFloor();
 
@@ -70,22 +81,21 @@ public class LootquestGame extends GameListener {
             for ( int x = 0; x < flr.length; x++ ) {
                 if (flr[x][y].equals("S") || flr[x][y].equals("E")) {
                 	float [] point = world.getEnemySpawn(x, y);
-                	EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
+                	EntityFactory.createConsumable(point[0], point[1], 1000, 0, 10);
                 }else if ( flr[x][y].equals("X") ) {
                     Random r = new Random();
                     int roomType = r.nextInt(3);
                     if ( roomType == 0 ) {
                         float [] point = world.getEnemySpawn(x, y);
                         EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
-                    } else {
-                        for ( int e = 0; e < 3; e++ ) {
-                            EntityFactory.createEnemy1((float) ((tiles * x) + (tiles)/2 + r.nextInt(tiles/2) - tiles/4), (float) ((tiles * y) + (tiles/2) + r.nextInt(tiles/2) - tiles/4), (int) (Math.random() * 3));
-                        }
+                    }
+                    for ( int e = 0; e < 3; e++ ) {
+                        EntityFactory.createEnemy1((float) ((tiles * x) + (tiles)/2 + r.nextInt(tiles/2) - tiles/4), (float) ((tiles * y) + (tiles/2) + r.nextInt(tiles/2) - tiles/4), (int) (Math.random() * 3));
                     }
                     
                 } else if ( flr[x][y].equals("S") ) {
                     float [] point = world.getEnemySpawn(x, y);
-                    EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
+                    EntityFactory.createConsumable(point[0], point[1], 1000, 0, 20);
                 }
             }
         }
@@ -97,7 +107,18 @@ public class LootquestGame extends GameListener {
         Lutebox.audio.play(music, true, true); 
     }
     
-    public static void main(String[] args) {
-        Lutebox.start(new LootquestGame()); 
+    public static void reload( ) {
+//        Sound music = new Sound("assets/music/Dungeon.wav"); 
+//        Lutebox.audio.stop(music);
+        
+        //Lutebox.stop();
+        //Lutebox.display.dispose();
+        
+        //Lutebox.start(null, new LootquestGame());
+    }
+    
+    public static void main(String [] args) {
+        Lutebox.start( null, new LootquestGame());
+        
     }
 }

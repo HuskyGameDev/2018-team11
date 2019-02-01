@@ -96,6 +96,10 @@ public class AwtDisplay implements Display {
         return frame.isVisible(); 
     }
     
+    public void dispose( ) {
+        frame.dispose();
+    }
+    
     public void setVisible(boolean visible) {
         frame.setVisible(visible); 
         

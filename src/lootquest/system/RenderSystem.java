@@ -84,7 +84,7 @@ public class RenderSystem extends IteratingEntitySystem {
             }
         }else if ( e.contains(Enemy.class) ) {
             if ( e.contains(EquipedCrossbow.class)) {
-                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/skeleton0.png"), p.x, p.y, s.w, s.h*2);
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/skeleton0.png"), p.x, p.y-1, s.w, s.h*2);
             } else {
                 float speed = e.get(Movement.class).maxSpeed;
                 if ( speed == 3.0 ) {
