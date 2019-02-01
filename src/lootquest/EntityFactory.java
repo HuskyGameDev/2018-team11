@@ -30,7 +30,7 @@ public final class EntityFactory {
         e.attach(Size.class).set(0.8f, 0.8f); 
         e.attach(Direction.class);
         e.attach(Health.class).set(10, 10);
-        e.attach(EquipedSword.class);
+        e.attach(EquipedSword.class).setCoolDown(0.5f);
         e.attach(Player.class);
         e.attach(Collider.class); 
         
@@ -51,7 +51,7 @@ public final class EntityFactory {
     	}
     	e.attach(Direction.class); 
         e.attach(Size.class).set(0.8f, 0.8f); 
-        e.attach(EquipedSword.class);
+        e.attach(EquipedSword.class).setCoolDown(1f);
         e.attach(Health.class);
         e.attach(Collider.class);
 		e.attach(Enemy.class);
@@ -98,7 +98,7 @@ public final class EntityFactory {
 		e.attach(Collider.class);
 		e.attach(Movement.class).setMaxSpeed(4);
 		e.attach(Boss.class);
-		e.attach(EquipedSword.class);
+		e.attach(EquipedSword.class).setCoolDown(1.5f);
 		e.attach(Enemy.class);
 		e.attach(Health.class).set(5, 5);
 		e.attach(Direction.class);

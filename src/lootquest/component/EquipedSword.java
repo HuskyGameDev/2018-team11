@@ -4,7 +4,7 @@ import lutebox.ecs.Component;
 
 public class EquipedSword extends Component {
 
-	public float cooldownTime = 0.5f; 
+	public float cooldownTime = 1f; 
 	public float animationTime = 0.2f; 
 	
 	public int damage = 1; 
@@ -17,6 +17,11 @@ public class EquipedSword extends Component {
 		
 		inUse = true; 
 		return true; 
+	}
+	
+	public EquipedSword setCoolDown( float cd ) {
+	    cooldownTime = cd;
+	    return this;
 	}
 	
 	public boolean isUsing() {
