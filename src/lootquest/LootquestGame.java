@@ -4,6 +4,7 @@ import java.util.Random;
 
 import lootquest.dungeon.World;
 import lootquest.system.AISystem;
+import lootquest.system.BossSystem;
 import lootquest.system.ConsumableSystem;
 import lootquest.system.DeathSystem;
 import lootquest.system.DungeonLoopSystem;
@@ -72,6 +73,8 @@ public class LootquestGame extends GameListener {
         
         Lutebox.scene.addSystem(new ConsumableSystem());
         
+        Lutebox.scene.addSystem(new BossSystem());
+        
         // add entities
         //Player
         EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY()); 
@@ -81,9 +84,11 @@ public class LootquestGame extends GameListener {
 
         for ( int y = 0; y < flr[0].length; y++ ) {
             for ( int x = 0; x < flr.length; x++ ) {
-                if (flr[x][y].equals("S") || flr[x][y].equals("E")) {
+            	if (flr[x][y].equals("E")) {
                 	float [] point = world.getEnemySpawn(x, y);
-                	EntityFactory.createConsumable(point[0], point[1], 1000, 0, 10);
+                	//EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
+                	EntityFactory.createEnemyBoss(point[0], point[1]);
+
                 }else if ( flr[x][y].equals("X") ) {
                     Random r = new Random();
                     int roomType = r.nextInt(3);

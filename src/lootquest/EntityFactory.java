@@ -1,6 +1,7 @@
 package lootquest;
 
 import lootquest.component.AI;
+import lootquest.component.Boss;
 import lootquest.component.Collider;
 import lootquest.component.Consumable;
 import lootquest.component.Direction;
@@ -86,4 +87,20 @@ public final class EntityFactory {
     	
     	return e;
     }
+
+	public static Entity createEnemyBoss(float x, float y) {
+		Entity e = Lutebox.scene.createEntity();
+
+		e.attach(Position.class).set(x, y);
+		e.attach(Size.class).set(1.8f, 1.8f);
+		e.attach(Collider.class);
+		e.attach(Movement.class).setMaxSpeed(4);
+		e.attach(Boss.class);
+		e.attach(EquipedSword.class);
+		e.attach(Enemy.class);
+		e.attach(Health.class);
+		e.attach(Direction.class);
+
+		return e;
+	}
 }
