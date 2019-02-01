@@ -3,6 +3,8 @@ package lootquest.system;
 import java.util.List;
 
 import lootquest.LootquestGame;
+import lootquest.component.AI;
+import lootquest.component.Boss;
 import lootquest.component.Consumable;
 import lootquest.component.Direction;
 import lootquest.component.Enemy;
@@ -77,25 +79,29 @@ public class RenderSystem extends IteratingEntitySystem {
                 Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player-front0.png"), p.x, p.y - s.h, s.w, s.h * 2);
             } else if ( d== 2 ) {
                 //Left
-                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player-side0.png"), (float) (p.x+0.75), p.y - s.h, s.w*-1, s.h * 2);
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player-side0.png"), (float) (p.x+0.75), p.y - s.h, (float) (s.w*-0.75), s.h * 2);
             } else {
                 //Right
-                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player-side0.png"), p.x, p.y - s.h, s.w, s.h * 2);
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player-side0.png"), p.x, p.y - s.h, (float) (s.w*0.75), s.h * 2);
             }
-        }else if ( e.contains(Enemy.class) ) {
-            if ( e.contains(EquipedCrossbow.class)) {
-                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/skeleton0.png"), p.x, p.y-1, s.w, s.h*2);
+        } else if ( e.contains(Enemy.class) ) {
+            AI aiEnem = e.get(AI.class);
+
+            if ( e.contains(Boss.class)) {
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/slime0.png"), p.x, p.y, s.w, (float) (s.h*0.75));
             } else {
-                float speed = e.get(Movement.class).maxSpeed;
-                if ( speed == 3.0 ) {
-                    Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/bat0.png"), p.x, p.y, s.w, s.h);
-                } else {
-                    Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/slime0.png"), p.x, p.y, s.w, s.h);
+                if ( aiEnem.getEnemyType() == 2 ) {
+                    Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/skeleton0.png"), p.x, p.y-1, s.w, s.h*2);
+                }else if ( aiEnem.getEnemyType() == 1 ) {
+                    Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/bat0.png"), p.x, p.y, s.w, (float) (s.h*0.75));
+                } else if ( aiEnem.getEnemyType() == 0 ) {
+                    Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/slime0.png"), p.x, p.y, s.w, (float) (s.h*0.75));
                 }
             }
-        }else if ( e.contains(Consumable.class) ) {
+            
+        } else if ( e.contains(Consumable.class) ) {
             Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/potion.png"), p.x, p.y, s.w, s.h);
-        }else if ( e.contains(Projectile.class) ) {
+        } else if ( e.contains(Projectile.class) ) {
             int d = e.get(Direction.class).direction;
             if ( d == 0 ) {
                 //Up
