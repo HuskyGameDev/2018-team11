@@ -25,10 +25,12 @@ public class LootquestGame extends GameListener {
     public static World world; 
 //    public static float scale = 48; 
     
+
     public static int endX = -1;
     public static int endY = -1;
     public static boolean end = false;
     
+
     public void init() {
         Lutebox.display.setTitle("Lootquest: Depths of Koderia");
         Lutebox.display.setSize(800, 600);

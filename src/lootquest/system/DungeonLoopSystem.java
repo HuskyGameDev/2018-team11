@@ -34,8 +34,7 @@ public class DungeonLoopSystem extends IteratingEntitySystem {
         
         if ( playerPos.x <= endX+0.5 && playerPos.x >= endX-0.5 && playerPos.y <= endY+0.5 && playerPos.y >= endY-0.5 ) {
             System.out.println("YOU REACHED THE END");
-            Sound music = new Sound("assets/music/Dungeon.wav"); 
-            Lutebox.audio.stop(music);
+
             LootquestGame.reload();
         }
         
