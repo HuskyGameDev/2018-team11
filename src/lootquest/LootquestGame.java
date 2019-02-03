@@ -7,6 +7,7 @@ import lootquest.system.AISystem;
 import lootquest.system.BossSystem;
 import lootquest.system.ConsumableSystem;
 import lootquest.system.DeathSystem;
+import lootquest.system.DungeonLoopSystem;
 import lootquest.system.FollowPlayerCameraSystem;
 import lootquest.system.MovementSystem;
 import lootquest.system.PlayerInputSystem;
@@ -70,7 +71,7 @@ public class LootquestGame extends GameListener {
         Lutebox.scene.addSystem(new WorldPhysicsSystem());
         
         Lutebox.scene.addSystem(new ConsumableSystem());
-        
+        Lutebox.scene.addSystem(new DungeonLoopSystem(endX, endY));
         Lutebox.scene.addSystem(new BossSystem());
         
         // add entities
@@ -100,7 +101,7 @@ public class LootquestGame extends GameListener {
                     
                 } else if ( flr[x][y].equals("S") ) {
                     float [] point = world.getEnemySpawn(x, y);
-                    EntityFactory.createConsumable(point[0], point[1], 1000, 0, 20);
+                    EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
                 }
             }
         }
@@ -115,10 +116,10 @@ public class LootquestGame extends GameListener {
     public static void reload( ) {
         Lutebox.audio.stopAll();
         
-//        Lutebox.stop();
-//        Lutebox.display.dispose();
-//        
-//        Lutebox.start(null, new LootquestGame());
+        Lutebox.stop();
+        Lutebox.display.dispose();
+        
+        Lutebox.start(null, new LootquestGame());
     }
     
     public static void main(String [] args) {
