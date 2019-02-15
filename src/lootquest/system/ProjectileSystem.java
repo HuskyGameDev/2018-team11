@@ -4,6 +4,7 @@ import lootquest.component.Projectile;
 import lootquest.component.Collider;
 import lootquest.component.Health;
 import lootquest.component.Player;
+import lootquest.component.Position;
 import lutebox.ecs.Entity;
 import lutebox.ecs.Filter;
 import lutebox.ecs.IteratingEntitySystem;
@@ -17,8 +18,11 @@ public class ProjectileSystem extends IteratingEntitySystem{
 	public void updateEntity(Entity e) {
 		Collider col = e.get(Collider.class);
 		Projectile pro = e.get(Projectile.class);
+		Position pos = e.get(Position.class);
 		
-		if(col.isHittingWall) {
+		if (Math.abs(pos.x-pro.startingX) > 20 || Math.abs(pos.y-pro.startingY) > 20) {
+			e.destroy();
+		}else if(col.isHittingWall) {
 //			System.out.println("ProjectileSystem: destroy arrow");
 			e.destroy();
 		}else {

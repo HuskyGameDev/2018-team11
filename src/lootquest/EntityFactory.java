@@ -71,7 +71,7 @@ public final class EntityFactory {
     	e.attach(Size.class).set(0.3f, 0.3f);
     	e.attach(Collider.class);
     	e.attach(Direction.class);
-    	e.attach(Projectile.class).setShooter(from).setDamage(bow.damage);
+    	e.attach(Projectile.class).setShooter(from).setDamage(bow.damage).setStartPosition(x, y);
     	
     	
     	return e;
