@@ -33,19 +33,28 @@ public class BossSystem extends IteratingEntitySystem {
 		Position playerPos = player.get(Position.class);
 		Movement enemyMov = e.get(Movement.class);
 		Size playerSize = player.get(Size.class);
+		Size bossSize = e.get(Size.class);
 		EquipedSword armed = e.get(EquipedSword.class);
 		Collider col = e.get(Collider.class);
 		Boss skeletor = e.get(Boss.class);
 
-		float xDiff = playerPos.x - enemyPos.x - 0.9f;
-		float yDiff = playerPos.y - enemyPos.y - 0.9f;
+		float xDiff = playerPos.x - enemyPos.x - bossSize.w/2;
+		float yDiff = playerPos.y - enemyPos.y - bossSize.h/2;
 
-		if (Math.abs(xDiff) > skeletor.distance || Math.abs(yDiff) > skeletor.distance) {
+		if (skeletor.delay > 0) {
+			skeletor.delay --;
+			if (skeletor.delay == 0) {
+				armed.use();
+			}
+		}else if (armed.shouldShowAnimation()) {
+			
+		}else if (Math.abs(xDiff) > skeletor.distance || Math.abs(yDiff) > skeletor.distance) {
+			skeletor.counterCur--;
 			if (skeletor.counterCur < 0) {
 				enemyMov.set((float) (Math.random() * 4 - 2), (float) (Math.random() * 4 - 2));
 				skeletor.counterCur = skeletor.counterMax;
 			}
-		} else if (Math.abs(yDiff) >= playerSize.h + 0.25 || Math.abs(xDiff) >= playerSize.h + 0.25) {
+		} else if (Math.abs(yDiff) >= playerSize.h * 2 || Math.abs(xDiff) >= playerSize.h * 2) {
 			if (!col.collidingEntities.isEmpty() && col.collidingEntities.get(0).get(Enemy.class) != null) {
 				float colX = enemyPos.x - col.collidingEntities.get(0).get(Position.class).x;
 				float colY = enemyPos.y - col.collidingEntities.get(0).get(Position.class).y;
@@ -55,7 +64,7 @@ public class BossSystem extends IteratingEntitySystem {
 			}
 		} else {
 			enemyMov.set(0, 0);
-			armed.use();
+			skeletor.delay = 20;
 		}
 	}
 

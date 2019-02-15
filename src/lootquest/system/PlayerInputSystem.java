@@ -1,9 +1,12 @@
 package lootquest.system;
 
+import lootquest.component.Collider;
 import lootquest.component.Direction;
+import lootquest.component.Enemy;
 import lootquest.component.EquipedSword;
 import lootquest.component.Movement;
 import lootquest.component.Player;
+import lootquest.component.Position;
 import lutebox.core.Lutebox;
 import lutebox.ecs.Entity;
 import lutebox.ecs.Filter;
@@ -20,6 +23,15 @@ public class PlayerInputSystem extends IteratingEntitySystem {
 		Direction d = e.get(Direction.class); 
 		Movement v = e.get(Movement.class);
 		EquipedSword sword = e.get(EquipedSword.class);
+		Collider col = e.get(Collider.class);
+		Position playerPos = e.get(Position.class);
+		
+		if (!col.collidingEntities.isEmpty() && col.collidingEntities.get(0).get(Enemy.class) != null) {
+			float colX = playerPos.x - col.collidingEntities.get(0).get(Position.class).x;
+			float colY = playerPos.y - col.collidingEntities.get(0).get(Position.class).y;
+			v.set(colX*5, colY*5);
+			return;
+		}
 		
 		d.moving = false;
 		
