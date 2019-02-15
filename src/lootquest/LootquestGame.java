@@ -101,7 +101,7 @@ public class LootquestGame extends GameListener {
                     
                 } else if ( flr[x][y].equals("S") ) {
                     float [] point = world.getEnemySpawn(x, y);
-                    EntityFactory.createConsumable(point[0], point[1], 20, 0, 10);
+                    EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
                 }
             }
         }
