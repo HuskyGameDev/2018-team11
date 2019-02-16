@@ -5,8 +5,11 @@ import java.util.List;
 
 
 import lootquest.LootquestGame;
+import lootquest.component.Boss;
 import lootquest.component.Player;
 import lootquest.component.Position;
+import lootquest.component.Size;
+import lutebox.core.Lutebox;
 import lutebox.ecs.Entity;
 import lutebox.ecs.Filter;
 import lutebox.ecs.IteratingEntitySystem;
@@ -30,16 +33,18 @@ public class DungeonLoopSystem extends IteratingEntitySystem {
         Filter playerSearch = Filter.include(Position.class,Player.class).create();
         List<Entity> players = getScene().getEntities(playerSearch);
         
+        List<Entity> bossList = Lutebox.scene.getEntities(Filter.include(Boss.class).create()); 
+        
         if (players.isEmpty()) return; 
         Entity player = players.get(0);
         
         Position playerPos = player.get(Position.class);
-        
-        if ( playerPos.x <= endX+0.5 && playerPos.x >= endX-0.5 && playerPos.y <= endY+0.5 && playerPos.y >= endY-0.5 ) {
-            System.out.println("YOU REACHED THE END");
-            LootquestGame.reload();
+        if (bossList.isEmpty()) {
+            if ( playerPos.x <= endX+0.5 && playerPos.x >= endX-0.5 && playerPos.y <= endY+0.5 && playerPos.y >= endY-0.5 ) {
+                System.out.println("YOU REACHED THE END");
+                LootquestGame.reload();
+            }
         }
-        
     }   
 
 }
