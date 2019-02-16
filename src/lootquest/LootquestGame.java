@@ -166,6 +166,7 @@ public class LootquestGame extends GameListener {
         
         //Player
         EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY());
+        EntityFactory.createPlayerHealthBar(world.getSpawnX(), world.getSpawnY());
         
         //Enemies and Consumables
         String[][] flr = world.getFloor();
