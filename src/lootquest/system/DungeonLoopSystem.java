@@ -22,6 +22,10 @@ public class DungeonLoopSystem extends IteratingEntitySystem {
         this.endY = endY;
     }
     
+    public void setXY ( int x, int y ) {
+        endX = x;
+        endY = y;
+    }
     public void updateEntity(Entity e) {
         Filter playerSearch = Filter.include(Position.class,Player.class).create();
         List<Entity> players = getScene().getEntities(playerSearch);

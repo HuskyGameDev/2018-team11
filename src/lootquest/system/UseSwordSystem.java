@@ -112,7 +112,6 @@ public class UseSwordSystem extends IteratingEntitySystem {
         			swordHitbox.y, 
         			swordHitbox.w, 
         			swordHitbox.h);
-        	
         }
     }
     
