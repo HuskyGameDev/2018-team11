@@ -10,6 +10,7 @@ import lootquest.system.DeathSystem;
 import lootquest.system.DungeonLoopSystem;
 import lootquest.system.FollowPlayerCameraSystem;
 import lootquest.system.MovementSystem;
+import lootquest.system.PlayerHealthDisplaySystem;
 import lootquest.system.PlayerInputSystem;
 import lootquest.system.ProjectileSystem;
 import lootquest.system.RenderSystem;
@@ -74,10 +75,13 @@ public class LootquestGame extends GameListener {
         Lutebox.scene.addSystem(new DungeonLoopSystem(endX, endY));
         Lutebox.scene.addSystem(new BossSystem());
         
+        Lutebox.scene.addSystem(new PlayerHealthDisplaySystem());
+        
         // add entities
         //Player
         EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY()); 
-
+        EntityFactory.createPlayerHealthBar(world.getSpawnX(), world.getSpawnY());
+        
         //Enemies
         String[][] flr = world.getFloor();
 
