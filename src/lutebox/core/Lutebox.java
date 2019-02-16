@@ -122,6 +122,39 @@ public class Lutebox {
     }
     
     /**
+     * Continues on to next floor of game
+     */
+    public static void nextFloorSystems() {
+        backend = new AwtBackend(); 
+        
+        cursor = backend.getCursor(); 
+        display = backend.getDisplay(); 
+        graphics = backend.getGraphics(); 
+        input = backend.getKeyboard(); 
+        audio = backend.getAudio(); 
+        
+        
+        graphicsBackend = backend.getGraphicsBackend();
+        audioBackend = backend.getAudioBackend(); 
+    }
+    
+    public static void nextFloor( GameListener game) {
+        if (running) throw new IllegalStateException("Game is already running");
+        Config config = new Config();
+        
+        nextFloorSystems(); 
+        
+        Lutebox.game = game; 
+        
+        display.setTitle(config.title); 
+        display.setSize(config.width, config.height); 
+        display.setVisible(true); 
+        
+        running = true; 
+        gameLoop(); 
+    }
+    
+    /**
      * Quits the game after the current frame. 
      */
     public static void stop() {
