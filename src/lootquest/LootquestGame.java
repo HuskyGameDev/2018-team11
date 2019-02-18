@@ -1,10 +1,12 @@
 package lootquest;
 
 import java.util.List;
+
 import java.util.Random;
 
 import lootquest.component.Consumable;
 import lootquest.component.Enemy;
+import lootquest.component.Health;
 import lootquest.component.Player;
 import lootquest.component.Position;
 import lootquest.component.Size;
@@ -121,7 +123,7 @@ public class LootquestGame extends GameListener {
                     
                 } else if ( flr[x][y].equals("S") ) {
                     float [] point = world.getEnemySpawn(x, y);
-                    EntityFactory.createConsumable(point[0], point[1], 200, 0, 10);
+                    EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
                 }
             }
         }
@@ -168,6 +170,7 @@ public class LootquestGame extends GameListener {
         EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY());
         EntityFactory.createPlayerHealthBar(world.getSpawnX(), world.getSpawnY());
         
+        
         //Enemies and Consumables
         String[][] flr = world.getFloor();
 
@@ -191,7 +194,7 @@ public class LootquestGame extends GameListener {
                     
                 } else if ( flr[x][y].equals("S") ) {
                     float [] point = world.getEnemySpawn(x, y);
-                    EntityFactory.createConsumable(point[0], point[1], 200, 0, 10);
+                    EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
                 }
             }
         }
