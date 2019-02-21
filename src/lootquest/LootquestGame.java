@@ -8,6 +8,7 @@ import lootquest.component.Consumable;
 import lootquest.component.Enemy;
 import lootquest.component.Health;
 import lootquest.component.Player;
+import lootquest.component.PlayerHealthBarComponent;
 import lootquest.component.Position;
 import lootquest.component.Size;
 import lootquest.dungeon.World;
@@ -42,6 +43,7 @@ public class LootquestGame extends GameListener {
     public static boolean end = false;
     public static RenderSystem render;
     public static DungeonLoopSystem dls;
+    public static PlayerHealthDisplaySystem phds;
     
     public static LootquestGame game;
     
@@ -93,7 +95,8 @@ public class LootquestGame extends GameListener {
         
         Lutebox.scene.addSystem(new BossSystem());
         
-        Lutebox.scene.addSystem(new PlayerHealthDisplaySystem());
+        phds = new PlayerHealthDisplaySystem();
+        Lutebox.scene.addSystem(phds);
         
         // add entities
         //Player
@@ -141,11 +144,6 @@ public class LootquestGame extends GameListener {
         int rooms = tiles * 10;
         world = new World(rooms, rooms, tiles, tiles);
         
-        //Get rid of old player
-        List<Entity> playerList = Lutebox.scene.getEntities(Filter.include(Player.class, Position.class, Size.class).create()); 
-        Entity player = playerList.get(0);
-        player.destroy();
-        
         //Get rid of old enemies
         List<Entity> enemyList = Lutebox.scene.getEntities(Filter.include(Enemy.class, Position.class, Size.class).create());
         for ( int i = 0; i < enemyList.size(); i++ ) {
@@ -167,8 +165,10 @@ public class LootquestGame extends GameListener {
         dls.setXY(endX, endY);
         
         //Player
-        EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY());
-        EntityFactory.createPlayerHealthBar(world.getSpawnX(), world.getSpawnY());
+      List<Entity> playerList = Lutebox.scene.getEntities(Filter.include(Player.class, Position.class, Size.class).create());
+      Entity player = playerList.get(0);
+      player.get(Position.class).x = world.getSpawnX();
+      player.get(Position.class).y = world.getSpawnY();
         
         
         //Enemies and Consumables
