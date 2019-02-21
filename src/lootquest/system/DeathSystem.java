@@ -1,5 +1,6 @@
 package lootquest.system;
 
+import lootquest.LootquestGame;
 import lootquest.component.Enemy;
 import lootquest.component.Health;
 import lootquest.component.Player;
@@ -20,14 +21,20 @@ public class DeathSystem extends IteratingEntitySystem {
 	  Enemy en = e.get(Enemy.class);
 	  if(h.getCurrent() <= 0)
 	  {
-		  if(en != null)
+		  if(en != null) {
 		     System.out.println("DeathSystem: enemy died");
-	      else if(p != null)
+		  } else if(p != null) {
 		     System.out.println("DeathSystem: player died");
-		  else
+	      } else {
 		     System.out.println("DeathSystem: nothing using health");
+		  }
 		 
-		 e.destroy();
+		 if ( p != null ) {
+		     LootquestGame.reloadNEW();
+		 } else {
+		     e.destroy();
+		 }
+		 
 	  }
 	  
 	}	
