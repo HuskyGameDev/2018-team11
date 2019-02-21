@@ -29,6 +29,7 @@ public class PlayerInputSystem extends IteratingEntitySystem {
 		if (!col.collidingEntities.isEmpty() && col.collidingEntities.get(0).get(Enemy.class) != null) {
 			float colX = playerPos.x - col.collidingEntities.get(0).get(Position.class).x;
 			float colY = playerPos.y - col.collidingEntities.get(0).get(Position.class).y;
+			d.updateFromMovement = false;
 			v.set(colX*5, colY*5);
 			return;
 		}
@@ -39,6 +40,7 @@ public class PlayerInputSystem extends IteratingEntitySystem {
 		float dy = 0; 
 		float s = v.maxSpeed; 
 		if (sword != null && Lutebox.input.getKey(Input.KEY_SPACE)) sword.use();
+		d.updateFromMovement = true;
 		
 		if (Lutebox.input.getKey(Input.KEY_A) || Lutebox.input.getKey(Input.KEY_J) || Lutebox.input.getKey(Input.KEY_LEFT)) {
 			d.direction = Direction.LEFT;

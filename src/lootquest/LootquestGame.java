@@ -1,11 +1,14 @@
 package lootquest;
 
 import java.util.List;
+
 import java.util.Random;
 
 import lootquest.component.Consumable;
 import lootquest.component.Enemy;
+import lootquest.component.Health;
 import lootquest.component.Player;
+import lootquest.component.PlayerHealthBarComponent;
 import lootquest.component.Position;
 import lootquest.component.Size;
 import lootquest.dungeon.World;
@@ -40,6 +43,7 @@ public class LootquestGame extends GameListener {
     public static boolean end = false;
     public static RenderSystem render;
     public static DungeonLoopSystem dls;
+    public static PlayerHealthDisplaySystem phds;
     
     public static LootquestGame game;
     
@@ -91,7 +95,8 @@ public class LootquestGame extends GameListener {
         
         Lutebox.scene.addSystem(new BossSystem());
         
-        Lutebox.scene.addSystem(new PlayerHealthDisplaySystem());
+        phds = new PlayerHealthDisplaySystem();
+        Lutebox.scene.addSystem(phds);
         
         // add entities
         //Player
@@ -121,7 +126,7 @@ public class LootquestGame extends GameListener {
                     
                 } else if ( flr[x][y].equals("S") ) {
                     float [] point = world.getEnemySpawn(x, y);
-                    EntityFactory.createConsumable(point[0], point[1], 200, 0, 10);
+                    EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
                 }
             }
         }
@@ -138,11 +143,6 @@ public class LootquestGame extends GameListener {
         int tiles = 16;
         int rooms = tiles * 10;
         world = new World(rooms, rooms, tiles, tiles);
-        
-        //Get rid of old player
-        List<Entity> playerList = Lutebox.scene.getEntities(Filter.include(Player.class, Position.class, Size.class).create()); 
-        Entity player = playerList.get(0);
-        player.destroy();
         
         //Get rid of old enemies
         List<Entity> enemyList = Lutebox.scene.getEntities(Filter.include(Enemy.class, Position.class, Size.class).create());
@@ -165,8 +165,11 @@ public class LootquestGame extends GameListener {
         dls.setXY(endX, endY);
         
         //Player
-        EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY());
-        EntityFactory.createPlayerHealthBar(world.getSpawnX(), world.getSpawnY());
+      List<Entity> playerList = Lutebox.scene.getEntities(Filter.include(Player.class, Position.class, Size.class).create());
+      Entity player = playerList.get(0);
+      player.get(Position.class).x = world.getSpawnX();
+      player.get(Position.class).y = world.getSpawnY();
+        
         
         //Enemies and Consumables
         String[][] flr = world.getFloor();
@@ -191,7 +194,7 @@ public class LootquestGame extends GameListener {
                     
                 } else if ( flr[x][y].equals("S") ) {
                     float [] point = world.getEnemySpawn(x, y);
-                    EntityFactory.createConsumable(point[0], point[1], 200, 0, 10);
+                    EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
                 }
             }
         }
