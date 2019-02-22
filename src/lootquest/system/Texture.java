@@ -2,6 +2,9 @@ package lootquest.system;
 
 import java.awt.image.BufferedImage;
 
+import lootquest.util.TextureCache;
+import lutebox.core.Lutebox;
+
 public class Texture {
 
 	SpriteSheet bs, ps;
@@ -20,7 +23,8 @@ public class Texture {
 		BufferedImageLoader loader = new BufferedImageLoader();
 		try{
 			//blockSheet = loader.loadImage("/");
-			playerSheet = loader.loadImage("/playerMoveSheet.png");
+		    //Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player-back0.png"), p.x, p.y - s.h, s.w, s.h * 2);
+			playerSheet = loader.loadImage("assets/textures/Player/player-move-sheet.png");
 			//attackSheet = loader.loadImage("/");
 		}catch(Exception e){
 			

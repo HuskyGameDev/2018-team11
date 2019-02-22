@@ -66,6 +66,11 @@ public class AwtAudio implements Audio, AudioBackend {
             FloatControl volume = (FloatControl) c.clip.getControl(FloatControl.Type.MASTER_GAIN);
             float range = volume.getMaximum() - volume.getMinimum();
             float gain = (range * amt) + volume.getMinimum();
+            if ( gain < -80 ) {
+                gain = -80;
+            } else if ( gain > 6 ) {
+                gain = 6;
+            }
             volume.setValue(gain);
         }
     }
@@ -87,6 +92,44 @@ public class AwtAudio implements Audio, AudioBackend {
                 stop( sounds.get(i) );
             }
         }
+    }
+    
+    public void unmuteALL() {
+        for ( int i = 0; i < sounds.size(); i++ ) {
+            if ( !isPlaying( sounds.get(i)) ) {
+                setVolume( sounds.get(i), 100 );
+            }
+        }
+    }
+
+    @Override
+    public void muteAll() {
+        for ( int i = 0; i < sounds.size(); i++ ) {
+            if ( isPlaying( sounds.get(i)) ) {
+                setVolume( sounds.get(i), 0 );
+            }
+        }
+    }
+
+    private double vol = 0.0;
+    @Override
+    public void lowerVol() {
+        vol = vol - 0.1;
+        if ( vol < -80 ) {
+            vol = -80;
+        }
+        setVolume( sounds.get(0), (float) vol);
+        
+    }
+
+    @Override
+    public void increaseVol() {
+        vol = vol + 0.1;
+        if ( vol > 6 ) {
+            vol = 6;
+        }
+        setVolume( sounds.get(0), (float) vol);
+        
     }
 
 }

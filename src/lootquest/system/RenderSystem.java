@@ -74,6 +74,7 @@ public class RenderSystem extends IteratingEntitySystem {
             if ( d == 0 ) {
                 //Up
                 Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player-back0.png"), p.x, p.y - s.h, s.w, s.h * 2);
+                
             } else if ( d == 1 ) {
                 //Down
                 Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player-front0.png"), p.x, p.y - s.h, s.w, s.h * 2);
@@ -88,7 +89,7 @@ public class RenderSystem extends IteratingEntitySystem {
             AI aiEnem = e.get(AI.class);
 
             if ( e.contains(Boss.class)) {
-                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/slime0.png"), p.x, p.y, s.w, (float) (s.h*0.75));
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/slime-king.png"), p.x, p.y, s.w, (float) (s.h*0.75));
             } else {
                 if ( aiEnem.getEnemyType() == 2 ) {
                     Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/skeleton0.png"), p.x, p.y-1, s.w, s.h*2);

@@ -13,6 +13,7 @@ import lootquest.component.Position;
 import lootquest.component.Size;
 import lootquest.dungeon.World;
 import lootquest.system.AISystem;
+import lootquest.system.AnimationSystem;
 import lootquest.system.BossSystem;
 import lootquest.system.ConsumableSystem;
 import lootquest.system.DeathSystem;
@@ -46,7 +47,6 @@ public class LootquestGame extends GameListener {
     public static PlayerHealthDisplaySystem phds;
     
     public static LootquestGame game;
-    
 
     public void init() {
         Lutebox.display.setTitle("Lootquest: Depths of Koderia");
@@ -78,8 +78,6 @@ public class LootquestGame extends GameListener {
         Lutebox.scene.addSystem(new UseSwordSystem());
         Lutebox.scene.addSystem(new UseRangedSystem()); 
         Lutebox.scene.addSystem(new ProjectileSystem());
-        
-
         
         Lutebox.scene.addSystem(new MovementSystem());
         Lutebox.scene.addSystem(new UpdateFromMovementSystem()); 

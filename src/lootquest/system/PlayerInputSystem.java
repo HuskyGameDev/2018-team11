@@ -19,6 +19,8 @@ public class PlayerInputSystem extends IteratingEntitySystem {
 		super(Filter.include(Player.class, Direction.class).create()); 
 	}
 	
+	private boolean mute = false;
+	
 	public void updateEntity(Entity e) {
 		Direction d = e.get(Direction.class); 
 		Movement v = e.get(Movement.class);
@@ -61,6 +63,21 @@ public class PlayerInputSystem extends IteratingEntitySystem {
 			d.direction = Direction.DOWN;
 			dy += s; 
 			d.moving = true;
+		}
+		if (Lutebox.input.getKey(Input.KEY_M)) {
+		    if ( mute == false ) {
+		        mute = true;
+		        Lutebox.audio.muteAll();
+		    } else if ( mute == true ) {
+		        mute = false;
+		        Lutebox.audio.unmuteALL();
+		    }
+		}
+		if (Lutebox.input.getKey(Input.KEY_Z)) {
+		    Lutebox.audio.lowerVol();
+		}
+		if (Lutebox.input.getKey(Input.KEY_X)) {
+		    Lutebox.audio.increaseVol();
 		}
 		
 		v.set(dx, dy); 

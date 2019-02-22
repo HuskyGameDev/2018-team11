@@ -11,4 +11,12 @@ public interface Audio {
     public void setVolume(Sound sound, float volume); 
     
     public void stopAll();
+
+    public void muteAll();
+
+    public void unmuteALL();
+
+    public void lowerVol();
+
+    public void increaseVol();
 }
