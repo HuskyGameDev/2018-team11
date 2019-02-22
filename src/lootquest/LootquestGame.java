@@ -124,6 +124,7 @@ public class LootquestGame extends GameListener {
                 } else if ( flr[x][y].equals("S") ) {
                     float [] point = world.getEnemySpawn(x, y);
                     EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
+                    EntityFactory.createEnemyBoss(point[0], point[1]);
                 }
             }
         }
@@ -167,6 +168,16 @@ public class LootquestGame extends GameListener {
       player.get(Position.class).x = world.getSpawnX();
       player.get(Position.class).y = world.getSpawnY();
         
+      //Destroying all non-player health bars
+      List<Entity> healthBarList = Lutebox.scene.getEntities(Filter.include(HealthBar.class).create());
+      for ( int i = 0; i < healthBarList.size(); i++ ) {
+          Entity healthBar = healthBarList.get(i);
+          Entity thing = healthBar.get(HealthBar.class).above;
+          
+          if ( !thing.contains(Player.class) ) {
+              healthBar.destroy();
+          }
+      }
         
         //Enemies and Consumables
         String[][] flr = world.getFloor();
@@ -230,9 +241,12 @@ public class LootquestGame extends GameListener {
         List<Entity> playerList = Lutebox.scene.getEntities(Filter.include(Player.class, Position.class, Size.class).create());
         Entity player = playerList.get(0);
         player.destroy();
+        
         List<Entity> healthBarList = Lutebox.scene.getEntities(Filter.include(HealthBar.class).create());
-        Entity healthBar = healthBarList.get(0);
-        healthBar.destroy();
+        for ( int i = 0; i < healthBarList.size(); i++ ) {
+            Entity healthBar = healthBarList.get(i);
+            healthBar.destroy();
+        }
         
         EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY()); 
         //EntityFactory.createPlayerHealthBar(world.getSpawnX(), world.getSpawnY());
