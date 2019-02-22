@@ -9,7 +9,6 @@ import lootquest.component.EquipedSword;
 import lootquest.component.Health;
 import lootquest.component.Player;
 import lootquest.component.Position;
-import lootquest.component.Projectile;
 import lootquest.component.Size;
 import lootquest.util.EntityUtil;
 import lootquest.util.TextureCache;
@@ -22,7 +21,7 @@ import lutebox.util.AABB;
 
 public class UseSwordSystem extends IteratingEntitySystem {
 
-	private Filter playerFilter, enemyFilter, projectileFilter; 
+	private Filter playerFilter, enemyFilter; 
 	
 	private Sound[] swordSounds, batSounds; 
 	
@@ -31,7 +30,6 @@ public class UseSwordSystem extends IteratingEntitySystem {
         
         playerFilter = Filter.include(Player.class).create(); 
         enemyFilter = Filter.include(Enemy.class).create();
-        projectileFilter = Filter.include(Projectile.class).create();
         
         // get a variety of sword sounds 
         
@@ -69,7 +67,6 @@ public class UseSwordSystem extends IteratingEntitySystem {
         	AABB swordHitbox = getSwordHitbox(e);
         	List<Entity> playerList = Lutebox.scene.getEntities(playerFilter); 
             List<Entity> enemyList = Lutebox.scene.getEntities(enemyFilter); 
-            List<Entity> projectileList = Lutebox.scene.getEntities(projectileFilter);
             
             // cause damage to target 
         	if (e.get(Player.class) != null) {
@@ -84,11 +81,6 @@ public class UseSwordSystem extends IteratingEntitySystem {
             			hp.current -= sword.damage;
             		}
             	}
-        		for(Entity other : projectileList) {
-        			if(swordHitbox.intersects(EntityUtil.getAABB(other))) {
-        				other.destroy();
-        			}
-        		}
         	}else {
         		for(Entity other : playerList) {
         			if (!swordHitbox.intersects(EntityUtil.getAABB(other))) continue;

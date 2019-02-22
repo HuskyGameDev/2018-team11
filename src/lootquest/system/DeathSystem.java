@@ -30,7 +30,7 @@ public class DeathSystem extends IteratingEntitySystem {
 		  }
 		 
 		 if ( p != null ) {
-		     LootquestGame.reload();
+		     LootquestGame.reloadNEW();
 		 } else {
 		     e.destroy();
 		 }
