@@ -8,7 +8,7 @@ import lootquest.component.Consumable;
 import lootquest.component.Enemy;
 import lootquest.component.Health;
 import lootquest.component.Player;
-import lootquest.component.PlayerHealthBarComponent;
+import lootquest.component.HealthBar;
 import lootquest.component.Position;
 import lootquest.component.Size;
 import lootquest.dungeon.World;
@@ -20,7 +20,7 @@ import lootquest.system.DeathSystem;
 import lootquest.system.DungeonLoopSystem;
 import lootquest.system.FollowPlayerCameraSystem;
 import lootquest.system.MovementSystem;
-import lootquest.system.PlayerHealthDisplaySystem;
+import lootquest.system.HealthDisplaySystem;
 import lootquest.system.PlayerInputSystem;
 import lootquest.system.ProjectileSystem;
 import lootquest.system.RenderSystem;
@@ -44,7 +44,7 @@ public class LootquestGame extends GameListener {
     public static boolean end = false;
     public static RenderSystem render;
     public static DungeonLoopSystem dls;
-    public static PlayerHealthDisplaySystem phds;
+    public static HealthDisplaySystem phds;
     
     public static LootquestGame game;
 
@@ -93,13 +93,12 @@ public class LootquestGame extends GameListener {
         
         Lutebox.scene.addSystem(new BossSystem());
         
-        phds = new PlayerHealthDisplaySystem();
+        phds = new HealthDisplaySystem();
         Lutebox.scene.addSystem(phds);
         
         // add entities
         //Player
         EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY()); 
-        EntityFactory.createPlayerHealthBar(world.getSpawnX(), world.getSpawnY());
         
         //Enemies
         String[][] flr = world.getFloor();
@@ -231,12 +230,12 @@ public class LootquestGame extends GameListener {
         List<Entity> playerList = Lutebox.scene.getEntities(Filter.include(Player.class, Position.class, Size.class).create());
         Entity player = playerList.get(0);
         player.destroy();
-        List<Entity> healthBarList = Lutebox.scene.getEntities(Filter.include(PlayerHealthBarComponent.class).create());
+        List<Entity> healthBarList = Lutebox.scene.getEntities(Filter.include(HealthBar.class).create());
         Entity healthBar = healthBarList.get(0);
         healthBar.destroy();
         
         EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY()); 
-        EntityFactory.createPlayerHealthBar(world.getSpawnX(), world.getSpawnY());
+        //EntityFactory.createPlayerHealthBar(world.getSpawnX(), world.getSpawnY());
         
         //Enemies and Consumables
         String[][] flr = world.getFloor();
