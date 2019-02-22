@@ -232,12 +232,12 @@ public class LootquestGame extends GameListener {
         List<Entity> playerList = Lutebox.scene.getEntities(Filter.include(Player.class, Position.class, Size.class).create());
         Entity player = playerList.get(0);
         player.destroy();
-        List<Entity> healthBarList = Lutebox.scene.getEntities(Filter.include(PlayerHealthBarComponent.class).create());
+        List<Entity> healthBarList = Lutebox.scene.getEntities(Filter.include(HealthBar.class).create());
         Entity healthBar = healthBarList.get(0);
         healthBar.destroy();
         
         EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY()); 
-        EntityFactory.createPlayerHealthBar(world.getSpawnX(), world.getSpawnY());
+        //EntityFactory.createPlayerHealthBar(world.getSpawnX(), world.getSpawnY());
         
         //Enemies and Consumables
         String[][] flr = world.getFloor();
