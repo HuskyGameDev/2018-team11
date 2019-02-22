@@ -26,6 +26,8 @@ public class RenderSystem extends IteratingEntitySystem {
 
     public float camX = 0; 
     public float camY = 0; 
+    //Load textures for animations____________________________________________________
+    static Texture tex;
     
     public RenderSystem() {
         super(Filter.include(Position.class, Size.class).create()); 
@@ -66,6 +68,7 @@ public class RenderSystem extends IteratingEntitySystem {
     }
     
     public void renderEntity(Entity e) {
+    	tex = new Texture();
         Position p = e.get(Position.class); 
         Size s = e.get(Size.class);
         // TODO should really have a sprite component 
@@ -73,7 +76,7 @@ public class RenderSystem extends IteratingEntitySystem {
             int d = e.get(Direction.class).direction;
             if ( d == 0 ) {
                 //Up
-                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player-back0.png"), p.x, p.y - s.h, s.w, s.h * 2);
+            	Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player-back0.png"), p.x, p.y - s.h, s.w, s.h * 2);
             } else if ( d == 1 ) {
                 //Down
                 Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/Player/player-front0.png"), p.x, p.y - s.h, s.w, s.h * 2);
@@ -120,6 +123,10 @@ public class RenderSystem extends IteratingEntitySystem {
             Lutebox.graphics.setColor(0xff0000);
             Lutebox.graphics.fillRect(p.x, p.y, s.w, s.h);
         } 
+    }
+    
+    public static Texture getInstance(){
+    	return tex;
     }
     
 }

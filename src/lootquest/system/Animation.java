@@ -3,7 +3,7 @@ package lootquest.system;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-public class AnimationSystem {
+public class Animation {
     
 	private int speed;
 	private int frames;
@@ -14,7 +14,7 @@ public class AnimationSystem {
 	private BufferedImage[] images;
 	private BufferedImage currentImg;
 	
-	public AnimationSystem(int speed, BufferedImage... args){
+	public Animation(int speed, BufferedImage... args){
 		this.speed = speed;
 		images  = new BufferedImage[args.length];
 		for(int i = 0; i < args.length; i++){
