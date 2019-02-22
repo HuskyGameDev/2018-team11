@@ -10,7 +10,7 @@ import lootquest.component.EquipedCrossbow;
 import lootquest.component.EquipedSword;
 import lootquest.component.Health;
 import lootquest.component.Player;
-import lootquest.component.PlayerHealthBarComponent;
+import lootquest.component.HealthBar;
 import lootquest.component.Position;
 import lootquest.component.Projectile;
 import lootquest.component.Size;
@@ -34,6 +34,7 @@ public final class EntityFactory {
         e.attach(EquipedSword.class).setCoolDown(0.5f);
         e.attach(Player.class);
         e.attach(Collider.class); 
+        createHealthBar(e, x, y);
         
         return e; 
     }
@@ -103,16 +104,18 @@ public final class EntityFactory {
 		e.attach(Enemy.class);
 		e.attach(Health.class).set(5, 5);
 		e.attach(Direction.class);
+		
+		createHealthBar(e, x, y);
 
 		return e;
 	}
 	
-	public static Entity createPlayerHealthBar(float x, float y) {
+	public static Entity createHealthBar(Entity above, float x, float y) {
 		Entity e = Lutebox.scene.createEntity();
 		
 		e.attach(Position.class).set(x, y);
 		e.attach(Size.class).set(.2f, .8f);
-		e.attach(PlayerHealthBarComponent.class);
+		e.attach(HealthBar.class).setAbove(above);
 		
 		return e;
 	}
