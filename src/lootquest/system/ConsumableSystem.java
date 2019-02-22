@@ -32,6 +32,9 @@ public class ConsumableSystem extends IteratingEntitySystem{
 				s.setMaxSpeed(s.maxSpeed + consume.SpeedUp);
 				sword.damage += consume.SwordDmgUp;
 				Hp.current += consume.HPRestore;
+				if (Hp.current > Hp.max) {
+					Hp.current = Hp.max;
+				}
 				
 				System.out.println("ConsumableSystem: potion used");
 				e.destroy();

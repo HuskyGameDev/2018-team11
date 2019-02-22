@@ -11,6 +11,7 @@ import lootquest.component.Player;
 import lootquest.component.Position;
 import lootquest.component.Size;
 import lootquest.util.EntityUtil;
+import lootquest.util.TextureCache;
 import lutebox.audio.Sound;
 import lutebox.core.Lutebox;
 import lutebox.ecs.Entity;
@@ -106,13 +107,22 @@ public class UseSwordSystem extends IteratingEntitySystem {
         	AABB swordHitbox = getSwordHitbox(e); 
         	if (swordHitbox == null) return; 
         	
-        	Lutebox.graphics.setColor(0xff00ff);
-        	Lutebox.graphics.drawRect(
-        			swordHitbox.x, 
-        			swordHitbox.y, 
-        			swordHitbox.w, 
-        			swordHitbox.h);
-        	
+//        	Lutebox.graphics.setColor(0xff00ff);
+//        	Lutebox.graphics.drawRect(
+//        			swordHitbox.x, 
+//        			swordHitbox.y, 
+//        			swordHitbox.w, 
+//        			swordHitbox.h);
+        	Direction dir = e.get(Direction.class);
+        	if (dir.direction == Direction.UP ) {
+        	    Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/animations/swordSlash0.png"), swordHitbox.x, swordHitbox.y, swordHitbox.w, (float) (swordHitbox.h*1));
+        	} else if ( dir.direction == Direction.DOWN ) {
+        	    Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/animations/swordSlashDown.png"), swordHitbox.x, swordHitbox.y, swordHitbox.w, (float) (swordHitbox.h*1));
+        	} else if ( dir.direction == Direction.LEFT ) {
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/animations/swordSlahLeft.png"), swordHitbox.x, swordHitbox.y, swordHitbox.w, (float) (swordHitbox.h*1));
+            } else {
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/animations/swordSlashRight.png"), swordHitbox.x, swordHitbox.y, swordHitbox.w, (float) (swordHitbox.h*1));
+            } 
         }
     }
     

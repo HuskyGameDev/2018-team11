@@ -117,7 +117,7 @@ public class RenderSystem extends IteratingEntitySystem {
                 Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/enemies/arrow3.png"), p.x, p.y, s.w*2, s.h*2);
             }
         } else {
-            Lutebox.graphics.setColor(0xFF0000);
+            Lutebox.graphics.setColor(0xff0000);
             Lutebox.graphics.fillRect(p.x, p.y, s.w, s.h);
         } 
     }
