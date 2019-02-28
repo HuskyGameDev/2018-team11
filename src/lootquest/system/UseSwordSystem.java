@@ -140,19 +140,35 @@ public class UseSwordSystem extends IteratingEntitySystem {
         Size size = e.get(Size.class);
         
         // sword logic here 
-        if (dir.direction == Direction.UP) {
-            //up
-        	return new AABB(pos.x - (size.w)/4,pos.y - size.h,(size.w) * 1.5f,size.h);
-        }else if (dir.direction == Direction.RIGHT) {
-            //right
-        	return new AABB(pos.x + (size.w),pos.y - (size.h)/4,(size.w),(size.h)*1.5f);
-        }else if (dir.direction == Direction.DOWN) {
-            //down
-        	return new AABB(pos.x - (size.w)/4,pos.y + (size.h),(size.w) * 1.5f,size.h);
-        }else if (dir.direction == Direction.LEFT) {
-            //left
-            return new AABB(pos.x - (size.w),pos.y - (size.h)/4,(size.w),(size.h)*1.5f);
-        } 
+		if (e.get(Player.class) != null) {  // if its a player sword hitbox has the following size
+			if (dir.direction == Direction.UP) {
+				// up
+				return new AABB(pos.x - (size.w) / 4, pos.y - size.h, (size.w) * 1.5f, size.h);
+			} else if (dir.direction == Direction.RIGHT) {
+				// right
+				return new AABB(pos.x + (size.w), pos.y - (size.h) / 4, (size.w), (size.h) * 1.5f);
+			} else if (dir.direction == Direction.DOWN) {
+				// down
+				return new AABB(pos.x - (size.w) / 4, pos.y + (size.h), (size.w) * 1.5f, size.h);
+			} else if (dir.direction == Direction.LEFT) {
+				// left
+				return new AABB(pos.x - (size.w), pos.y - (size.h) / 4, (size.w), (size.h) * 1.5f);
+			}
+		}else { // if not player it has a different size
+			if (dir.direction == Direction.UP) {
+				// up
+				return new AABB(pos.x - (size.w) / 8, pos.y - size.h*0.75f, (size.w) * 1.25f, size.h*0.75f);
+			} else if (dir.direction == Direction.RIGHT) {
+				// right
+				return new AABB(pos.x + (size.w)*0.75f, pos.y - (size.h) / 8, (size.w)*0.75f, (size.h) * 1.25f);
+			} else if (dir.direction == Direction.DOWN) {
+				// down
+				return new AABB(pos.x - (size.w) / 8, pos.y + (size.h)*0.75f, (size.w) * 1.25f, size.h*0.75f);
+			} else if (dir.direction == Direction.LEFT) {
+				// left
+				return new AABB(pos.x - (size.w)*0.75f, pos.y - (size.h) / 8, (size.w)*0.75f, (size.h) * 1.25f);
+			}
+		}
         
         return null; 
     }
