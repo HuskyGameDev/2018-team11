@@ -8,6 +8,7 @@ import lootquest.component.Direction;
 import lootquest.component.Enemy;
 import lootquest.component.EquipedCrossbow;
 import lootquest.component.EquipedSword;
+import lootquest.component.Gold;
 import lootquest.component.Health;
 import lootquest.component.Player;
 import lootquest.component.HealthBar;
@@ -34,6 +35,7 @@ public final class EntityFactory {
         e.attach(EquipedSword.class).setCoolDown(0.5f);
         e.attach(Player.class);
         e.attach(Collider.class); 
+        e.attach(Gold.class);
         createHealthBar(e, x, y);
         
         return e; 
@@ -123,4 +125,16 @@ public final class EntityFactory {
 		
 		return e;
 	}
+	
+	 public static Entity createGold(float x,float y, int value) {
+	    	Entity e = Lutebox.scene.createEntity();
+	    	
+	    	e.attach(Size.class).set(0.6f, 0.6f);
+	    	e.attach(Position.class).set(x, y);
+	    	e.attach(Collider.class);
+	    	e.attach(Gold.class).SetGoldValue((int)Math.random() * 100);
+	    	e.attach(Movement.class);
+	    	
+	    	return e;
+	    }
 }

@@ -11,6 +11,7 @@ import lootquest.component.Player;
 import lootquest.component.HealthBar;
 import lootquest.component.Position;
 import lootquest.component.Size;
+import lootquest.dungeon.OverWorldGen;
 import lootquest.dungeon.World;
 import lootquest.system.AISystem;
 import lootquest.system.AnimationSystem;
@@ -19,6 +20,7 @@ import lootquest.system.ConsumableSystem;
 import lootquest.system.DeathSystem;
 import lootquest.system.DungeonLoopSystem;
 import lootquest.system.FollowPlayerCameraSystem;
+import lootquest.system.GoldSystem;
 import lootquest.system.MovementSystem;
 import lootquest.system.HealthDisplaySystem;
 import lootquest.system.PlayerInputSystem;
@@ -36,7 +38,8 @@ import lutebox.ecs.Filter;
 
 public class LootquestGame extends GameListener {
     // add map
-    public static World world; 
+    public static World world;
+    public static OverWorldGen overWorld;
 //    public static float scale = 48;
 
     public static int endX = -1;
@@ -47,6 +50,8 @@ public class LootquestGame extends GameListener {
     public static HealthDisplaySystem phds;
     
     public static LootquestGame game;
+    
+    public static int floorCount;
 
     public void init() {
         Lutebox.display.setTitle("Lootquest: Depths of Koderia");
@@ -54,15 +59,9 @@ public class LootquestGame extends GameListener {
         Lutebox.cursor.setVisible(true); 
         Lutebox.camera.setUnitSize(64); 
         
-        int tiles = 16;
-        int rooms = tiles * 10;
-        try {
-            // int #ofRoomsX, #ofRoomsY, #ofTiles/RoomX, #ofTiles/RoomY
-            world = new World(rooms, rooms, tiles, tiles);
-        } catch (Exception e) {
-            System.out.println("Something went wrong with world creating. Look at the world call to see if it is properly called.");
-            e.printStackTrace();
-        }
+        world = new World();
+        
+        floorCount = 1;
         
         endX = world.getExitX();
         endY = world.getExitY();
@@ -88,6 +87,8 @@ public class LootquestGame extends GameListener {
         
         Lutebox.scene.addSystem(new ConsumableSystem());
         
+        Lutebox.scene.addSystem(new GoldSystem());
+        
         dls = new DungeonLoopSystem(endX, endY);
         Lutebox.scene.addSystem(dls);
         
@@ -100,38 +101,6 @@ public class LootquestGame extends GameListener {
         //Player
         EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY()); 
         
-        //Enemies
-        String[][] flr = world.getFloor();
-
-        for ( int y = 0; y < flr[0].length; y++ ) {
-            for ( int x = 0; x < flr.length; x++ ) {
-            	if (flr[x][y].equals("E")) {
-                	float [] point = world.getEnemySpawn(x, y);
-                	//EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
-                	EntityFactory.createEnemyBoss(point[0], point[1]);
-
-                }else if ( flr[x][y].equals("X") ) {
-                    Random r = new Random();
-                    int roomType = r.nextInt(3);
-                    if ( roomType == 0 ) {
-                        float [] point = world.getEnemySpawn(x, y);
-                        EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
-                    }
-                    for ( int e = 0; e < 3; e++ ) {
-                        EntityFactory.createEnemy1((float) ((tiles * x) + (tiles)/2 + r.nextInt(tiles/2) - tiles/4), (float) ((tiles * y) + (tiles/2) + r.nextInt(tiles/2) - tiles/4), (int) (Math.random() * 3));
-                    }
-                    
-                } else if ( flr[x][y].equals("S") ) {
-                    float [] point = world.getEnemySpawn(x, y);
-                    EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
-                    EntityFactory.createEnemyBoss(point[0], point[1]);
-                }
-            }
-        }
-
-        //consumable
-//        EntityFactory.createConsumable(world.getSpawnX() + 1, world.getSpawnY() + 1, 1, 0, 0);
-        
         Sound music = new Sound("assets/music/Dungeon.wav"); 
         Lutebox.audio.play(music, true, true); 
     }
@@ -141,6 +110,7 @@ public class LootquestGame extends GameListener {
         int tiles = 16;
         int rooms = tiles * 10;
         world = new World(rooms, rooms, tiles, tiles);
+        floorCount++;
         
         //Get rid of old enemies
         List<Entity> enemyList = Lutebox.scene.getEntities(Filter.include(Enemy.class, Position.class, Size.class).create());
@@ -186,15 +156,30 @@ public class LootquestGame extends GameListener {
             for ( int x = 0; x < flr.length; x++ ) {
                 if (flr[x][y].equals("E")) {
                     float [] point = world.getEnemySpawn(x, y);
-                    //EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
-                    EntityFactory.createEnemyBoss(point[0], point[1]);
+                    if ( floorCount%3 == 0 ) {
+                        EntityFactory.createEnemyBoss(point[0], point[1]);
+                    }
 
                 }else if ( flr[x][y].equals("X") ) {
                     Random r = new Random();
                     int roomType = r.nextInt(3);
                     if ( roomType == 0 ) {
                         float [] point = world.getEnemySpawn(x, y);
-                        EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
+                        int potionType = r.nextInt(6);
+                        if ( potionType == 0 ) {
+                            EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
+                        } else if ( potionType == 1 ) {
+                            EntityFactory.createConsumable(point[0], point[1], 0, 1, 0);
+                        } else if ( potionType == 2) {
+                            EntityFactory.createConsumable(point[0], point[1], 0, 0, 2);
+                        } else if ( potionType == 3) {
+                            EntityFactory.createConsumable(point[0], point[1], -1, 0, 0);
+                        } else if ( potionType == 4) {
+                            EntityFactory.createConsumable(point[0], point[1], 0, -1, 0);
+                        } else {
+                            EntityFactory.createConsumable(point[0], point[1], 0, 0, -1);
+                        }
+                        
                     }
                     for ( int e = 0; e < 3; e++ ) {
                         EntityFactory.createEnemy1((float) ((tiles * x) + (tiles)/2 + r.nextInt(tiles/2) - tiles/4), (float) ((tiles * y) + (tiles/2) + r.nextInt(tiles/2) - tiles/4), (int) (Math.random() * 3));
@@ -213,9 +198,7 @@ public class LootquestGame extends GameListener {
     
     public static void reloadNEW( ) {
         System.out.println("It started the reload");
-        int tiles = 16;
-        int rooms = tiles * 10;
-        world = new World(rooms, rooms, tiles, tiles);
+        world = new World();
         
         //Get rid of old enemies
         List<Entity> enemyList = Lutebox.scene.getEntities(Filter.include(Enemy.class, Position.class, Size.class).create());
@@ -250,34 +233,6 @@ public class LootquestGame extends GameListener {
         
         EntityFactory.createPlayer(world.getSpawnX(), world.getSpawnY()); 
         //EntityFactory.createPlayerHealthBar(world.getSpawnX(), world.getSpawnY());
-        
-        //Enemies and Consumables
-        String[][] flr = world.getFloor();
-
-        for ( int y = 0; y < flr[0].length; y++ ) {
-            for ( int x = 0; x < flr.length; x++ ) {
-                if (flr[x][y].equals("E")) {
-                    float [] point = world.getEnemySpawn(x, y);
-                    //EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
-                    EntityFactory.createEnemyBoss(point[0], point[1]);
-
-                }else if ( flr[x][y].equals("X") ) {
-                    Random r = new Random();
-                    int roomType = r.nextInt(3);
-                    if ( roomType == 0 ) {
-                        float [] point = world.getEnemySpawn(x, y);
-                        EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
-                    }
-                    for ( int e = 0; e < 3; e++ ) {
-                        EntityFactory.createEnemy1((float) ((tiles * x) + (tiles)/2 + r.nextInt(tiles/2) - tiles/4), (float) ((tiles * y) + (tiles/2) + r.nextInt(tiles/2) - tiles/4), (int) (Math.random() * 3));
-                    }
-                    
-                } else if ( flr[x][y].equals("S") ) {
-                    float [] point = world.getEnemySpawn(x, y);
-                    EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
-                }
-            }
-        }
         
         
         System.out.println("It finished the reload");

@@ -31,6 +31,22 @@ public class World {
         }
 	}
 	
+	public World() {
+	    OverWorldGen overWorld = new OverWorldGen();
+	    floor = overWorld.getFloorPlan();
+	    tiles = overWorld.getEveryTile();
+	    worldWidth = 32;
+	    worldHeight = 32;
+	    roomWidth = 32;
+	    roomHeight = 32;
+	    
+	    spawnX = overWorld.getSpawnX();
+	    spawnY = overWorld.getSpawnY();
+	    
+	    exitX = overWorld.getDungX();
+	    exitY = overWorld.getDungY();
+	}
+	
 	public int getWidth() {
 	    return worldWidth; 
 	}
