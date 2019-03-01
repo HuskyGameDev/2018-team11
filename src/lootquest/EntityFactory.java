@@ -35,6 +35,7 @@ public final class EntityFactory {
         e.attach(EquipedSword.class).setCoolDown(0.5f);
         e.attach(Player.class);
         e.attach(Collider.class); 
+        e.attach(Gold.class);
         createHealthBar(e, x, y);
         
         return e; 
