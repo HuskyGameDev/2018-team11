@@ -11,6 +11,7 @@ public class BufferedImageLoader {
 	
 	public BufferedImage loadImage(String path){
 		
+		//try to load image from specified location, if it fails throw and exception.
 		try{
 			image = ImageIO.read(getClass().getResourceAsStream(path));
 		} catch (IOException e) {
