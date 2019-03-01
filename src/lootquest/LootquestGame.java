@@ -164,17 +164,17 @@ public class LootquestGame extends GameListener {
                         float [] point = world.getEnemySpawn(x, y);
                         int potionType = r.nextInt(6);
                         if ( potionType == 0 ) {
-                            EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
+                            EntityFactory.createConsumable(point[0], point[1], 2, 0, 0, 0);
                         } else if ( potionType == 1 ) {
-                            EntityFactory.createConsumable(point[0], point[1], 0, 1, 0);
+                            EntityFactory.createConsumable(point[0], point[1], 0, 1, 0, 1);
                         } else if ( potionType == 2) {
-                            EntityFactory.createConsumable(point[0], point[1], 0, 0, 2);
+                            EntityFactory.createConsumable(point[0], point[1], 0, 0, 2, 2);
                         } else if ( potionType == 3) {
-                            EntityFactory.createConsumable(point[0], point[1], -1, 0, 0);
+                            EntityFactory.createConsumable(point[0], point[1], -1, 0, 0, 3);
                         } else if ( potionType == 4) {
-                            EntityFactory.createConsumable(point[0], point[1], 0, -1, 0);
+                            EntityFactory.createConsumable(point[0], point[1], 0, -1, 0, 4);
                         } else {
-                            EntityFactory.createConsumable(point[0], point[1], 0, 0, -1);
+                            EntityFactory.createConsumable(point[0], point[1], 0, 0, -1, 5);
                         }
                         
                     }
@@ -184,7 +184,7 @@ public class LootquestGame extends GameListener {
                     
                 } else if ( flr[x][y].equals("S") ) {
                     float [] point = world.getEnemySpawn(x, y);
-                    EntityFactory.createConsumable(point[0], point[1], 2, 0, 0);
+                    EntityFactory.createConsumable(point[0], point[1], 2, 0, 0, 0);
                 }
             }
         }

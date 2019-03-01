@@ -81,13 +81,13 @@ public final class EntityFactory {
     }
     
     //arguments are x and y position followed by stat values that can be increased.
-    public static Entity createConsumable(float x,float y,int HP, int SDmg, float Speed) {
+    public static Entity createConsumable(float x,float y,int HP, int SDmg, float Speed, int type) {
     	Entity e = Lutebox.scene.createEntity();
     	
     	e.attach(Size.class).set(0.6f, 0.6f);
     	e.attach(Position.class).set(x, y);
     	e.attach(Collider.class);
-    	e.attach(Consumable.class).SetHpRestore(HP).SetSwordDmgUp(SDmg).SetSpeedUp(Speed);
+    	e.attach(Consumable.class).SetHpRestore(HP).SetSwordDmgUp(SDmg).SetSpeedUp(Speed).SetType(type);
     	e.attach(Movement.class);
     	
     	return e;
