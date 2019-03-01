@@ -69,7 +69,11 @@ public final class EntityFactory {
     	EquipedCrossbow bow = from.get(EquipedCrossbow.class);
     	
     	e.attach(Position.class).set(x, y);
-    	e.attach(Movement.class).setMaxSpeed(6).set(xVel*5, yVel*5);
+    	if (from.get(Player.class) != null) {
+    		e.attach(Movement.class).setMaxSpeed(10).set(xVel*10, yVel*10);
+    	} else {
+    		e.attach(Movement.class).setMaxSpeed(6).set(xVel*5, yVel*5);
+    	}
     	e.attach(Size.class).set(0.3f, 0.3f);
     	e.attach(Collider.class);
     	e.attach(Direction.class);
@@ -98,7 +102,7 @@ public final class EntityFactory {
 		e.attach(Position.class).set(x, y);
 		e.attach(Size.class).set(1.8f, 1.8f);
 		e.attach(Collider.class);
-		e.attach(Movement.class).setMaxSpeed(4);
+		e.attach(Movement.class).setMaxSpeed(3);
 		e.attach(Boss.class);
 		e.attach(EquipedSword.class).setCoolDown(1.5f);
 		e.attach(Enemy.class);

@@ -3,6 +3,7 @@ package lootquest.system;
 import lootquest.component.Collider;
 import lootquest.component.Direction;
 import lootquest.component.Enemy;
+import lootquest.component.EquipedCrossbow;
 import lootquest.component.EquipedSword;
 import lootquest.component.Movement;
 import lootquest.component.Player;
@@ -27,6 +28,7 @@ public class PlayerInputSystem extends IteratingEntitySystem {
 		EquipedSword sword = e.get(EquipedSword.class);
 		Collider col = e.get(Collider.class);
 		Position playerPos = e.get(Position.class);
+		EquipedCrossbow bow = e.get(EquipedCrossbow.class);
 		
 		if (!col.collidingEntities.isEmpty() && col.collidingEntities.get(0).get(Enemy.class) != null) {
 			float colX = playerPos.x - col.collidingEntities.get(0).get(Position.class).x;
@@ -42,6 +44,7 @@ public class PlayerInputSystem extends IteratingEntitySystem {
 		float dy = 0; 
 		float s = v.maxSpeed; 
 		if (sword != null && Lutebox.input.getKey(Input.KEY_SPACE)) sword.use();
+		if (bow != null && Lutebox.input.getKey(Input.KEY_G)) bow.use();
 		d.updateFromMovement = true;
 		
 		if (Lutebox.input.getKey(Input.KEY_A) || Lutebox.input.getKey(Input.KEY_J) || Lutebox.input.getKey(Input.KEY_LEFT)) {
