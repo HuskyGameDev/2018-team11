@@ -51,7 +51,7 @@ public class LootquestGame extends GameListener {
     
     public static LootquestGame game;
     
-    public static int floorCount;
+    public static int floorCount = 0;
 
     public void init() {
         Lutebox.display.setTitle("Lootquest: Depths of Koderia");
@@ -60,8 +60,6 @@ public class LootquestGame extends GameListener {
         Lutebox.camera.setUnitSize(64); 
         
         world = new World();
-        
-        floorCount = 1;
         
         endX = world.getExitX();
         endY = world.getExitY();
@@ -199,6 +197,7 @@ public class LootquestGame extends GameListener {
     public static void reloadNEW( ) {
         System.out.println("It started the reload");
         world = new World();
+        floorCount = 0;
         
         //Get rid of old enemies
         List<Entity> enemyList = Lutebox.scene.getEntities(Filter.include(Enemy.class, Position.class, Size.class).create());

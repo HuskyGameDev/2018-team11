@@ -101,7 +101,20 @@ public class RenderSystem extends IteratingEntitySystem {
             }
             
         } else if ( e.contains(Consumable.class) ) {
-            Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/potion.png"), p.x, p.y, s.w, s.h);
+            if ( e.get(Consumable.class).type == 0 ) {
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/potion.png"), p.x, p.y, s.w, s.h);
+            } else if ( e.get(Consumable.class).type == 1 ) {
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/potion_0.png"), p.x, p.y, s.w, s.h);
+            } else if ( e.get(Consumable.class).type == 2 ) {
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/potion_1.png"), p.x, p.y, s.w, s.h);
+            } else if ( e.get(Consumable.class).type == 3 ) {
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/potion_2.png"), p.x, p.y, s.w, s.h);
+            } else if ( e.get(Consumable.class).type == 4 ) {
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/potion_3.png"), p.x, p.y, s.w, s.h);
+            } else if ( e.get(Consumable.class).type == 5 ) {
+                Lutebox.graphics.drawTexture(TextureCache.get("assets/textures/potion_4.png"), p.x, p.y, s.w, s.h);
+            }
+            
         } else if ( e.contains(Projectile.class) ) {
             int d = e.get(Direction.class).direction;
             if ( d == 0 ) {
