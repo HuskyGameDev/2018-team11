@@ -4,6 +4,7 @@ import lootquest.EntityFactory;
 import lootquest.component.Direction;
 import lootquest.component.EquipedCrossbow;
 import lootquest.component.Movement;
+import lootquest.component.Player;
 import lootquest.component.Position;
 import lootquest.component.Size;
 import lutebox.core.Lutebox;
@@ -22,6 +23,9 @@ public class UseRangedSystem extends IteratingEntitySystem{
         
         spawnProjectile(e); 
         crossbow.addTime(Lutebox.deltaTime);
+        if (e.get(Player.class) != null) {
+        	crossbow.addTime(Lutebox.deltaTime * 2);
+        }
         
         //arrow.addTime(Lutebox.deltaTime); 
         

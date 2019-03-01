@@ -20,6 +20,7 @@ import lootquest.system.ConsumableSystem;
 import lootquest.system.DeathSystem;
 import lootquest.system.DungeonLoopSystem;
 import lootquest.system.FollowPlayerCameraSystem;
+import lootquest.system.GoldSystem;
 import lootquest.system.MovementSystem;
 import lootquest.system.HealthDisplaySystem;
 import lootquest.system.PlayerInputSystem;
@@ -85,6 +86,8 @@ public class LootquestGame extends GameListener {
         Lutebox.scene.addSystem(new WorldPhysicsSystem());
         
         Lutebox.scene.addSystem(new ConsumableSystem());
+        
+        Lutebox.scene.addSystem(new GoldSystem());
         
         dls = new DungeonLoopSystem(endX, endY);
         Lutebox.scene.addSystem(dls);
