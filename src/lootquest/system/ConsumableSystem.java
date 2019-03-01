@@ -29,11 +29,20 @@ public class ConsumableSystem extends IteratingEntitySystem{
 				EquipedSword sword = other.get(EquipedSword.class);
 				Health Hp = other.get(Health.class);
 				
+				
 				s.setMaxSpeed(s.maxSpeed + consume.SpeedUp);
 				sword.damage += consume.SwordDmgUp;
 				Hp.current += consume.HPRestore;
 				if (Hp.current > Hp.max) {
 					Hp.current = Hp.max;
+				}
+				
+				if ( sword.damage < 1 ) {
+				    sword.damage = 1;
+				}
+				
+				if ( s.maxSpeed < 2 ) {
+				    s.setMaxSpeed(2);
 				}
 				
 				System.out.println("ConsumableSystem: potion used");
